@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/AirStrike/Scripts/GameManager/GameUI.cs">
+    <Files>
+      <File FileName="Assets/_RC Plane Sim/Scripts/ClickAction.cs" Line="89" Column="61" />
+      <File FileName="Assets/_RC Plane Sim/Scripts/PanelType.cs" Line="14" Column="11" />
+      <File FileName="Assets/_RC Plane Sim/Scripts/UIController.cs" Line="8" Column="34" />
+      <File FileName="Assets/AirStrike/Scripts/GameManager/GameUI.cs" Line="90" Column="29" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

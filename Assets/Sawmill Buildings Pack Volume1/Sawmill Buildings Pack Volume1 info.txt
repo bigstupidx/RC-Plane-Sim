@@ -1,0 +1,17 @@
+//Profi developers 2012 v1.0
+//Sawmill Buildings Pack Volume1
+//Key words: 3d model environment architecture industrial urban sawmill building pack photorealistic texture art profi developers
+
+Version 1.2
+- 5 new UNITREE prefabs with full support glosines, tranculency, normal maps and they are responsible to the wind
+- 2 new materials with texture for bark
+- 2 new materials with texture for leafs
+- 4 new ground textures
+- 1 new bilbord grass texture
+- 1 new skybox
+We added environment scene in Package. 
+
+Version 1.1 
+- Eight photorealistic textured buildings from the industrial sawmill environment. Models are suitable for any type games. They use one material with set textures (diffuse+normalmap).
+- Each model has prepared two mapping coordinates. One for the diffuse map and second for the custom light map (so uw strips dosen´t overlap). Coordinates were made manually for best quality.
+- The textures are imported at 1024x1024 to speed up the import process, but the original files are 2048x2048 and can be re-imported at that size for higher quality.
