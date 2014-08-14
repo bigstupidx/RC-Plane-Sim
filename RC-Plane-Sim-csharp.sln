@@ -1,6 +1,8 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
+Project("{1288D7D6-D034-BF06-18F1-DF519AC068F0}") = "RC-Plane-Sim", "Assembly-CSharp-firstpass-vs.csproj", "{F746C18F-634B-0397-C27C-6D5B51A6A510}"
+EndProject
 Project("{1288D7D6-D034-BF06-18F1-DF519AC068F0}") = "RC-Plane-Sim", "Assembly-CSharp-vs.csproj", "{7DED2B6A-3B9F-20E9-D1F0-1E54FC3BFDE4}"
 EndProject
 Project("{1288D7D6-D034-BF06-18F1-DF519AC068F0}") = "RC-Plane-Sim", "Assembly-CSharp-Editor-vs.csproj", "{740C4B82-B174-40A2-14BC-D633523F1B21}"
@@ -11,6 +13,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F746C18F-634B-0397-C27C-6D5B51A6A510}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F746C18F-634B-0397-C27C-6D5B51A6A510}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F746C18F-634B-0397-C27C-6D5B51A6A510}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F746C18F-634B-0397-C27C-6D5B51A6A510}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7DED2B6A-3B9F-20E9-D1F0-1E54FC3BFDE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7DED2B6A-3B9F-20E9-D1F0-1E54FC3BFDE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DED2B6A-3B9F-20E9-D1F0-1E54FC3BFDE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -23,7 +29,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-				GlobalSection(MonoDevelopProperties) = preSolution
+																					GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1

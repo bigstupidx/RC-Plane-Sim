@@ -33,7 +33,7 @@ public class ClickAction : MonoBehaviour
 			UIController.previous = UIController.current;
 			UIController.current = UIController.GetPanel(PanelType.Type.Garage);
 			UIController.current.gameObject.SetActive(true);
-			if(Application.loadedLevel != 1)  Application.LoadLevel(1);
+			if(Application.loadedLevel != 2)  Application.LoadLevel(2);
 			break;
 		case ActionType.Tutorial:
 			break;
@@ -50,7 +50,7 @@ public class ClickAction : MonoBehaviour
 			UIController.previous = UIController.current;
 			UIController.current = UIController.GetPanel(PanelType.Type.MainMenu);
 			UIController.current.gameObject.SetActive(true);
-			if(Application.loadedLevel != 0) Application.LoadLevel(0);
+			if(Application.loadedLevel != 1) Application.LoadLevel(1);
 			break;
 		case ActionType.Upgrades:
 			panel = UIController.GetPanel(PanelType.Type.Upgrade);
@@ -86,7 +86,7 @@ public class ClickAction : MonoBehaviour
 			break;
 		case ActionType.GamePlay:
 			UIController.current.gameObject.SetActive(false);
-			if(Application.loadedLevel != 2)  Application.LoadLevel(2);
+			if(Application.loadedLevel != 3)  Application.LoadLevel(3);
 			break;
 		}
 	}

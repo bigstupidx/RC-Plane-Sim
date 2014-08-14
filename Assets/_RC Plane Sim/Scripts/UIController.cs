@@ -25,6 +25,8 @@ public class UIController : MonoBehaviour
 				current = panels[i];
 			}
         }
+
+		Application.LoadLevel (1);
     }
 
 	public static PanelType GetPanel(PanelType.Type type)

@@ -87,7 +87,7 @@ public class GameUI : MonoBehaviour
 			
 			}
 			if (GUI.Button (new Rect (Screen.width / 2 - 150, Screen.height / 2 + 100, 300, 40), "Main menu")) {
-				Application.LoadLevel (0);
+				Application.LoadLevel ("Mainmenu");
 			}
 			break;
 		
@@ -109,7 +109,7 @@ public class GameUI : MonoBehaviour
 			if (GUI.Button (new Rect (Screen.width / 2 - 150, Screen.height / 2 + 100, 300, 40), "Main menu")) {
 				Time.timeScale = 1;
 				Mode = 0;
-				Application.LoadLevel (0);
+				Application.LoadLevel ("Mainmenu");
 			}
 			break;
 			
