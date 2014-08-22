@@ -213,12 +213,12 @@
      <Compile Include="Assets\TerrainComposer\Scripts\MultiTerrainBoost.cs" />
      <Compile Include="Assets\TerrainComposer\Scripts\rtp_functions.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\ClickAction.cs" />
-     <Compile Include="Assets\_RC Plane Sim\Scripts\PlaneUI\PanelType.cs" />
+     <Compile Include="Assets\_RC Plane Sim\Scripts\PanelType.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\PlaneUI\PlaneAction.cs" />
-     <Compile Include="Assets\_RC Plane Sim\Scripts\PlaneUI\PlaneStats.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\PlaneUI\PlaneVisual.cs" />
+     <Compile Include="Assets\_RC Plane Sim\Scripts\PlaneUI\PlaneVisualStat.cs" />
+     <Compile Include="Assets\_RC Plane Sim\Scripts\PlaneUI\UpgradeSlot.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\UIController.cs" />
-     <Compile Include="Assets\_RC Plane Sim\Scripts\UpgradeSlot.cs" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\NGUI\ReadMe - 3.5.1.txt" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Particle Shaders\Mobile Multiply Culled.shader" />
