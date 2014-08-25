@@ -14,6 +14,8 @@ public class PlaneVisual : MonoBehaviour
 
 	public void UpdateStats()
 	{
+		PlaneAction.currentPlane.Adjust ();
+
 		for(int i = 0; i < stats.Length; i++)
 		{
 			stats[i].UpdateSlot();

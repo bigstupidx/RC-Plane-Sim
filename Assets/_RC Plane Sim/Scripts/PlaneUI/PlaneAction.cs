@@ -30,22 +30,69 @@ public class PlaneAction : MonoBehaviour
 		public bool fold;
 		public List<StatLevel> levels = new List<StatLevel>();
 	}
-	
+
+	public PlaneStatAdjustment plane;
+	public int material;
 	public List<Stat> stat = new List<Stat>();
 
+	public static PlaneStatAdjustment currentPlane;
+	public static int currentMaterial;
 	public static List<Stat> currentStat;
+	public static GameObject planeModel;
 
 	void Awake()
 	{
 		if(name.Contains("1"))
 		{
 			currentStat = stat;
+			currentMaterial = material;
+			currentPlane = plane;
+		}
+	}
+
+	void OnLevelWasLoaded(int level) 
+	{
+		if(level == 2)
+		{
+			if (planeModel != null)
+				return;
+
+			planeModel = Instantiate (plane.gameObject, new Vector3 (1360.706f, 1.376582f, 1360.081f), Quaternion.identity) as GameObject;
+			planeModel.transform.localScale = new Vector3 (0.5f, 0.5f, 0.5f);
+			planeModel.transform.localEulerAngles = new Vector3 (0, 144f, 0);
+			
+			MonoBehaviour[] comps = planeModel.GetComponents<MonoBehaviour>();
+			
+			foreach(MonoBehaviour c in comps)
+			{
+				c.enabled = false;
+			}
+			
+			planeModel.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 		}
 	}
 
 	public void Click()
 	{
+		if (planeModel != null)
+						Destroy (planeModel);
+
 		currentStat = stat;
+		currentMaterial = material;
+		currentPlane = plane;
+
+		planeModel = Instantiate (plane.gameObject, new Vector3 (1360.706f, 1.376582f, 1360.081f), Quaternion.identity) as GameObject;
+		planeModel.transform.localScale = new Vector3 (0.5f, 0.5f, 0.5f);
+		planeModel.transform.localEulerAngles = new Vector3 (0, 144f, 0);
+
+		MonoBehaviour[] comps = planeModel.GetComponents<MonoBehaviour>();
+		
+		foreach(MonoBehaviour c in comps)
+		{
+			c.enabled = false;
+		}
+
+		planeModel.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 	}
 
 	public static Stat FindStatType(Stat.Type type)

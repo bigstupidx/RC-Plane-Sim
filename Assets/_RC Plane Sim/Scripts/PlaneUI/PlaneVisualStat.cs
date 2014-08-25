@@ -38,7 +38,7 @@ public class PlaneVisualStat : MonoBehaviour
 			value2 = param2.levels[param1.currentLevel].value;
 
 			value = (value1 + 5f + (value2 / 10f) + (2f * 4.3f) + (value2 / 15f) + (5f * 2.7f)) / 6f + 1f;
-			roundValue = (int)value;	
+			roundValue = Mathf.Min((int)value, 20);	
 
 			transform.FindChild("Stat Param").GetComponent<UILabel>().text = roundValue.ToString();
 
@@ -59,7 +59,7 @@ public class PlaneVisualStat : MonoBehaviour
 			value2 = param2.levels[param1.currentLevel].value;
 			
 			value  = (value1 + 5f + (value2 / 10f) + (2f * 4.3f) + (value2 / 15f) + (5f * 2.7f)) / 6f + 1f;
-			roundValue = (int)value;	
+			roundValue = Mathf.Min((int)value, 20);
 			
 			transform.FindChild("Stat Param").GetComponent<UILabel>().text = roundValue.ToString();
 
@@ -80,7 +80,7 @@ public class PlaneVisualStat : MonoBehaviour
 			value2 = param2.levels[param1.currentLevel].value;
 			
 			value  = (value1 + 5f + (value2 / 10f) + (2f * 4.3f) + (value2 / 15f) + (5f * 2.7f)) / 6f + 1f;
-			roundValue = (int)value;	
+			roundValue = Mathf.Min((int)value, 20);	
 			
 			transform.FindChild("Stat Param").GetComponent<UILabel>().text = roundValue.ToString();
 
@@ -99,7 +99,7 @@ public class PlaneVisualStat : MonoBehaviour
 			value1 = param1.levels[param1.currentLevel].value;
 			
 			value  = value1 / 100f + 1f;
-			roundValue = (int)value;	
+			roundValue = Mathf.Min((int)value, 20);	
 			
 			transform.FindChild("Stat Param").GetComponent<UILabel>().text = roundValue.ToString();
 

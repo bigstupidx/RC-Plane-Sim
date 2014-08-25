@@ -31,6 +31,8 @@ public class PlaneEditorWindow : EditorWindow
 
 	private void Draw(PlaneAction target)
 	{
+		target.plane = EditorGUILayout.ObjectField ("Plane", target.plane, typeof(PlaneStatAdjustment)) as PlaneStatAdjustment;
+
 		if(target.stat.Count < 4)
 		{
 			target.stat.Add(new PlaneAction.Stat());
