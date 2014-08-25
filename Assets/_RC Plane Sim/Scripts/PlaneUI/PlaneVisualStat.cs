@@ -113,7 +113,7 @@ public class PlaneVisualStat : MonoBehaviour
 			}
 			break;
 		case Type.Speed:
-			roundValue = 10;	
+			roundValue = (int)(PlaneAction.currentPlane.GetComponent<FlightSystem>().Speed / 5);	
 			
 			transform.FindChild("Stat Param").GetComponent<UILabel>().text = roundValue.ToString();
 
