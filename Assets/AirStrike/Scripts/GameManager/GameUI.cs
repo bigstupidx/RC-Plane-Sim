@@ -44,6 +44,13 @@ public class GameUI : MonoBehaviour
 				
 				GUI.skin.label.alignment = TextAnchor.UpperRight;
 				GUI.Label (new Rect (Screen.width - 220, 20, 200, 50), "ARMOR " + play.GetComponent<DamageManager> ().HP);
+
+				if(transform.position.x < 1200 || transform.position.x > 2800 || transform.position.z < 1200 || transform.position.z > 2800)
+				{
+					GUI.skin.label.alignment = TextAnchor.MiddleCenter;
+					GUI.Label (new Rect (Screen.width / 2 - 300, 200, 600, 100), "Come back to battle zone or your plane will be crashed");
+				}
+
 				GUI.skin.label.fontSize = 16;
 				
 				// Draw Weapon system
@@ -80,8 +87,6 @@ public class GameUI : MonoBehaviour
 			GUI.skin.label.alignment = TextAnchor.MiddleCenter;
 			GUI.Label (new Rect (0, Screen.height / 2 + 10, Screen.width, 30), "Game Over");
 		
-			GUI.DrawTexture (new Rect (Screen.width / 2 - Logo.width / 2, Screen.height / 2 - 150, Logo.width, Logo.height), Logo);
-		
 			if (GUI.Button (new Rect (Screen.width / 2 - 150, Screen.height / 2 + 50, 300, 40), "Restart")) {
 				Application.LoadLevel (Application.loadedLevelName);
 			
@@ -99,8 +104,6 @@ public class GameUI : MonoBehaviour
 			Time.timeScale = 0;
 			GUI.skin.label.alignment = TextAnchor.MiddleCenter;
 			GUI.Label (new Rect (0, Screen.height / 2 + 10, Screen.width, 30), "Pause");
-		
-			GUI.DrawTexture (new Rect (Screen.width / 2 - Logo.width / 2, Screen.height / 2 - 150, Logo.width, Logo.height), Logo);
 		
 			if (GUI.Button (new Rect (Screen.width / 2 - 150, Screen.height / 2 + 50, 300, 40), "Resume")) {
 				Mode = 0;

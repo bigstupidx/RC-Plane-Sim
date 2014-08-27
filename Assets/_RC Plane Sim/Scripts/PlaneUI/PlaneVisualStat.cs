@@ -113,9 +113,20 @@ public class PlaneVisualStat : MonoBehaviour
 			}
 			break;
 		case Type.Speed:
-			roundValue = (int)(PlaneAction.currentPlane.GetComponent<FlightSystem>().Speed / 5);	
-			
-			transform.FindChild("Stat Param").GetComponent<UILabel>().text = roundValue.ToString();
+			roundValue = (int)(PlaneAction.currentPlane.GetComponent<FlightSystem>().Speed / 3);	
+
+			if(roundValue <= 20)
+			{
+				transform.FindChild("Stat Param").GetComponent<UILabel>().text = "Slow";
+			}
+			else if(roundValue <= 40)
+			{
+				transform.FindChild("Stat Param").GetComponent<UILabel>().text = "Medium";
+			}
+			else if(roundValue <= 60)
+			{
+				transform.FindChild("Stat Param").GetComponent<UILabel>().text = "Fast";
+			}
 
 			for(; j <= roundValue / 2; j++)
 			{

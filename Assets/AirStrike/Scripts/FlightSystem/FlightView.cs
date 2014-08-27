@@ -73,6 +73,11 @@ public class FlightView : MonoBehaviour
 		float distance = Vector3.Distance (positionTarget, this.transform.position);
 		this.transform.position = Vector3.Lerp (this.transform.position, positionTarget, Time.fixedDeltaTime * (distance  * FollowSpeedMult));
 		
+		if(transform.position.x < 1100 || transform.position.x > 2900 || transform.position.z < 1100 || transform.position.z > 2900)
+		{
+			Target.GetComponent<DamageManager>().ApplyDamage(1000, null);
+		}
+		
 	}
 
 	void Update ()

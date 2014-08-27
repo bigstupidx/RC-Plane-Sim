@@ -22,8 +22,8 @@ public class PlaneStatAdjustment : MonoBehaviour
 		minigun.Missile.GetComponent<Damage> ().Damage = rgun.levels [rgun.currentLevel].value;
 
 		var range = PlaneAction.FindStatType (PlaneAction.Stat.Type.Range);
-		minigun.Missile.GetComponent<MoverBullet> ().Lifetime = range.levels [range.currentLevel].value / 200;
-		rocket.Missile.GetComponent<MoverMissile> ().LifeTime = range.levels [range.currentLevel].value / 200;
+		minigun.Missile.GetComponent<MoverBullet> ().Lifetime = range.levels [range.currentLevel].value / 200f;
+		rocket.Missile.GetComponent<MoverMissile> ().LifeTime = Mathf.CeilToInt(range.levels [range.currentLevel].value / 200f);
 
 		render.sharedMaterial = materials [PlaneAction.currentMaterial];
 		if(PlaneAction.planeModel != null)

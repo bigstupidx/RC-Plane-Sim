@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MoverBullet : WeaponBase
 {
-    public int Lifetime;
+    public float Lifetime;
     public float Speed = 80;
     public float SpeedMax = 80;
     public float SpeedMult = 1;
