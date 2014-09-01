@@ -37,7 +37,7 @@ public class PlaneVisualStat : MonoBehaviour
 			value1 = param1.levels[param1.currentLevel].value;
 			value2 = param2.levels[param1.currentLevel].value;
 
-			value = (value1 + 5f + (value2 / 10f) + (2f * 4.3f) + (value2 / 15f) + (5f * 2.7f)) / 6f + 1f;
+			value = (value1 / 2.83f) + (value2 / 35) + 1;
 			roundValue = Mathf.Min((int)value, 20);	
 
 			transform.FindChild("Stat Param").GetComponent<UILabel>().text = roundValue.ToString();
@@ -58,7 +58,7 @@ public class PlaneVisualStat : MonoBehaviour
 			value1 = param1.levels[param1.currentLevel].value;
 			value2 = param2.levels[param1.currentLevel].value;
 			
-			value  = (value1 + 5f + (value2 / 10f) + (2f * 4.3f) + (value2 / 15f) + (5f * 2.7f)) / 6f + 1f;
+			value = (value1 / 2.83f) + (value2 / 35) + 1;
 			roundValue = Mathf.Min((int)value, 20);
 			
 			transform.FindChild("Stat Param").GetComponent<UILabel>().text = roundValue.ToString();
@@ -79,7 +79,7 @@ public class PlaneVisualStat : MonoBehaviour
 			value1 = param1.levels[param1.currentLevel].value;
 			value2 = param2.levels[param1.currentLevel].value;
 			
-			value  = (value1 + 5f + (value2 / 10f) + (2f * 4.3f) + (value2 / 15f) + (5f * 2.7f)) / 6f + 1f;
+			value = (value1 / 2.83f) + (value2 / 35) + 1;
 			roundValue = Mathf.Min((int)value, 20);	
 			
 			transform.FindChild("Stat Param").GetComponent<UILabel>().text = roundValue.ToString();
@@ -98,7 +98,7 @@ public class PlaneVisualStat : MonoBehaviour
 			
 			value1 = param1.levels[param1.currentLevel].value;
 			
-			value  = value1 / 100f + 1f;
+			value = (value1 / 1382f) * 20f;
 			roundValue = Mathf.Min((int)value, 20);	
 			
 			transform.FindChild("Stat Param").GetComponent<UILabel>().text = roundValue.ToString();
@@ -113,7 +113,9 @@ public class PlaneVisualStat : MonoBehaviour
 			}
 			break;
 		case Type.Speed:
-			roundValue = (int)(PlaneAction.currentPlane.GetComponent<FlightSystem>().Speed / 3);	
+			value1 = PlaneAction.currentPlane.GetComponent<FlightSystem>().Speed;
+			value = (value1 / 89f) * 20f;
+			roundValue = Mathf.Min((int)value, 20);	
 
 			if(roundValue <= 20)
 			{

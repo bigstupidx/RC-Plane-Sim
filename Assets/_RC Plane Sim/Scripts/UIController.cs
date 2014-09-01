@@ -7,6 +7,9 @@ public class UIController : MonoBehaviour
 	public static PanelType current;
 	public static PanelType previous;
 
+	//Save Data
+	public static int exp = 0;
+
 	// Use this for initialization
     void Awake()
     {

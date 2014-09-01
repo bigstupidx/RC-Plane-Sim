@@ -3,14 +3,20 @@ using System.Collections;
 
 public class PlayerDead : FlightOnDead
 {
-	void Start (){}
+	private GameObject eject;
+	void Awake ()
+	{
+		eject =	GameObject.FindGameObjectWithTag ("Eject");
+		if(eject != null) eject.SetActive (false);
+	}
 	
 	// if player dead 
 	public override void OnDead (GameObject killer)
 	{
-		// if player dead call GameOver in GameManager
 		GameManager gamemanger = (GameManager)GameObject.FindObjectOfType (typeof(GameManager));
 		gamemanger.GameOver ();
 		base.OnDead (killer);
+
+		if(eject != null) eject.SetActive (true);
 	}
 }

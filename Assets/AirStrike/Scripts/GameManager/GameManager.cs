@@ -5,14 +5,13 @@ public class GameManager : MonoBehaviour {
 	// basic game score
 	public int Score = 0;
 	public int Killed = 0;
-	public GameObject plane;
 
 	void Start () 
 	{
 		Score = 0;
 		Killed = 0;
 
-		Instantiate (plane);
+		Instantiate (PlaneAction.currentPlane.gameObject);
 	}
 	
 	// Update is called once per frame

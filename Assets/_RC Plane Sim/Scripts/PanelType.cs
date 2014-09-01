@@ -11,7 +11,9 @@ public class PanelType : MonoBehaviour
         Shop,
 		PopUpSAS,
 		Upgrade,
-		PopUpBuy
+		PopUpBuy,
+		GameMenu,
+		PauseMenu
     }
 
     public Type panelType;

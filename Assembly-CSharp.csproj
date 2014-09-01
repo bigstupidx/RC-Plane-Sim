@@ -83,6 +83,9 @@
      <Compile Include="Assets\AirStrike\Scripts\WeaponSystem\WeaponBase.cs" />
      <Compile Include="Assets\AirStrike\Scripts\WeaponSystem\WeaponController.cs" />
      <Compile Include="Assets\AirStrike\Scripts\WeaponSystem\WeaponLauncher.cs" />
+     <Compile Include="Assets\GameAssets\Scripts\AdvMouseLook.cs" />
+     <Compile Include="Assets\GameAssets\Scripts\ParachuteLogic.cs" />
+     <Compile Include="Assets\GameAssets\Scripts\ParachutePayloadLogic.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\EquipItems.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\EquipRandomItem.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\UICursor.cs" />
@@ -221,6 +224,7 @@
      <Compile Include="Assets\_RC Plane Sim\Scripts\PlaneUI\TextureAction.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\PlaneUI\UpgradeSlot.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\UIController.cs" />
+     <Compile Include="Assets\_RC Plane Sim\Scripts\UILevelController.cs" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\NGUI\ReadMe - 3.5.1.txt" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Particle Shaders\Mobile Multiply Culled.shader" />
@@ -265,7 +269,7 @@
      <None Include="Assets\Mobile Scifi GUI\Readme.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text.shader" />
      <None Include="Assets\TerrainComposer\Update\check.txt" />
-     <None Include="Assets\WWII P47 Thunderbolt\aeroplanes.shader" />
+     <None Include="Assets\_RC Plane Sim\Planes\Superbolt\aeroplanes.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed).shader" />
      <None Include="Assets\TerrainComposer\Update\last_checked.txt" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Vertex Colored Shaders\Mobile Vertex Colored.shader" />
@@ -276,6 +280,7 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Additive Colored.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Header.txt" />
      <None Include="Assets\NGUI\Examples\Shaders\Refractive.shader" />
+     <None Include="Assets\GameAssets\Shaders\Normal-Diffuse-CullOff.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\SciFi\SciFi Font - Normal.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (SoftClip).shader" />

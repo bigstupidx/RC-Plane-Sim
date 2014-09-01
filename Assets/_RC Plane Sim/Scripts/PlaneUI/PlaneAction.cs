@@ -39,10 +39,10 @@ public class PlaneAction : MonoBehaviour
 	public static int currentMaterial;
 	public static List<Stat> currentStat;
 	public static GameObject planeModel;
-
+	
 	void Awake()
 	{
-		if(name.Contains("1"))
+		if(name.Contains("Bloody Jane"))
 		{
 			currentStat = stat;
 			currentMaterial = material;
@@ -54,10 +54,17 @@ public class PlaneAction : MonoBehaviour
 	{
 		if(level == 2)
 		{
-			if (planeModel != null)
+			if(name.Contains("Bloody Jane"))
+			{
+				currentStat = stat;
+				currentMaterial = material;
+				currentPlane = plane;
+			}
+
+			if (planeModel != null || currentPlane == null)
 				return;
 
-			planeModel = Instantiate (plane.gameObject, new Vector3 (1360.706f, 1.376582f, 1360.081f), Quaternion.identity) as GameObject;
+			planeModel = Instantiate (currentPlane.gameObject, new Vector3 (1360.706f, 1.376582f, 1360.081f), Quaternion.identity) as GameObject;
 			planeModel.transform.localScale = new Vector3 (0.5f, 0.5f, 0.5f);
 			planeModel.transform.localEulerAngles = new Vector3 (0, 144f, 0);
 			
