@@ -23,7 +23,10 @@ public class ClickAction : MonoBehaviour
 		Resume,
 		Retry,
 		Exit,
-		Eject
+		Eject,
+		Map,
+		PopUpLevel,
+		ClosePopUpLevel
 	}
 
 	public ActionType action;
@@ -47,11 +50,12 @@ public class ClickAction : MonoBehaviour
 		switch(action)
 		{
 		case ActionType.SinglePlayer:
+			UIController.HidePanels();
 			UIController.current.gameObject.SetActive(false);
 			UIController.previous = UIController.current;
 			UIController.current = UIController.GetPanel(PanelType.Type.Garage);
 			UIController.current.gameObject.SetActive(true);
-			if(Application.loadedLevel != 2)  Application.LoadLevel(2);
+			if(Application.loadedLevel != 2)  LevelsLoader.LoadLevel(2);
 			break;
 		case ActionType.Tutorial:
 			break;
@@ -64,11 +68,27 @@ public class ClickAction : MonoBehaviour
 		case ActionType.FacebookPage:
 			break;
 		case ActionType.MainMenu:
+			UIController.HidePanels();
 			UIController.current.gameObject.SetActive(false);
 			UIController.previous = UIController.current;
 			UIController.current = UIController.GetPanel(PanelType.Type.MainMenu);
 			UIController.current.gameObject.SetActive(true);
-			if(Application.loadedLevel != 1) Application.LoadLevel(1);
+			if(Application.loadedLevel != 1) LevelsLoader.LoadLevel(1);
+			break;
+		case ActionType.Map:
+			UIController.HidePanels();
+			UIController.current.gameObject.SetActive(false);
+			UIController.previous = UIController.current;
+			UIController.current = UIController.GetPanel(PanelType.Type.Map);
+			UIController.current.gameObject.SetActive(true);
+			break;
+		case ActionType.PopUpLevel:
+			panel = UIController.GetPanel(PanelType.Type.PopUpLevel);
+			panel.gameObject.SetActive(true);
+			break;
+		case ActionType.ClosePopUpLevel:
+			panel = UIController.GetPanel(PanelType.Type.PopUpLevel);
+			panel.gameObject.SetActive(false);
 			break;
 		case ActionType.Upgrades:
 			panel = UIController.GetPanel(PanelType.Type.Upgrade);
@@ -103,11 +123,12 @@ public class ClickAction : MonoBehaviour
 			panel.gameObject.SetActive(false);
 			break;
 		case ActionType.GamePlay:
+			UIController.HidePanels();
 			UIController.current.gameObject.SetActive(false);
 			UIController.previous = UIController.current;
 			UIController.current = UIController.GetPanel(PanelType.Type.GameMenu);
 			UIController.current.gameObject.SetActive(true);
-			if(Application.loadedLevel != 3)  Application.LoadLevel(3);
+			if(Application.loadedLevel != 3)  LevelsLoader.LoadLevel(3);
 			break;
 		case ActionType.Pause:
 			Time.timeScale = 0;
@@ -129,7 +150,7 @@ public class ClickAction : MonoBehaviour
 			UIController.previous = UIController.current;
 			UIController.current = UIController.GetPanel(PanelType.Type.GameMenu);
 			UIController.current.gameObject.SetActive(true);
-			Application.LoadLevel(3);
+			LevelsLoader.LoadLevel(3);
 			break;
 		case ActionType.Exit:
 			Time.timeScale = 1;
@@ -137,7 +158,7 @@ public class ClickAction : MonoBehaviour
 			UIController.previous = UIController.current;
 			UIController.current = UIController.GetPanel(PanelType.Type.MainMenu);
 			UIController.current.gameObject.SetActive(true);
-			Application.LoadLevel(1);
+			LevelsLoader.LoadLevel(1);
 			break;
 		case ActionType.Eject: 
 			var parashute = GameObject.FindGameObjectWithTag("Parashute");
@@ -148,6 +169,8 @@ public class ClickAction : MonoBehaviour
 			parashute.transform.position = camera.transform.position;
 
 			camera.Target = parashute.transform.GetChild(0).gameObject;
+
+			gameObject.SetActive(false);
 			break;
 		}
 	}

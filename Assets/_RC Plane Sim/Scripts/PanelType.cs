@@ -13,7 +13,9 @@ public class PanelType : MonoBehaviour
 		Upgrade,
 		PopUpBuy,
 		GameMenu,
-		PauseMenu
+		PauseMenu,
+		Map,
+		PopUpLevel
     }
 
     public Type panelType;

@@ -216,6 +216,7 @@
      <Compile Include="Assets\TerrainComposer\Scripts\MultiTerrainBoost.cs" />
      <Compile Include="Assets\TerrainComposer\Scripts\rtp_functions.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\ClickAction.cs" />
+     <Compile Include="Assets\_RC Plane Sim\Scripts\LevelsLoader.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\PanelType.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\PlaneStatAdjustment.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\PlaneUI\PlaneAction.cs" />
@@ -223,6 +224,7 @@
      <Compile Include="Assets\_RC Plane Sim\Scripts\PlaneUI\PlaneVisualStat.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\PlaneUI\TextureAction.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\PlaneUI\UpgradeSlot.cs" />
+     <Compile Include="Assets\_RC Plane Sim\Scripts\SwipeAction.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\UIController.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\UILevelController.cs" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />

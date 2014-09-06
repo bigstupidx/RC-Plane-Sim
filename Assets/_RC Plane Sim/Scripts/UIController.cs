@@ -10,6 +10,9 @@ public class UIController : MonoBehaviour
 	//Save Data
 	public static int exp = 0;
 
+	float deltaTime = 0.0f;
+	float fps = 0.0f;
+
 	// Use this for initialization
     void Awake()
     {
@@ -29,7 +32,7 @@ public class UIController : MonoBehaviour
 			}
         }
 
-		Application.LoadLevel (1);
+		LevelsLoader.LoadLevel (1);
     }
 
 	public static PanelType GetPanel(PanelType.Type type)
@@ -43,5 +46,13 @@ public class UIController : MonoBehaviour
 		}
 
 		return null;
+	}
+
+	public static void HidePanels()
+	{
+		for(int i = 0; i < panels.Length; i++)
+		{
+			panels[i].gameObject.SetActive(false);
+		}
 	}
 }

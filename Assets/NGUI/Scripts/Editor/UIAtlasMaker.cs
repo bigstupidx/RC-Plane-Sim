@@ -141,7 +141,8 @@ public class UIAtlasMaker : EditorWindow
 			Rect rect = NGUIMath.ConvertToPixels(rects[i], tex.width, tex.height, true);
 
 			// Make sure that we don't shrink the textures
-			if (Mathf.RoundToInt(rect.width) != textures[i].width) return false;
+			if(textures != null && textures[i] != null);
+				if (Mathf.RoundToInt(rect.width) != textures[i].width) return false;
 
 			SpriteEntry se = sprites[i];
 			se.x = Mathf.RoundToInt(rect.x);
