@@ -18,5 +18,6 @@ public class PlayerDead : FlightOnDead
 		base.OnDead (killer);
 
 		if(eject != null) eject.SetActive (true);
+		Screen.lockCursor = false;
 	}
 }
