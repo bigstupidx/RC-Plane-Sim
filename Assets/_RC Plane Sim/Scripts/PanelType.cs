@@ -15,7 +15,8 @@ public class PanelType : MonoBehaviour
 		GameMenu,
 		PauseMenu,
 		Map,
-		PopUpLevel
+		PopUpLevel,
+		Win
     }
 
     public Type panelType;

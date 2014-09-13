@@ -35,9 +35,12 @@ public class PlayerController : MonoBehaviour {
 		directVelBack = flight.DirectVelocity;
 	}
 	
-	void Update () {
+	void Update () 
+	{
 		if(!flight || !Active)
 			return;
+		SimpleControl = true;
+		Acceleration = UIController.acceleration;
 		#if UNITY_EDITOR || UNITY_WEBPLAYER || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX
 		// On Desktop
 		DesktopController();
@@ -116,35 +119,4 @@ public class PlayerController : MonoBehaviour {
 			flight.WeaponControl.LaunchWeapon ();
 		}	
 	}
-	
-	
-	// you can remove this part..
-	void OnGUI ()
-	{
-		if(!ShowHowto)
-			return;
-		
-		if(skin)
-			GUI.skin = skin;
-		
-		if(GUI.Button(new Rect(20,150,200,40),"Gyroscope "+Acceleration)){
-			Acceleration = !Acceleration;
-		}
-		
-		if(GUI.Button(new Rect(20,200,200,40),"Change View")){
-			if(View)
-				View.SwitchCameras ();	
-		}
-		
-		if(GUI.Button(new Rect(20,250,200,40),"Change Weapons")){
-			if(flight)
-				flight.WeaponControl.SwitchWeapon ();
-		}
-		
-		if(GUI.Button(new Rect(20,300,200,40),"Simple Control "+SimpleControl)){
-			if(flight)
-				SimpleControl = !SimpleControl;
-		}
-	}
-
 }

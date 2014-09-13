@@ -19,9 +19,10 @@ public class GameManager : MonoBehaviour {
 		
 	}
 	// add score function
-	public void AddScore(int score){
-		Score += score;
-		Killed +=1;
+	public void AddScore(int score)
+	{
+		UIController.exp += score;
+		Killed += 1;
 	}
 	
 	void OnGUI(){

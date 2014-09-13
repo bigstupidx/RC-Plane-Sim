@@ -225,6 +225,7 @@
      <Compile Include="Assets\_RC Plane Sim\Scripts\PlaneUI\TextureAction.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\PlaneUI\UpgradeSlot.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\SwipeAction.cs" />
+     <Compile Include="Assets\_RC Plane Sim\Scripts\TypeAction.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\UIController.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\UILevelController.cs" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />

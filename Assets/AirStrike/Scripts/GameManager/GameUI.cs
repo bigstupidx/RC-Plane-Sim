@@ -34,8 +34,8 @@ public class GameUI : MonoBehaviour
 		{
 			play.Active = true;
 				
-			GUI.skin.label.alignment = TextAnchor.UpperRight;
-			GUI.Label (new Rect (Screen.width - 220, 20, 200, 50), "ARMOR " + play.GetComponent<DamageManager> ().HP);
+			GUI.skin.label.alignment = TextAnchor.MiddleCenter;
+			GUI.Label (new Rect ((Screen.width - 200) / 2, 0, 200, 50), "ARMOR " + play.GetComponent<DamageManager> ().HP);
 
 			if(transform.position.x < 1200 || transform.position.x > 2800 || transform.position.z < 1200 || transform.position.z > 2800)
 			{
@@ -46,24 +46,27 @@ public class GameUI : MonoBehaviour
 			GUI.skin.label.fontSize = 16;
 				
 			// Draw Weapon system
-			if (weapon.WeaponLists [weapon.CurrentWeapon].Icon)
+			for(int i = 0; i < weapon.WeaponLists.Length; i++)
 			{
-				GUI.DrawTexture (new Rect (Screen.width - 100, Screen.height - 100, 80, 80), weapon.WeaponLists [weapon.CurrentWeapon].Icon);
-			}
-				
-			GUI.skin.label.alignment = TextAnchor.UpperRight;
-			if (weapon.WeaponLists [weapon.CurrentWeapon].Ammo <= 0 && weapon.WeaponLists [weapon.CurrentWeapon].ReloadingProcess > 0) 
-			{
-				if (!weapon.WeaponLists [weapon.CurrentWeapon].InfinityAmmo)
+				if (weapon.WeaponLists [i].Icon)
 				{
-					GUI.Label (new Rect (Screen.width - 230, Screen.height - 120, 200, 30), "Reloading " + Mathf.Floor ((1 - weapon.WeaponLists [weapon.CurrentWeapon].ReloadingProcess) * 100) + "%");
+					GUI.DrawTexture (new Rect (Screen.width - 100 * (i + 1), Screen.height - 100, 80, 80), weapon.WeaponLists [i].Icon);
 				}
-			} 
-			else 
-			{
-				if (!weapon.WeaponLists [weapon.CurrentWeapon].InfinityAmmo)
+					
+				GUI.skin.label.alignment = TextAnchor.UpperRight;
+				if (weapon.WeaponLists [i].Ammo <= 0 && weapon.WeaponLists [i].ReloadingProcess > 0) 
 				{
-					GUI.Label (new Rect (Screen.width - 230, Screen.height - 120, 200, 30), weapon.WeaponLists [weapon.CurrentWeapon].Ammo.ToString ());
+					if (!weapon.WeaponLists [i].InfinityAmmo)
+					{
+						GUI.Label (new Rect (Screen.width - 230 * (i + 1), Screen.height - 120, 200, 30), "Reloading " + Mathf.Floor ((1 - weapon.WeaponLists [i].ReloadingProcess) * 100) + "%");
+					}
+				} 
+				else 
+				{
+					if (!weapon.WeaponLists [i].InfinityAmmo)
+					{
+						GUI.Label (new Rect (Screen.width - 230 * (i + 1), Screen.height - 120, 200, 30), weapon.WeaponLists [i].Ammo.ToString ());
+					}
 				}
 			}
 		}

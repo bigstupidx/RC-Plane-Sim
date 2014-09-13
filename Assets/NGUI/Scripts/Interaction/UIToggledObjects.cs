@@ -49,6 +49,15 @@ public class UIToggledObjects : MonoBehaviour
 	{
 		bool val = UIToggle.current.value;
 
+		if(gameObject.name.Contains("Manual"))
+		{
+			UIController.acceleration = false;
+		}
+		else
+		{
+			UIController.acceleration = true;
+		}
+
 		if (enabled)
 		{
 			for (int i = 0; i < activate.Count; ++i)

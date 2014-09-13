@@ -9,6 +9,7 @@ public class UIController : MonoBehaviour
 
 	//Save Data
 	public static int exp = 0;
+	public static bool acceleration = false;
 
 	float deltaTime = 0.0f;
 	float fps = 0.0f;

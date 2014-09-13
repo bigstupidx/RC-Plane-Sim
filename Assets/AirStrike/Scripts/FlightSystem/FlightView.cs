@@ -16,6 +16,7 @@ public class FlightView : MonoBehaviour
 	public float TurnSpeedMult = 5; // camera turning speed 
 	private int indexCamera;// current camera index
 	public Vector3 Offset = new Vector3 (10, 0.5f, 10);// position offset between plan and camera
+	private float dieTime;
 	
 	// camera swith
 	public void SwitchCameras ()
@@ -44,7 +45,8 @@ public class FlightView : MonoBehaviour
 		AddCamera(this.gameObject);
 	}
 	
-	public void AddCamera(GameObject cam){
+	public void AddCamera(GameObject cam)
+	{
 		GameObject[] temp = new GameObject[Cameras.Length+1];
 		Cameras.CopyTo(temp, 0);
 		Cameras = temp;
@@ -54,17 +56,34 @@ public class FlightView : MonoBehaviour
 	void Start ()
 	{
 		// if player is not included try to find a player
-		if(!Target){
+		if(!Target)
+		{
 			PlayerManager player = (PlayerManager)GameObject.FindObjectOfType(typeof(PlayerManager));	
 			Target = player.gameObject;
 		}
 	}
+
 	Vector3 positionTargetUp; 
 	void FixedUpdate ()
 	{
+		if(dieTime != 0f && dieTime < Time.timeSinceLevelLoad)
+		{
+			Time.timeScale = 0;
+			Screen.lockCursor = false;
+			UIController.exp += 300;
+			UIController.current.gameObject.SetActive(false);
+			UIController.previous = UIController.current;
+			UIController.current = UIController.GetPanel(PanelType.Type.Win);
+			UIController.current.gameObject.SetActive(true);
+		}
+
 		if (!Target)
+		{
+			if(dieTime == 0f)
+				dieTime = Time.timeSinceLevelLoad + 3f;
 			return;
-		
+		}
+
 		// rotation , moving along the player	
 		Quaternion lookAtRotation = Quaternion.LookRotation (Target.transform.position);
 		this.transform.LookAt (Target.transform.position + Target.transform.forward * Offset.x);
@@ -74,13 +93,14 @@ public class FlightView : MonoBehaviour
 		this.transform.position = Vector3.Lerp (this.transform.position, positionTarget, Time.fixedDeltaTime * (distance  * FollowSpeedMult));
 
 		if (Target.CompareTag ("Parashute"))
-						return;
+		{
+			return;
+		}
 
 		if(transform.position.x < 1100 || transform.position.x > 2900 || transform.position.z < 1100 || transform.position.z > 2900)
 		{
 			Target.GetComponent<DamageManager>().ApplyDamage(1000, null);
 		}
-		
 	}
 
 	void Update ()

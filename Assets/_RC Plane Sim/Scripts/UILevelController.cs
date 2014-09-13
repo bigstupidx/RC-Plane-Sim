@@ -18,14 +18,17 @@ public class UILevelController : MonoBehaviour
 		11000
 	};
 
-	void OnEnable()
+	void Awake()
 	{
 		if(levels == null)
 		{
 			levels = GameObject.FindGameObjectsWithTag ("Level");
 			foreground = transform.FindChild("Level Foreground").GetComponent<UISprite>();
 		}
+	}
 
+	void OnEnable()
+	{
 		int i = 0;
 		int index = 0;
 
@@ -36,7 +39,7 @@ public class UILevelController : MonoBehaviour
 				index = i;
 			}
 		}
-
+		Debug.Log (index);
 		int current = UIController.exp - exps [index];
 		float percent = current / (float)(exps [index + 1] - exps [index]);
 
@@ -49,6 +52,10 @@ public class UILevelController : MonoBehaviour
 			if(levels[i].name != index.ToString())
 			{
 				levels[i].SetActive(false);
+			}
+			else
+			{
+				levels[i].SetActive(true);
 			}
 		}
 	}

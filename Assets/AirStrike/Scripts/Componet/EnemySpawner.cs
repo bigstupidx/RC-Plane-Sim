@@ -21,22 +21,46 @@ public class EnemySpawner : MonoBehaviour
 	{
 		indexSpawn = Random.Range (0, Objectman.Length);
 		timetemp = Time.time;
+
+		if(TypeAction.type == 2)
+		{
+			Enabled = false;
+		}
 	}
 
 	void Update ()
 	{
-		
+		var gos = GameObject.FindGameObjectsWithTag (Tag);
+
+		if(gos.Length == 0 && !Enabled && TypeAction.type == 1)
+		{
+			Enabled = true;
+		}
+		else if(gos.Length == 0 && !Enabled && TypeAction.type == 0)
+		{
+			Time.timeScale = 0;
+			UIController.exp += 300;
+			UIController.current.gameObject.SetActive(false);
+			UIController.previous = UIController.current;
+			UIController.current = UIController.GetPanel(PanelType.Type.Win);
+			UIController.current.gameObject.SetActive(true);
+		}
+
 		if (!Enabled)
 			return;
-		
-		
-		var gos = GameObject.FindGameObjectsWithTag (Tag);
-		if (gos.Length < enemyCount && Time.time > timetemp + timeSpawn) {
+
+		if (gos.Length < enemyCount && Time.time > timetemp + timeSpawn) 
+		{
 			// spawing an enemys by random index of Objectman[]
 			timetemp = Time.time;
 			GameObject obj = (GameObject)GameObject.Instantiate (Objectman [indexSpawn], transform.position + new Vector3 (Random.Range (-radius, radius), 0, Random.Range (-radius, radius)), Quaternion.identity);
 			obj.tag = Tag;
 			indexSpawn = Random.Range (0, Objectman.Length);
+		}
+
+		if(gos.Length == enemyCount)
+		{
+			Enabled = false;
 		}
 	}
 }

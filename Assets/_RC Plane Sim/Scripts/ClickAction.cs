@@ -51,6 +51,7 @@ public class ClickAction : MonoBehaviour
 		{
 		case ActionType.SinglePlayer:
 			UIController.HidePanels();
+			Time.timeScale = 1;
 			UIController.current.gameObject.SetActive(false);
 			UIController.previous = UIController.current;
 			UIController.current = UIController.GetPanel(PanelType.Type.Garage);
