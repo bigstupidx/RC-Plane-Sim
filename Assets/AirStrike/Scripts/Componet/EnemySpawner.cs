@@ -38,6 +38,7 @@ public class EnemySpawner : MonoBehaviour
 		}
 		else if(gos.Length == 0 && !Enabled && TypeAction.type == 0)
 		{
+			Screen.lockCursor = false;
 			Time.timeScale = 0;
 			UIController.exp += 300;
 			UIController.current.gameObject.SetActive(false);

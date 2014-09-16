@@ -13,13 +13,19 @@ public class PlaneStatAdjustment : MonoBehaviour
 	public void Adjust()
 	{
 		var armour = PlaneAction.FindStatType (PlaneAction.Stat.Type.Armour);
-		GetComponent<DamageManager> ().HP = armour.levels [armour.currentLevel].value;
+		GetComponent<DamageManager> ().HP = (int)armour.levels [armour.currentLevel].value;
 
 		var mgun = PlaneAction.FindStatType (PlaneAction.Stat.Type.Machinegun);
-		minigun.Missile.GetComponent<Damage> ().Damage = mgun.levels [mgun.currentLevel].value;
+		var mtime = PlaneAction.FindStatType (PlaneAction.Stat.Type.GunFireTime);
+		var mheat = PlaneAction.FindStatType (PlaneAction.Stat.Type.GunHeatTime);
+		minigun.Missile.GetComponent<Damage> ().Damage = (int)mgun.levels [mgun.currentLevel].value;
+		minigun.ReloadTime = mtime.levels [mgun.currentLevel].value;
+		minigun.AmmoMax = mheat.levels [mgun.currentLevel].value;
 
 		var rgun = PlaneAction.FindStatType (PlaneAction.Stat.Type.Rockets);
-		minigun.Missile.GetComponent<Damage> ().Damage = rgun.levels [rgun.currentLevel].value;
+		var rreload = PlaneAction.FindStatType (PlaneAction.Stat.Type.RocketsReload);
+		rocket.Missile.GetComponent<Damage> ().Damage = (int)rgun.levels [rgun.currentLevel].value;
+		rocket.ReloadTime = rreload.levels [rgun.currentLevel].value;
 
 		var range = PlaneAction.FindStatType (PlaneAction.Stat.Type.Range);
 		minigun.Missile.GetComponent<MoverBullet> ().Lifetime = range.levels [range.currentLevel].value / 200f;

@@ -41,6 +41,17 @@ public class PlaneEditorWindow : EditorWindow
 			target.stat.Add(new PlaneAction.Stat());
 		}
 
+		if(target.stat.Count < 5)
+		{
+			target.stat.Add(new PlaneAction.Stat());
+		}
+
+		if(target.stat.Count < 7)
+		{
+			target.stat.Add(new PlaneAction.Stat());
+			target.stat.Add(new PlaneAction.Stat());
+		}
+
 		PlaneAction.Stat stat;
 
 		for(int j = 0; j < target.stat.Count; j++)
@@ -57,7 +68,7 @@ public class PlaneEditorWindow : EditorWindow
 				for(int i = 0; i < stat.levels.Count; i++)
 				{
 					EditorGUILayout.LabelField("\tLevel" + (i + 1));
-					stat.levels[i].value = EditorGUILayout.IntField ("\t\tValue", stat.levels[i].value);
+					stat.levels[i].value = EditorGUILayout.FloatField ("\t\tValue", stat.levels[i].value);
 					stat.levels[i].cost = EditorGUILayout.IntField ("\t\tCost", stat.levels[i].cost);
 				}
 				if(stat.levels.Count < 4)

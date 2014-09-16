@@ -44,31 +44,6 @@ public class GameUI : MonoBehaviour
 			}
 
 			GUI.skin.label.fontSize = 16;
-				
-			// Draw Weapon system
-			for(int i = 0; i < weapon.WeaponLists.Length; i++)
-			{
-				if (weapon.WeaponLists [i].Icon)
-				{
-					GUI.DrawTexture (new Rect (Screen.width - 100 * (i + 1), Screen.height - 100, 80, 80), weapon.WeaponLists [i].Icon);
-				}
-					
-				GUI.skin.label.alignment = TextAnchor.UpperRight;
-				if (weapon.WeaponLists [i].Ammo <= 0 && weapon.WeaponLists [i].ReloadingProcess > 0) 
-				{
-					if (!weapon.WeaponLists [i].InfinityAmmo)
-					{
-						GUI.Label (new Rect (Screen.width - 230 * (i + 1), Screen.height - 120, 200, 30), "Reloading " + Mathf.Floor ((1 - weapon.WeaponLists [i].ReloadingProcess) * 100) + "%");
-					}
-				} 
-				else 
-				{
-					if (!weapon.WeaponLists [i].InfinityAmmo)
-					{
-						GUI.Label (new Rect (Screen.width - 230 * (i + 1), Screen.height - 120, 200, 30), weapon.WeaponLists [i].Ammo.ToString ());
-					}
-				}
-			}
 		}
 		else if(Mode != 1)
 		{

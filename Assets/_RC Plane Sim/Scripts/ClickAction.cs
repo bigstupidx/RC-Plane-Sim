@@ -26,11 +26,15 @@ public class ClickAction : MonoBehaviour
 		Eject,
 		Map,
 		PopUpLevel,
-		ClosePopUpLevel
+		ClosePopUpLevel,
+		Fire1,
+		Fire2,
 	}
 
 	public ActionType action;
 	private PanelType panel;
+	private float fireTime = 0;
+	private float heatTime = 0;
 
 	void Update()
 	{
@@ -45,8 +49,48 @@ public class ClickAction : MonoBehaviour
 		}
 	}
 
+	public void Press()
+	{
+		FlightView camera;
+		PlaneStatAdjustment stat;
+		
+		switch(action)
+		{
+		case ActionType.Fire1:
+			camera = FindObjectOfType<FlightView>();
+			stat = FindObjectOfType<PlaneStatAdjustment>();
+
+			if(fireTime == 0)
+			{
+				fireTime = Time.timeSinceLevelLoad + stat.minigun.ReloadTime;
+			}
+
+			if(fireTime < Time.timeSinceLevelLoad)
+			{
+				heatTime = Time.timeSinceLevelLoad + stat.minigun.AmmoMax;
+			}
+			Debug.Log(fireTime + " " + heatTime);
+			if(heatTime > Time.timeSinceLevelLoad)
+				return;
+
+			camera.Target.GetComponent<FlightSystem>().WeaponControl.LaunchWeapon(0);
+			break;
+		case ActionType.Fire2:
+			camera = FindObjectOfType<FlightView>();
+			camera.Target.GetComponent<FlightSystem>().WeaponControl.LaunchWeapon(1);
+			break;
+		}
+	}
+
+	public void Reveal()
+	{
+		fireTime = 0;
+	}
+
 	void OnClick()
 	{
+		FlightView camera;
+
 		switch(action)
 		{
 		case ActionType.SinglePlayer:
@@ -163,7 +207,7 @@ public class ClickAction : MonoBehaviour
 			break;
 		case ActionType.Eject: 
 			var parashute = GameObject.FindGameObjectWithTag("Parashute");
-			var camera = FindObjectOfType<FlightView>();
+			camera = FindObjectOfType<FlightView>();
 
 			parashute.transform.GetChild(0).gameObject.SetActive(true);
 			parashute.transform.GetChild(1).gameObject.SetActive(true);

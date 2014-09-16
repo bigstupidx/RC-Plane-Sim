@@ -21,7 +21,8 @@ public class PlayerController : MonoBehaviour {
 	private bool directVelBack;
 	public GUISkin skin;
 	public bool ShowHowto;
-	void Start () {
+	void Start () 
+	{
 		flight = this.GetComponent<FlightSystem>();
 		View = (FlightView)GameObject.FindObjectOfType(typeof(FlightView));
 		// setting all Touch screen controller in the position
@@ -52,18 +53,22 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	
-	void DesktopController(){
+	void DesktopController()
+	{
 		// Desktop controller
 		flight.SimpleControl = SimpleControl;
 		
 		// lock mouse position to the center.
-		Screen.lockCursor = true;
+		//Screen.lockCursor = true;
 		
 		flight.AxisControl(new Vector2(Input.GetAxis("Mouse X"),Input.GetAxis("Mouse Y") ));
-		if(SimpleControl){
+		if(SimpleControl)
+		{
 			flight.DirectVelocity = false;
 			flight.TurnControl(Input.GetAxis("Mouse X"));
-		}else{
+		}
+		else
+		{
 			flight.DirectVelocity = directVelBack;	
 		}
 
@@ -71,15 +76,18 @@ public class PlayerController : MonoBehaviour {
 		flight.SpeedUp(Input.GetAxis ("Vertical"));
 		
 		
-		if(Input.GetButton("Fire1")){
+		if(Input.GetButton("Fire1"))
+		{
             flight.WeaponControl.LaunchWeapon();
         }
 		
-		if(Input.GetButtonDown("Fire2")){
+		if(Input.GetButtonDown("Fire2"))
+		{
             flight.WeaponControl.SwitchWeapon();
         }
 		
-       	if (Input.GetKeyDown (KeyCode.C)) {
+       	if (Input.GetKeyDown (KeyCode.C)) 
+		{
 			if(View)
 				View.SwitchCameras ();	
 		}	
@@ -114,9 +122,5 @@ public class PlayerController : MonoBehaviour {
 		sliceTouch.OnDragDirection(true);
 		// slice speed
 		flight.SpeedUp(sliceTouch.slideVal.x);
-		
-		if (fireTouch.OnTouchPress ()) {
-			flight.WeaponControl.LaunchWeapon ();
-		}	
 	}
 }

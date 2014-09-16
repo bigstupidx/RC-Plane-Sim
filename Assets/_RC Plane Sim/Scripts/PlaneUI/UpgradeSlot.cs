@@ -5,7 +5,7 @@ public class UpgradeSlot : MonoBehaviour
 {
 	public PlaneAction.Stat.Type type;
 
-	void Start()
+	void OnEnable()
 	{
 		UpdateSlot ();
 	}
@@ -13,6 +13,10 @@ public class UpgradeSlot : MonoBehaviour
 	private void UpdateSlot()
 	{
 		PlaneAction.Stat stat = PlaneAction.FindStatType (type);
+
+		if (stat == null)
+						return;
+
 		transform.FindChild("Stat Name").GetComponent<UILabel>().text = stat.type.ToString() + ": " + stat.levels[stat.currentLevel].value.ToString();
 		var stats = transform.FindChild ("Plane - StatDelim");
 		int j = 1;

@@ -1,19 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/AirStrike/Scripts/Player/PlayerDead.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../Thief/Assets/Scripts/UI/UIController.cs">
     <Files>
-      <File FileName="Assets/_RC Plane Sim/Scripts/TypeAction.cs" Line="18" Column="3" />
-      <File FileName="Assets/_RC Plane Sim/Scripts/PlaneUI/TextureAction.cs" Line="27" Column="3" />
-      <File FileName="Assets/_RC Plane Sim/Scripts/UIController.cs" Line="12" Column="33" />
-      <File FileName="Assets/_RC Plane Sim/Scripts/ClickAction.cs" Line="54" Column="23" />
-      <File FileName="Assets/AirStrike/Scripts/Player/PlayerController.cs" Line="121" Column="3" />
-      <File FileName="Assets/AirStrike/Scripts/Player/PlayerDead.cs" Line="21" Column="29" />
-      <File FileName="Assets/AirStrike/Scripts/GameManager/GameManager.cs" Line="24" Column="3" />
-      <File FileName="Assets/AirStrike/Scripts/Componet/EnemySpawner.cs" Line="46" Column="52" />
-      <File FileName="Assets/AirStrike/Scripts/FlightSystem/FlightView.cs" Line="72" Column="30" />
-      <File FileName="Assets/_RC Plane Sim/Scripts/UILevelController.cs" Line="58" Column="29" />
-      <File FileName="Assets/AirStrike/Scripts/GameManager/GameUI.cs" Line="37" Column="54" />
-      <File FileName="Assets/NGUI/Scripts/Interaction/UIToggledObjects.cs" Line="58" Column="36" />
+      <File FileName="../Thief/Assets/Scripts/UI/SwipeAction.cs" Line="282" Column="19" />
+      <File FileName="../Thief/Assets/Scripts/UI/UIController.cs" Line="95" Column="15" />
+      <File FileName="../Thief/Assets/Scripts/UI/SMController.cs" Line="58" Column="10" />
+      <File FileName="../Thief/Assets/Scripts/UI/LightEffect.cs" Line="14" Column="38" />
+      <File FileName="../Thief/Assets/Scripts/UI/SetSwipe.cs" Line="218" Column="41" />
+      <File FileName="../Thief/Assets/Scripts/SetController.cs" Line="162" Column="120" />
+      <File FileName="../Thief/Assets/Scripts/InputController.cs" Line="16" Column="48" />
+      <File FileName="../Thief/Assets/Scripts/UI/PanelType.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

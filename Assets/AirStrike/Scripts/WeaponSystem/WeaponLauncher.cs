@@ -16,7 +16,7 @@ public class WeaponLauncher : WeaponBase
 	public float ForceShoot = 8000;
 	public int NumBullet = 1;
 	public int Ammo = 10;
-	public int AmmoMax = 10;
+	public float AmmoMax = 10;
 	public bool InfinityAmmo = false;
 	public float ReloadTime = 1;
 	public bool ShowHUD = true;
@@ -169,7 +169,7 @@ public class WeaponLauncher : WeaponBase
 							audio.PlayOneShot (SoundReloaded);
 						}
 					}
-					Ammo = AmmoMax;
+					Ammo = (int)AmmoMax;
 				}
 			} else {
 				if (Ammo <= 0) {

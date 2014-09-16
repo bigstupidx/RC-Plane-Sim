@@ -11,7 +11,7 @@ public class PlaneAction : MonoBehaviour
 		[Serializable]
 		public class StatLevel
 		{
-			public int value;
+			public float value;
 			public int cost;
 		}
 		
@@ -20,7 +20,10 @@ public class PlaneAction : MonoBehaviour
 			Machinegun,
 			Rockets,
 			Armour,
-			Range
+			Range,
+			RocketsReload,
+			GunFireTime,
+			GunHeatTime
 		}
 		
 		public Type type;
@@ -104,6 +107,9 @@ public class PlaneAction : MonoBehaviour
 
 	public static Stat FindStatType(Stat.Type type)
 	{
+		if (currentStat == null)
+						return null;
+
 		for(int i = 0; i < currentStat.Count; i++)
 		{
 			if(currentStat[i].type == type)

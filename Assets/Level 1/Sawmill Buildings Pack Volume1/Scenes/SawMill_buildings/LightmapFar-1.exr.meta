@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 488af396191595c4aad3d7ae103beed0
+guid: 0dd0910358a92184cb6831cba1911226
 TextureImporter:
   fileIDToRecycleName: {}
   serializedVersion: 2
@@ -30,7 +30,7 @@ TextureImporter:
     wrapMode: 1
   nPOTScale: 1
   lightmap: 1
-  compressionQuality: 50
+  compressionQuality: 100
   spriteMode: 0
   spriteExtrude: 1
   spriteMeshType: 1
