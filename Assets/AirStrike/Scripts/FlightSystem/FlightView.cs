@@ -9,6 +9,11 @@ using System.Collections;
 
 public class FlightView : MonoBehaviour
 {
+    // Zone of battle
+    [HideInInspector]
+    public Vector2 xBattle;
+    [HideInInspector]
+    public Vector2 zBattle;
 
 	public GameObject Target;// player ( Your Plane)
 	public GameObject[] Cameras;// all cameras in the game ( in case of able to swith the views).
@@ -70,11 +75,24 @@ public class FlightView : MonoBehaviour
 		{
 			Time.timeScale = 0;
 			Screen.lockCursor = false;
-			UIController.exp += 300;
-			UIController.current.gameObject.SetActive(false);
-			UIController.previous = UIController.current;
-			UIController.current = UIController.GetPanel(PanelType.Type.Win);
-			UIController.current.gameObject.SetActive(true);
+
+            var enemy = GameObject.FindGameObjectsWithTag("Enemy");
+            if (enemy.Length == 0)
+                ProgressController.goldAdd += 100 * SwipeAction.levelDifficult;
+            else if (enemy.Length == 1)
+                ProgressController.goldAdd += 50 * SwipeAction.levelDifficult;
+            else if (enemy.Length == 2)
+                ProgressController.goldAdd += 25 * SwipeAction.levelDifficult;
+            else if (enemy.Length >= 3)
+                ProgressController.goldAdd += 10 * SwipeAction.levelDifficult;
+
+            if (UIController.previous != null && UIController.previous != UIController.GetPanel(PanelType.Type.Win))
+            {
+                UIController.current.gameObject.SetActive(false);
+                UIController.previous = UIController.current;
+                UIController.current = UIController.GetPanel(PanelType.Type.Win);
+                UIController.current.gameObject.SetActive(true);
+            }
 		}
 
 		if (!Target)
@@ -85,7 +103,7 @@ public class FlightView : MonoBehaviour
 		}
 
 		// rotation , moving along the player	
-		Quaternion lookAtRotation = Quaternion.LookRotation (Target.transform.position);
+		//Quaternion lookAtRotation = Quaternion.LookRotation (Target.transform.position);
 		this.transform.LookAt (Target.transform.position + Target.transform.forward * Offset.x);
 		positionTargetUp = Vector3.Lerp(positionTargetUp,(-Target.transform.forward + (Target.transform.up * Offset.y)),Time.fixedDeltaTime * TurnSpeedMult);
 		Vector3 positionTarget = Target.transform.position + (positionTargetUp * Offset.z);
@@ -97,9 +115,9 @@ public class FlightView : MonoBehaviour
 			return;
 		}
 
-		if(transform.position.x < 1100 || transform.position.x > 2900 || transform.position.z < 1100 || transform.position.z > 2900)
+		if(transform.position.x < xBattle.y || transform.position.x > xBattle.x || transform.position.z < zBattle.y || transform.position.z > zBattle.x)
 		{
-			Target.GetComponent<DamageManager>().ApplyDamage(1000, null);
+			Target.GetComponent<DamageManager>().ApplyDamage(2000, null);
 		}
 	}
 

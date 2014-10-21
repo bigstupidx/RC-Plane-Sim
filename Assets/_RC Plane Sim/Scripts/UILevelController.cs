@@ -4,7 +4,7 @@ using System.Collections;
 public class UILevelController : MonoBehaviour 
 {
 	private GameObject[] levels;
-	private UISprite foreground;
+    private UISprite foreground;
 
 	private int[] exps = new int[9] {
 		0,
@@ -34,13 +34,13 @@ public class UILevelController : MonoBehaviour
 
 		for(; i < exps.Length; i++)
 		{
-			if(UIController.exp > exps[i])
+			if(ProgressController.exp + ProgressController.expAdd  > exps[i])
 			{
 				index = i;
 			}
 		}
 		Debug.Log (index);
-		int current = UIController.exp - exps [index];
+        int current = (ProgressController.exp + ProgressController.expAdd) - exps[index];
 		float percent = current / (float)(exps [index + 1] - exps [index]);
 
 		foreground.width = (int)(383 * percent);

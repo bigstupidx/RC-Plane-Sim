@@ -12,7 +12,11 @@ using System.Collections;
 
 public class FlightSystem : MonoBehaviour
 {
-	
+    public float BoostFactor = 3f;
+    public float BoostTime = 3f;
+    public float BoostRatio = 6f;
+    public ParticleSystem[] boostEfect;
+    private float nextTimeBoost = 0;
 	
 	public float Speed = 50.0f;// Speed
 	public float SpeedMax = 60.0f;// Max speed
@@ -49,8 +53,11 @@ public class FlightSystem : MonoBehaviour
 	public float Mess = 30;
 	public bool DirectVelocity = true;// if true this riggidbody will not receive effect by other force.
 	public float DampingVelocity = 5;
-	void Start ()
+	void Awake ()
 	{
+        if (boostEfect != null)
+            for (int i = 0; i < boostEfect.Length; i++)
+                boostEfect[i].Stop();
 		// define all component
 		DamageManage = this.gameObject.GetComponent<DamageManager> ();
 		WeaponControl = this.gameObject.GetComponent<WeaponController> ();
@@ -139,4 +146,31 @@ public class FlightSystem : MonoBehaviour
 	{
 		MoveSpeed = Mathf.Lerp (MoveSpeed, SpeedMax, Time.deltaTime * 10);
 	}
+
+    // Boost
+    public void Boost()
+    {
+        if (Time.time > nextTimeBoost + BoostRatio)
+        {
+            nextTimeBoost = Time.time;
+            StartCoroutine(BoostCoroutine());
+        }
+    }
+
+    IEnumerator BoostCoroutine()
+    {
+        Debug.Log("Boost");
+
+        Speed *= BoostFactor;
+        SpeedMax *= BoostFactor;
+        for (int i = 0; i < boostEfect.Length; i++)
+            boostEfect[i].Play();
+
+        yield return new WaitForSeconds(BoostTime);
+
+        for (int i = 0; i < boostEfect.Length; i++)
+            boostEfect[i].Stop();
+        Speed /= BoostFactor;
+        SpeedMax /= BoostFactor;
+    }
 }

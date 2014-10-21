@@ -22,6 +22,7 @@ public class SwipeAction : MonoBehaviour
 	private string[] DIFFICULT = new string[5] { "EASY", "MEDIUM", "HARD", "MASTER", "NIGHTMARE"};
 
     public UILabel text;
+    public static int levelDifficult;
 
     private SwipeDirection sSwipeDirection;
 
@@ -78,9 +79,13 @@ public class SwipeAction : MonoBehaviour
                 {
                     case SwipeDirection.Left:
 						currentLevel = Mathf.Min(twScale.Length - 1, currentLevel + 1);
+                        levelDifficult = currentLevel + 1;
+                        Debug.Log(levelDifficult);
                         break;
                     case SwipeDirection.Right:
 						currentLevel = Mathf.Max(0, currentLevel - 1);
+                        levelDifficult = currentLevel + 1;
+                        Debug.Log(levelDifficult);
                         break;
                 }
 

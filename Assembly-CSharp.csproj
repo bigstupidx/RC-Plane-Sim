@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_4_5_3;UNITY_4_5;UNITY_ANDROID;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;UNITY_ANDROID_API;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_OSX;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_4_5_5;UNITY_4_5;UNITY_ANDROID;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;UNITY_ANDROID_API;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -39,10 +39,10 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>D:/Unity3D/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>D:/Unity3D/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +215,8 @@
      <Compile Include="Assets\TerrainComposer\Scripts\MouseLook_tc.cs" />
      <Compile Include="Assets\TerrainComposer\Scripts\MultiTerrainBoost.cs" />
      <Compile Include="Assets\TerrainComposer\Scripts\rtp_functions.cs" />
+     <Compile Include="Assets\_RC Plane Sim\Scripts\AnimationTraincart.cs" />
+     <Compile Include="Assets\_RC Plane Sim\Scripts\ChangesAfterLevel.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\ClickAction.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\LevelsLoader.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\PanelType.cs" />
@@ -224,9 +226,11 @@
      <Compile Include="Assets\_RC Plane Sim\Scripts\PlaneUI\PlaneVisualStat.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\PlaneUI\TextureAction.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\PlaneUI\UpgradeSlot.cs" />
+     <Compile Include="Assets\_RC Plane Sim\Scripts\ProgressController.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\SwipeAction.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\TypeAction.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\UIController.cs" />
+     <Compile Include="Assets\_RC Plane Sim\Scripts\UIGoldController.cs" />
      <Compile Include="Assets\_RC Plane Sim\Scripts\UILevelController.cs" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\NGUI\ReadMe - 3.5.1.txt" />

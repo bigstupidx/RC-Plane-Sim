@@ -3,7 +3,7 @@ using System.Collections;
 
 public class EnemyDead : FlightOnDead {
 	// giving score.
-	public int ScoreAdd = 250;
+	public int ExpAdd = 250;
 	
 	void Start () {}
 	
@@ -15,7 +15,7 @@ public class EnemyDead : FlightOnDead {
 			if(killer.gameObject.GetComponent<PlayerManager>()){
 				// find gameMAnager and Add score
 				GameManager score = (GameManager)GameObject.FindObjectOfType(typeof(GameManager));
-				score.AddScore(ScoreAdd);
+				score.AddExp(ExpAdd);
 			}
 		}
 		base.OnDead (killer);

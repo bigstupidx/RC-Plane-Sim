@@ -40,15 +40,15 @@ public class ParachuteLogic : MonoBehaviour
         parachuteCablesContainer.name = "Cables";
         parachuteCablesContainer.transform.parent = transform;
 
-        parachuteCableHookPoints = new Transform[parachuteCableHookPointsParent.GetChildCount()];
-        payloadCableHookPoints = new Transform[payloadCableHookPointsParent.GetChildCount()];
+        parachuteCableHookPoints = new Transform[parachuteCableHookPointsParent.childCount];
+        payloadCableHookPoints = new Transform[payloadCableHookPointsParent.childCount];
 
-        for (int t = 0; t < parachuteCableHookPointsParent.GetChildCount(); t++)
+        for (int t = 0; t < parachuteCableHookPointsParent.childCount; t++)
         {
             parachuteCableHookPoints[t] = parachuteCableHookPointsParent.GetChild(t);
         }
 
-        for (int t = 0; t < payloadCableHookPointsParent.GetChildCount(); t++)
+        for (int t = 0; t < payloadCableHookPointsParent.childCount; t++)
         {
             payloadCableHookPoints[t] = payloadCableHookPointsParent.GetChild(t);
         }

@@ -11,7 +11,10 @@ public class GameManager : MonoBehaviour {
 		Score = 0;
 		Killed = 0;
 
-		Instantiate (PlaneAction.currentPlane.gameObject);
+        Vector3 positionCamera = transform.GetComponentInParent<Transform>().position;
+        Quaternion quaternionCamera = transform.GetComponentInParent<Transform>().rotation;
+
+		Instantiate (PlaneAction.currentPlane.gameObject, positionCamera, quaternionCamera);
 	}
 	
 	// Update is called once per frame
@@ -19,9 +22,10 @@ public class GameManager : MonoBehaviour {
 		
 	}
 	// add score function
-	public void AddScore(int score)
+	public void AddExp(int exp)
 	{
-		UIController.exp += score;
+		ProgressController.expAdd += exp;
+        Score += exp;
 		Killed += 1;
 	}
 	
