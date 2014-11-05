@@ -48,6 +48,9 @@ public class FlightView : MonoBehaviour
 	{
 		// add this camera to primery
 		AddCamera(this.gameObject);
+
+		xBattle = new Vector2 (1000, 3000);
+		zBattle = new Vector2 (1000, 3000);
 	}
 	
 	public void AddCamera(GameObject cam)
@@ -115,7 +118,7 @@ public class FlightView : MonoBehaviour
 			return;
 		}
 
-		if(transform.position.x < xBattle.y || transform.position.x > xBattle.x || transform.position.z < zBattle.y || transform.position.z > zBattle.x)
+		if(transform.position.x < xBattle.x || transform.position.x > xBattle.y || transform.position.z < zBattle.x || transform.position.z > zBattle.y)
 		{
 			Target.GetComponent<DamageManager>().ApplyDamage(2000, null);
 		}

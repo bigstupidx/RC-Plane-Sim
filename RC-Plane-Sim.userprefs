@@ -1,15 +1,14 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../Thief/Assets/Scripts/UI/UIController.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/AirStrike/Scripts/GameManager/GameUI.cs">
     <Files>
-      <File FileName="../Thief/Assets/Scripts/UI/SwipeAction.cs" Line="282" Column="19" />
-      <File FileName="../Thief/Assets/Scripts/UI/UIController.cs" Line="95" Column="15" />
-      <File FileName="../Thief/Assets/Scripts/UI/SMController.cs" Line="58" Column="10" />
-      <File FileName="../Thief/Assets/Scripts/UI/LightEffect.cs" Line="14" Column="38" />
-      <File FileName="../Thief/Assets/Scripts/UI/SetSwipe.cs" Line="218" Column="41" />
-      <File FileName="../Thief/Assets/Scripts/SetController.cs" Line="162" Column="120" />
-      <File FileName="../Thief/Assets/Scripts/InputController.cs" Line="16" Column="48" />
-      <File FileName="../Thief/Assets/Scripts/UI/PanelType.cs" Line="1" Column="1" />
+      <File FileName="Assets/_RC Plane Sim/Scripts/ChangesAfterLevel.cs" Line="27" Column="28" />
+      <File FileName="Assets/_RC Plane Sim/Scripts/ProgressController.cs" Line="1" Column="1" />
+      <File FileName="Assets/_RC Plane Sim/Scripts/PlaneUI/PlaneVisual.cs" Line="1" Column="1" />
+      <File FileName="Assets/_RC Plane Sim/Scripts/PlaneUI/PlaneAction.cs" Line="107" Column="65" />
+      <File FileName="Assets/_RC Plane Sim/Scripts/PlaneStatAdjustment.cs" Line="44" Column="129" />
+      <File FileName="Assets/AirStrike/Scripts/GameManager/GameUI.cs" Line="41" Column="5" />
+      <File FileName="Assets/AirStrike/Scripts/FlightSystem/FlightView.cs" Line="53" Column="29" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -35,4 +35,12 @@ public class PlaneStatAdjustment : MonoBehaviour
 		if(PlaneAction.planeModel != null)
 			PlaneAction.planeModel.GetComponent<PlaneStatAdjustment>().render.sharedMaterial = materials [PlaneAction.currentMaterial];
 	}
+
+	void Update()
+	{
+		if (Application.loadedLevel != 2)
+						return;
+
+		PlaneAction.planeModel.transform.localEulerAngles = new Vector3 (0, PlaneAction.planeModel.transform.localEulerAngles.y + 0.3f, 0);
+	}
 }

@@ -73,13 +73,11 @@ public class EnemySpawner : MonoBehaviour
                 GameObject obj = (GameObject)GameObject.Instantiate(Objectman[0], transform.position + new Vector3(Random.Range(-radius, radius), 0, Random.Range(-radius, radius)), Quaternion.identity);
                 obj.GetComponent<DamageManager>().HP += 10 * numberWave;
                 obj.GetComponent<WeaponController>().WeaponLists[0].GetComponent<WeaponLauncher>().Missile.GetComponent<Damage>().Damage += 2 * numberWave;
-                setCentreOfBattle(obj);
                 obj.tag = Tag;
             }
             else 
             {
                 GameObject obj = (GameObject)GameObject.Instantiate(Objectman[0], transform.position + new Vector3(Random.Range(-radius, radius), 0, Random.Range(-radius, radius)), Quaternion.identity);
-                setCentreOfBattle(obj);
                 obj.tag = Tag;
             }
 		}
@@ -89,26 +87,4 @@ public class EnemySpawner : MonoBehaviour
             Enabled = false;
 		}
 	}
-
-    void setCentreOfBattle(GameObject obj)
-    {
-        if (Application.loadedLevelName == "SAWMILL") 
-        {
-            obj.GetComponent<AIController>().BattlePosition = new Vector3(2100, 400, 1950);
-            obj.GetComponent<AIController>().FlyDistance = 800;
-            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<FlightView>().xBattle =
-                new Vector2(2100 - 800, 2100 + 800);
-            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<FlightView>().zBattle =
-                new Vector2(1950 - 800, 1950 + 800);
-        } 
-        else if (Application.loadedLevelName == "METRO") 
-        {
-            obj.GetComponent<AIController>().BattlePosition = new Vector3(0, 50, 150);
-            obj.GetComponent<AIController>().FlyDistance = 800;
-            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<FlightView>().xBattle =
-                new Vector2(-900, 900);
-            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<FlightView>().zBattle =
-                new Vector2(150 - 900, 150 + 900);
-        }    
-    }
 }

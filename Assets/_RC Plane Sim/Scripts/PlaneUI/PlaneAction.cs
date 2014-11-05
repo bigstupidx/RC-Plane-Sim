@@ -67,8 +67,8 @@ public class PlaneAction : MonoBehaviour
 			if (planeModel != null || currentPlane == null)
 				return;
 
-			planeModel = Instantiate (currentPlane.gameObject, new Vector3 (1360.706f, 1.376582f, 1360.081f), Quaternion.identity) as GameObject;
-			planeModel.transform.localScale = new Vector3 (0.5f, 0.5f, 0.5f);
+			planeModel = Instantiate (plane.gameObject, new Vector3 (220f, 20f, 385f), Quaternion.identity) as GameObject;
+			planeModel.transform.localScale = new Vector3 (5f, 5f, 5f);
 			planeModel.transform.localEulerAngles = new Vector3 (0, 144f, 0);
 			
 			MonoBehaviour[] comps = planeModel.GetComponents<MonoBehaviour>();
@@ -77,6 +77,8 @@ public class PlaneAction : MonoBehaviour
 			{
 				c.enabled = false;
 			}
+
+			planeModel.GetComponent<PlaneStatAdjustment>().enabled = true;
 			
 			planeModel.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 		}
@@ -91,8 +93,8 @@ public class PlaneAction : MonoBehaviour
 		currentMaterial = material;
 		currentPlane = plane;
 
-		planeModel = Instantiate (plane.gameObject, new Vector3 (1360.706f, 1.376582f, 1360.081f), Quaternion.identity) as GameObject;
-		planeModel.transform.localScale = new Vector3 (0.5f, 0.5f, 0.5f);
+		planeModel = Instantiate (plane.gameObject, new Vector3 (220f, 20f, 385f), Quaternion.identity) as GameObject;
+		planeModel.transform.localScale = new Vector3 (5f, 5f, 5f);
 		planeModel.transform.localEulerAngles = new Vector3 (0, 144f, 0);
 
 		MonoBehaviour[] comps = planeModel.GetComponents<MonoBehaviour>();
@@ -101,6 +103,8 @@ public class PlaneAction : MonoBehaviour
 		{
 			c.enabled = false;
 		}
+
+		planeModel.GetComponent<PlaneStatAdjustment>().enabled = true;
 
 		planeModel.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 	}
