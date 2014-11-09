@@ -43,20 +43,17 @@ public class EnemySpawner : MonoBehaviour
             ProgressController.expAdd += 50 * numberWave;
 			Enabled = true;
 		}
-		else if(gos.Length == 0 && !Enabled && TypeAction.type == 0)
+		else if(gos.Length == 0 && !Enabled && TypeAction.type == 0 && UIController.current.panelType != PanelType.Type.Win && enemyCount == 0)
 		{
             // Free for all
 			Screen.lockCursor = false;
 			Time.timeScale = 0;
 			ProgressController.goldAdd += 100 * SwipeAction.levelDifficult;
-            Debug.Log(ProgressController.goldAdd.ToString());
-            if (UIController.previous != null && UIController.previous != UIController.GetPanel(PanelType.Type.Win))
-            {
-                UIController.current.gameObject.SetActive(false);
-                UIController.previous = UIController.current;
-                UIController.current = UIController.GetPanel(PanelType.Type.Win);
-                UIController.current.gameObject.SetActive(true);   
-            }
+
+            UIController.current.gameObject.SetActive(false);
+            UIController.previous = UIController.current;
+            UIController.current = UIController.GetPanel(PanelType.Type.Win);
+            UIController.current.gameObject.SetActive(true);   
 		}
 
 		if (!Enabled)
@@ -84,6 +81,7 @@ public class EnemySpawner : MonoBehaviour
 
 		if(gos.Length == enemyCount)
 		{
+			enemyCount = 0;
             Enabled = false;
 		}
 	}

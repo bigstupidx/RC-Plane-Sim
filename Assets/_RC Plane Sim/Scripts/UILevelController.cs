@@ -39,7 +39,7 @@ public class UILevelController : MonoBehaviour
 				index = i;
 			}
 		}
-		Debug.Log (index);
+
         int current = (ProgressController.exp + ProgressController.expAdd) - exps[index];
 		float percent = current / (float)(exps [index + 1] - exps [index]);
 

@@ -49,8 +49,15 @@ public class FlightView : MonoBehaviour
 		// add this camera to primery
 		AddCamera(this.gameObject);
 
-		xBattle = new Vector2 (1000, 3000);
-		zBattle = new Vector2 (1000, 3000);
+		Time.timeScale = 1;
+		UIController.HidePanels();
+		UIController.current.gameObject.SetActive(false);
+		UIController.previous = UIController.current;
+		UIController.current = UIController.GetPanel(PanelType.Type.GameMenu);
+		UIController.current.gameObject.SetActive(true);
+
+		xBattle = new Vector2 (-1200, 1200);
+		zBattle = new Vector2 (-1200, 1200);
 	}
 	
 	public void AddCamera(GameObject cam)
@@ -74,7 +81,7 @@ public class FlightView : MonoBehaviour
 	Vector3 positionTargetUp; 
 	void FixedUpdate ()
 	{
-		if(dieTime != 0f && dieTime < Time.timeSinceLevelLoad)
+		if(dieTime != 0f && dieTime < Time.timeSinceLevelLoad && UIController.current.panelType != PanelType.Type.Win)
 		{
 			Time.timeScale = 0;
 			Screen.lockCursor = false;
@@ -89,13 +96,10 @@ public class FlightView : MonoBehaviour
             else if (enemy.Length >= 3)
                 ProgressController.goldAdd += 10 * SwipeAction.levelDifficult;
 
-            if (UIController.previous != null && UIController.previous != UIController.GetPanel(PanelType.Type.Win))
-            {
-                UIController.current.gameObject.SetActive(false);
-                UIController.previous = UIController.current;
-                UIController.current = UIController.GetPanel(PanelType.Type.Win);
-                UIController.current.gameObject.SetActive(true);
-            }
+            UIController.current.gameObject.SetActive(false);
+            UIController.previous = UIController.current;
+            UIController.current = UIController.GetPanel(PanelType.Type.Win);
+            UIController.current.gameObject.SetActive(true);
 		}
 
 		if (!Target)

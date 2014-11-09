@@ -14,8 +14,6 @@ public class ChangesAfterLevel : MonoBehaviour
 	
 	void OnEnable () 
     {
-        Debug.Log("ChangeAfterLevel");
-        Debug.Log(ProgressController.goldAdd.ToString());
         goldAddLabel.text = "Gold: + " + ProgressController.goldAdd.ToString();
         ProgressController.gold += ProgressController.goldAdd;
         ProgressController.goldAdd = 0;

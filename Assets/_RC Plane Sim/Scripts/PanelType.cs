@@ -17,7 +17,8 @@ public class PanelType : MonoBehaviour
 		Map,
 		PopUpLevel1,
         PopUpLevel2,
-		Win
+		Win,
+		PopUpLevel3
     }
 
     public Type panelType;

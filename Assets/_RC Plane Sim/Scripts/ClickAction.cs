@@ -32,6 +32,8 @@ public class ClickAction : MonoBehaviour
 		Fire1,
 		Fire2,
         Boost,
+		PopUpLevel3,
+		GamePlayLevel3,
 	}
 
 	public ActionType action;
@@ -102,7 +104,6 @@ public class ClickAction : MonoBehaviour
 		{
 		case ActionType.SinglePlayer:
 			UIController.HidePanels();
-            GameObject.FindGameObjectWithTag("Camera").GetComponent<AudioListener>().enabled = true;
 			Time.timeScale = 1;
 			UIController.current.gameObject.SetActive(false);
 			UIController.previous = UIController.current;
@@ -143,10 +144,16 @@ public class ClickAction : MonoBehaviour
             panel = UIController.GetPanel(PanelType.Type.PopUpLevel2);
             panel.gameObject.SetActive(true);
             break;
+		case ActionType.PopUpLevel3:
+			panel = UIController.GetPanel(PanelType.Type.PopUpLevel3);
+			panel.gameObject.SetActive(true);
+			break;
 		case ActionType.ClosePopUpLevel:
 			panel = UIController.GetPanel(PanelType.Type.PopUpLevel1);
             panel.gameObject.SetActive(false);
             panel = UIController.GetPanel(PanelType.Type.PopUpLevel2);
+			panel.gameObject.SetActive(false);
+			panel = UIController.GetPanel(PanelType.Type.PopUpLevel3);
 			panel.gameObject.SetActive(false);
 			break;
 		case ActionType.Upgrades:
@@ -182,23 +189,14 @@ public class ClickAction : MonoBehaviour
 			panel.gameObject.SetActive(false);
 			break;
 		case ActionType.GamePlayLevel1:
-			UIController.HidePanels();
-            GameObject.FindGameObjectWithTag("Camera").GetComponent<AudioListener>().enabled = false;
-			UIController.current.gameObject.SetActive(false);
-			UIController.previous = UIController.current;
-			UIController.current = UIController.GetPanel(PanelType.Type.GameMenu);
-			UIController.current.gameObject.SetActive(true);
 			if(Application.loadedLevel != 3)  LevelsLoader.LoadLevel(3);
 			break;
         case ActionType.GamePlayLevel2:
-            UIController.HidePanels();
-            GameObject.FindGameObjectWithTag("Camera").GetComponent<AudioListener>().enabled = false;
-            UIController.current.gameObject.SetActive(false);
-            UIController.previous = UIController.current;
-            UIController.current = UIController.GetPanel(PanelType.Type.GameMenu);
-            UIController.current.gameObject.SetActive(true);
             if (Application.loadedLevel != 4) LevelsLoader.LoadLevel(4);
             break;
+		case ActionType.GamePlayLevel3:
+			if (Application.loadedLevel != 5) LevelsLoader.LoadLevel(5);
+			break;
 		case ActionType.Pause:
 			Time.timeScale = 0;
 			UIController.current.gameObject.SetActive(false);
@@ -214,15 +212,7 @@ public class ClickAction : MonoBehaviour
 			UIController.current.gameObject.SetActive(true);
 			break;
 		case ActionType.Retry:
-			Time.timeScale = 1;
-			UIController.current.gameObject.SetActive(false);
-			UIController.previous = UIController.current;
-			UIController.current = UIController.GetPanel(PanelType.Type.GameMenu);
-			UIController.current.gameObject.SetActive(true);
-                if (Application.loadedLevelName == "SAWMILL")
-			        LevelsLoader.LoadLevel(3);
-                else if (Application.loadedLevelName == "METRO")
-                    LevelsLoader.LoadLevel(4);
+            LevelsLoader.LoadLevel(Application.loadedLevel);
 			break;
 		case ActionType.Exit:
 			Time.timeScale = 1;

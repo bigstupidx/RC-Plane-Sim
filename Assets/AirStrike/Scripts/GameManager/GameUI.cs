@@ -9,13 +9,11 @@ public class GameUI : MonoBehaviour
 	public int Mode;
 	private GameManager game;
 	private PlayerController play;
-	private WeaponController weapon;
 			
 	void Start ()
 	{
 		game = (GameManager)GameObject.FindObjectOfType (typeof(GameManager));
 		play = (PlayerController)GameObject.FindObjectOfType (typeof(PlayerController));
-		weapon = play.GetComponent<WeaponController> ();
 		// define player
 		
 	}
@@ -37,7 +35,7 @@ public class GameUI : MonoBehaviour
 			GUI.skin.label.alignment = TextAnchor.MiddleCenter;
 			GUI.Label (new Rect ((Screen.width - 200) / 2, 0, 200, 50), "ARMOR " + play.GetComponent<DamageManager> ().HP);
 
-			if(transform.position.x < 1200 || transform.position.x > 2800 || transform.position.z < 1200 || transform.position.z > 2800)
+			if(transform.position.x < -1000 || transform.position.x > 1000 || transform.position.z < -1000 || transform.position.z > 1000)
 			{
 				GUI.skin.label.alignment = TextAnchor.MiddleCenter;
 				GUI.Label (new Rect (Screen.width / 2 - 300, 200, 600, 100), "Come back to battle zone or your plane will be crashed");
@@ -48,7 +46,6 @@ public class GameUI : MonoBehaviour
 		else if(Mode != 1)
 		{
 			play = (PlayerController)GameObject.FindObjectOfType (typeof(PlayerController));
-			weapon = play.GetComponent<WeaponController> ();
 		}
 	}
 }
