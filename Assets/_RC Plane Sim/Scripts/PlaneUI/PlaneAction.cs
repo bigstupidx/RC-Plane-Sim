@@ -63,8 +63,8 @@ public class PlaneAction : MonoBehaviour
 				currentMaterial = material;
 				currentPlane = plane;
 
-				planeModel = Instantiate (plane.gameObject, new Vector3 (220f, 20f, 385f), Quaternion.identity) as GameObject;
-				planeModel.transform.localScale = new Vector3 (5f, 5f, 5f);
+				planeModel = Instantiate (plane.gameObject, new Vector3 (-42f, 10f, -20f), Quaternion.identity) as GameObject;
+				planeModel.transform.localScale = new Vector3 (2.5f, 2.5f, 2.5f);
 				planeModel.transform.localEulerAngles = new Vector3 (0, 144f, 0);
 				
 				MonoBehaviour[] comps = planeModel.GetComponents<MonoBehaviour>();
@@ -90,8 +90,8 @@ public class PlaneAction : MonoBehaviour
 		currentMaterial = material;
 		currentPlane = plane;
 
-		planeModel = Instantiate (plane.gameObject, new Vector3 (220f, 20f, 385f), Quaternion.identity) as GameObject;
-		planeModel.transform.localScale = new Vector3 (5f, 5f, 5f);
+		planeModel = Instantiate (plane.gameObject, new Vector3 (-42f, 10f, -20f), Quaternion.identity) as GameObject;
+		planeModel.transform.localScale = new Vector3 (2.5f, 2.5f, 2.5f);
 		planeModel.transform.localEulerAngles = new Vector3 (0, 144f, 0);
 
 		MonoBehaviour[] comps = planeModel.GetComponents<MonoBehaviour>();

@@ -43,7 +43,7 @@ public class EnemySpawner : MonoBehaviour
             ProgressController.expAdd += 50 * numberWave;
 			Enabled = true;
 		}
-		else if(gos.Length == 0 && !Enabled && TypeAction.type == 0 && UIController.current.panelType != PanelType.Type.Win && enemyCount == 0)
+		else if(gos.Length == 0 && !Enabled && TypeAction.type == 0 && UIController.current.panelType != PanelType.Type.Win && enemyCount == 0 && !LevelsLoader.isBlack)
 		{
             // Free for all
 			Screen.lockCursor = false;

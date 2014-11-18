@@ -105,11 +105,11 @@ public class ClickAction : MonoBehaviour
 		case ActionType.SinglePlayer:
 			UIController.HidePanels();
 			Time.timeScale = 1;
+			if(Application.loadedLevel != 2)  LevelsLoader.LoadLevel(2);
 			UIController.current.gameObject.SetActive(false);
 			UIController.previous = UIController.current;
 			UIController.current = UIController.GetPanel(PanelType.Type.Garage);
 			UIController.current.gameObject.SetActive(true);
-			if(Application.loadedLevel != 2)  LevelsLoader.LoadLevel(2);
 			break;
 		case ActionType.Tutorial:
 			break;

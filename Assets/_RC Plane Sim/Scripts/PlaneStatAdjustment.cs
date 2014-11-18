@@ -9,6 +9,7 @@ public class PlaneStatAdjustment : MonoBehaviour
 	public Material[] materials;
 
 	public MeshRenderer render;
+	public string desc;
 
 	public void Adjust()
 	{
