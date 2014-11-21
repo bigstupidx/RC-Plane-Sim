@@ -34,6 +34,9 @@ public class PlaneAction : MonoBehaviour
 		public List<StatLevel> levels = new List<StatLevel>();
 	}
 
+	public int unlockLevel;
+	public int unlockPrice;
+	public bool isOwned;
 	public PlaneStatAdjustment plane;
 	public int material;
 	public List<Stat> stat = new List<Stat>();
@@ -45,24 +48,31 @@ public class PlaneAction : MonoBehaviour
 	
 	void Awake()
 	{
-		if(name.Contains("Bloody Jane"))
+		if(name.Contains("Superbolt"))
 		{
 			currentStat = stat;
 			currentMaterial = material;
 			currentPlane = plane;
 		}
+
+		isOwned = unlockPrice == 0;
 	}
 
 	void OnLevelWasLoaded(int level) 
 	{
+		UpdatePlane (level);
+	}
+
+	public void UpdatePlane(int level)
+	{
 		if(level == 2)
 		{
-			if(name.Contains("Bloody Jane"))
+			if(name.Contains("Superbolt"))
 			{
 				currentStat = stat;
 				currentMaterial = material;
 				currentPlane = plane;
-
+				
 				planeModel = Instantiate (plane.gameObject, new Vector3 (-42f, 10f, -20f), Quaternion.identity) as GameObject;
 				planeModel.transform.localScale = new Vector3 (2.5f, 2.5f, 2.5f);
 				planeModel.transform.localEulerAngles = new Vector3 (0, 144f, 0);
@@ -73,16 +83,51 @@ public class PlaneAction : MonoBehaviour
 				{
 					c.enabled = false;
 				}
-
+				
 				planeModel.GetComponent<PlaneStatAdjustment>().enabled = true;
 				
 				planeModel.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+			}
+			
+			if(unlockLevel > ProgressController.GetPlayerLevel())
+			{
+				transform.FindChild("Label").GetComponent<UILabel>().text = "unlock on level " + unlockLevel;
+				transform.FindChild("Sprite").GetComponent<UISprite>().color = Color.black;
+				GetComponent<UIButton>().enabled = false;
+			}
+			else if(unlockLevel == 0 && !ProgressController.isSas)
+			{
+				transform.FindChild("Label").GetComponent<UILabel>().text = "join the sas to unlock";
+				transform.FindChild("Sprite").GetComponent<UISprite>().color = Color.black;
+				GetComponent<UIButton>().enabled = false;
+			}
+			else if(isOwned)
+			{
+				transform.FindChild("Lock").GetComponent<UISprite>().enabled = false;
+				transform.FindChild("Label").GetComponent<UILabel>().enabled = false;
+				transform.FindChild("Sprite").GetComponent<UISprite>().color = Color.white;
+				GetComponent<UIButton>().enabled = true;
+			}
+			else
+			{
+				transform.FindChild("Lock").GetComponent<UISprite>().enabled = false;
+				transform.FindChild("Label").GetComponent<UILabel>().text = unlockPrice.ToString();
+				transform.FindChild("Sprite").GetComponent<UISprite>().color = Color.white;
+				GetComponent<UIButton>().enabled = true;
 			}
 		}
 	}
 
 	public void Click()
 	{
+		if(!isOwned)
+		{
+			isOwned = true;
+			transform.FindChild("Label").GetComponent<UILabel>().enabled = false;
+			ProgressController.SaveProgress();
+			return;
+		}
+
 		if (planeModel != null)
 						Destroy (planeModel);
 
@@ -104,6 +149,9 @@ public class PlaneAction : MonoBehaviour
 		planeModel.GetComponent<PlaneStatAdjustment>().enabled = true;
 
 		planeModel.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+
+		PanelType panel = UIController.GetPanel(PanelType.Type.Upgrade);
+		panel.gameObject.SetActive(false);
 	}
 
 	public static Stat FindStatType(Stat.Type type)

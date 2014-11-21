@@ -32,6 +32,8 @@ public class PlaneEditorWindow : EditorWindow
 	private void Draw(PlaneAction target)
 	{
 		target.plane = EditorGUILayout.ObjectField ("Plane", target.plane, typeof(PlaneStatAdjustment)) as PlaneStatAdjustment;
+		target.unlockLevel = EditorGUILayout.IntField ("Unlock Level", target.unlockLevel);
+		target.unlockPrice = EditorGUILayout.IntField ("Unlock Price", target.unlockPrice);
 
 		if(target.stat.Count < 4)
 		{

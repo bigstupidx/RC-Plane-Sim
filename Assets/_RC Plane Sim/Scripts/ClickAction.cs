@@ -34,6 +34,7 @@ public class ClickAction : MonoBehaviour
         Boost,
 		PopUpLevel3,
 		GamePlayLevel3,
+		PopUpSASYes
 	}
 
 	public ActionType action;
@@ -196,6 +197,17 @@ public class ClickAction : MonoBehaviour
             break;
 		case ActionType.GamePlayLevel3:
 			if (Application.loadedLevel != 5) LevelsLoader.LoadLevel(5);
+			break;
+		case ActionType.PopUpSASYes:
+			ProgressController.isSas = true;
+			var go = GameObject.Find("Dragonfly").GetComponent<PlaneAction>();
+			if(go != null)
+			{
+				go.UpdatePlane(2);
+			}
+			ProgressController.SaveProgress();
+			panel = UIController.GetPanel(PanelType.Type.PopUpSAS);
+			panel.gameObject.SetActive(false);
 			break;
 		case ActionType.Pause:
 			Time.timeScale = 0;

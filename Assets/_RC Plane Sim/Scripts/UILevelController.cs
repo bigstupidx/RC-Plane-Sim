@@ -6,7 +6,7 @@ public class UILevelController : MonoBehaviour
 	private GameObject[] levels;
     private UISprite foreground;
 
-	private int[] exps = new int[9] {
+	public static int[] exps = new int[9] {
 		0,
 		500,
 		1250,

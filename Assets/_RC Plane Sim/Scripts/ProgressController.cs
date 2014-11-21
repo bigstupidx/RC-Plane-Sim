@@ -12,6 +12,9 @@ public class ProgressController : MonoBehaviour
     public static int exp;
     public static int goldAdd;
     public static int expAdd;
+	public static bool isSas;
+	public static float sasBonus = 1.2f;
+	public static bool[] planeLocked;
 	private static List<List<PlaneAction.Stat>> stats;
 
 	void Awake () 
@@ -19,21 +22,40 @@ public class ProgressController : MonoBehaviour
         LoadProgress();
 	}
 
+	public static int GetPlayerLevel()
+	{
+		int i = 0;
+		int index = 0;
+		for(; i < UILevelController.exps.Length; i++)
+		{
+			if(exp + expAdd  > UILevelController.exps[i])
+			{
+				index = i;
+			}
+		}
+
+		return index + 1;
+	}
+
     public static void SaveProgress() 
     {
         PlayerPrefs.SetInt("Gold", gold);
         PlayerPrefs.SetInt("Exp", exp);
+		PlayerPrefs.SetInt ("SAS", Convert.ToInt16 (isSas));
 
 		if(Application.loadedLevel == 2)
 		{
 			var planesArray = GameObject.FindObjectsOfType<PlaneAction> ();
+			planeLocked = new bool[planesArray.Length];
 			stats = new List<List<PlaneAction.Stat>>();
 			for(int i = 0; i < planesArray.Length; i++)
 			{
+				planeLocked[i] = planesArray[i].isOwned;
 				stats.Add(planesArray[i].stat);
 			}
 
 			PlayerPrefs.SetString("Planes", Serialize(stats));
+			PlayerPrefs.SetString("Locked", Serialize(planeLocked));
 		}
     }
 
@@ -41,12 +63,15 @@ public class ProgressController : MonoBehaviour
     {
         gold = PlayerPrefs.GetInt("Gold");
         exp = PlayerPrefs.GetInt("Exp");
+		isSas = Convert.ToBoolean(PlayerPrefs.GetInt ("SAS"));
 		stats = Deserialize(PlayerPrefs.GetString ("Planes")) as List<List<PlaneAction.Stat>>;
+		planeLocked = Deserialize (PlayerPrefs.GetString ("Locked")) as bool[];
 
 		var planesArray = GameObject.FindObjectsOfType<PlaneAction> ();
 		for(int i = 0; i < planesArray.Length; i++)
 		{
 			planesArray[i].stat = stats[i];
+			planesArray[i].isOwned = planeLocked[i];
 		}
     }
 
