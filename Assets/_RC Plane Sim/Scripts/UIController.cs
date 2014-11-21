@@ -14,7 +14,7 @@ public class UIController : MonoBehaviour
 	//float fps = 0.0f;
 
 	// Use this for initialization
-    void Awake()
+    void Start()
     {
         DontDestroyOnLoad(this);
 

@@ -34,7 +34,7 @@ public class UpgradeSlot : MonoBehaviour
 	{
 		PlaneAction.Stat stat = PlaneAction.FindStatType (type);
 		stat.currentLevel = Mathf.Min(stat.currentLevel + 1, stat.levels.Count - 1);
-
+		ProgressController.SaveProgress ();
 		UpdateSlot ();
 	}
 }
