@@ -34,13 +34,19 @@ public class ClickAction : MonoBehaviour
         Boost,
 		PopUpLevel3,
 		GamePlayLevel3,
-		PopUpSASYes
+		PopUpSASYes,
+		PopUpLevel4,
+		GamePlayLevel4,
+		PopUpLevel5,
+		GamePlayLevel5
 	}
 
 	public ActionType action;
 	private PanelType panel;
 	private float fireTime = 0;
 	private float heatTime = 0;
+
+	private int[] unlockMap = new int[3]{2, 4, 6};
 
 	void Update()
 	{
@@ -52,6 +58,61 @@ public class ClickAction : MonoBehaviour
 			UIController.previous = UIController.current;
 			UIController.current = UIController.GetPanel(PanelType.Type.PauseMenu);
 			UIController.current.gameObject.SetActive(true);
+		}
+	}
+
+	void OnEnable()
+	{
+		switch(action)
+		{
+		case ActionType.PopUpLevel2:
+			if(ProgressController.GetPlayerLevel() >= unlockMap[0])
+			{
+				transform.GetComponentInChildren<UILabel>().enabled = false;
+				collider.enabled = true;
+			}
+			else
+			{
+				transform.GetComponentInChildren<UILabel>().text = "unlock on lvl " + unlockMap[0];
+				collider.enabled = false;
+			}
+			break;
+		case ActionType.PopUpLevel3:
+			if(ProgressController.GetPlayerLevel() >= unlockMap[1])
+			{
+				transform.GetComponentInChildren<UILabel>().enabled = false;
+				collider.enabled = true;
+			}
+			else
+			{
+				transform.GetComponentInChildren<UILabel>().text = "unlock on lvl " + unlockMap[1];
+				collider.enabled = false;
+			}
+			break;
+		case ActionType.PopUpLevel4:
+			if(ProgressController.GetPlayerLevel() >= unlockMap[2])
+			{
+				transform.GetComponentInChildren<UILabel>().enabled = false;
+				collider.enabled = true;
+			}
+			else
+			{
+				transform.GetComponentInChildren<UILabel>().text = "unlock on lvl " + unlockMap[2];
+				collider.enabled = false;
+			}
+			break;
+		case ActionType.PopUpLevel5:
+			if(ProgressController.isSas)
+			{
+				transform.GetComponentInChildren<UILabel>().enabled = false;
+				collider.enabled = true;
+			}
+			else
+			{
+				transform.GetComponentInChildren<UILabel>().text = "join the sas to unlock";
+				collider.enabled = false;
+			}
+			break;
 		}
 	}
 
@@ -149,6 +210,14 @@ public class ClickAction : MonoBehaviour
 			panel = UIController.GetPanel(PanelType.Type.PopUpLevel3);
 			panel.gameObject.SetActive(true);
 			break;
+		case ActionType.PopUpLevel4:
+			panel = UIController.GetPanel(PanelType.Type.PopUpLevel4);
+			panel.gameObject.SetActive(true);
+			break;
+		case ActionType.PopUpLevel5:
+			panel = UIController.GetPanel(PanelType.Type.PopUpLevel5);
+			panel.gameObject.SetActive(true);
+			break;
 		case ActionType.ClosePopUpLevel:
 			panel = UIController.GetPanel(PanelType.Type.PopUpLevel1);
             panel.gameObject.SetActive(false);
@@ -197,6 +266,12 @@ public class ClickAction : MonoBehaviour
             break;
 		case ActionType.GamePlayLevel3:
 			if (Application.loadedLevel != 5) LevelsLoader.LoadLevel(5);
+			break;
+		case ActionType.GamePlayLevel4:
+			if (Application.loadedLevel != 6) LevelsLoader.LoadLevel(6);
+			break;
+		case ActionType.GamePlayLevel5:
+			if (Application.loadedLevel != 7) LevelsLoader.LoadLevel(7);
 			break;
 		case ActionType.PopUpSASYes:
 			ProgressController.isSas = true;

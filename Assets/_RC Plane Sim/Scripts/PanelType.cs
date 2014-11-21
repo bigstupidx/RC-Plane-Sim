@@ -18,7 +18,9 @@ public class PanelType : MonoBehaviour
 		PopUpLevel1,
         PopUpLevel2,
 		Win,
-		PopUpLevel3
+		PopUpLevel3,
+		PopUpLevel4,
+		PopUpLevel5
     }
 
     public Type panelType;
