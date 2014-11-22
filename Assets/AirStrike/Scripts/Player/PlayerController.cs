@@ -99,7 +99,8 @@ public class PlayerController : MonoBehaviour {
 		
 		flight.SimpleControl = SimpleControl;
 		
-		if (Acceleration) {
+		if (Acceleration) 
+		{
 			// get axis control from device acceleration
 			Vector3 acceleration = Input.acceleration;
 			Vector2 accValActive = new Vector2 (acceleration.x, (acceleration.y + 0.3f) * 0.5f) * AccelerationSensitivity;
@@ -109,15 +110,21 @@ public class PlayerController : MonoBehaviour {
 			
 			flight.AxisControl (accValActive);
 			flight.TurnControl (accValActive.x);
-		} else {
-			flight.FixedX = true;
-			flight.FixedY = false;
-			flight.FixedZ = true;
-			// get axis control from touch screen
-			Vector2 dir = controllerTouch.OnDragDirection (true);
-			dir = Vector2.ClampMagnitude(dir,1.0f);
-			flight.AxisControl (new Vector2 (dir.x,-dir.y) * AccelerationSensitivity * 0.7f);
-			flight.TurnControl (dir.x * AccelerationSensitivity * 0.3f);
+		} 
+		else 
+		{
+			if( Input.mousePosition.x < Screen.width * 0.3f &&
+			   Input.mousePosition.y < Screen.height * 0.3f)
+			{
+				flight.FixedX = true;
+				flight.FixedY = false;
+				flight.FixedZ = true;
+				// get axis control from touch screen
+				Vector2 dir = controllerTouch.OnDragDirection (true);
+				dir = Vector2.ClampMagnitude(dir,1.0f);
+				flight.AxisControl (new Vector2 (dir.x,-dir.y) * AccelerationSensitivity * 0.7f);
+				flight.TurnControl (dir.x * AccelerationSensitivity * 0.3f);
+			}
 		}
 		sliceTouch.OnDragDirection(true);
 		// slice speed

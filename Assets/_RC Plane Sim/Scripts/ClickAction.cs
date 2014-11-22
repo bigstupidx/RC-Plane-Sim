@@ -42,6 +42,7 @@ public class ClickAction : MonoBehaviour
 	}
 
 	public ActionType action;
+	private bool isGun;
 	private PanelType panel;
 	private float fireTime = 0;
 	private float heatTime = 0;
@@ -58,6 +59,31 @@ public class ClickAction : MonoBehaviour
 			UIController.previous = UIController.current;
 			UIController.current = UIController.GetPanel(PanelType.Type.PauseMenu);
 			UIController.current.gameObject.SetActive(true);
+		}
+
+		switch(action)
+		{
+		case ActionType.Fire1:
+			if(isGun )
+			{ 
+				if(fireTime < Time.timeSinceLevelLoad)
+				{
+					PlaneStatAdjustment stat;
+					stat = FindObjectOfType<PlaneStatAdjustment>();
+					heatTime = Time.timeSinceLevelLoad + stat.minigun.AmmoMax;
+				}
+				if(heatTime > Time.timeSinceLevelLoad)
+				{
+					GetComponent<UISprite>().spriteName = "machine_gun_fire_stopped";
+				}
+				else
+				{
+					FlightView camera = FindObjectOfType<FlightView>();camera = FindObjectOfType<FlightView>();
+					camera.Target.GetComponent<FlightSystem>().WeaponControl.LaunchWeapon(0);
+					GetComponent<UISprite>().spriteName = "machine_gun_fire";
+				}
+			}
+			break;
 		}
 	}
 
@@ -126,27 +152,20 @@ public class ClickAction : MonoBehaviour
 	{
 		FlightView camera;
 		PlaneStatAdjustment stat;
-		
 		switch(action)
 		{
 		case ActionType.Fire1:
-			camera = FindObjectOfType<FlightView>();
 			stat = FindObjectOfType<PlaneStatAdjustment>();
+
+			if(heatTime > Time.timeSinceLevelLoad)
+				return;
 
 			if(fireTime == 0)
 			{
 				fireTime = Time.timeSinceLevelLoad + stat.minigun.ReloadTime;
 			}
 
-			if(fireTime < Time.timeSinceLevelLoad)
-			{
-				heatTime = Time.timeSinceLevelLoad + stat.minigun.AmmoMax;
-			}
-			Debug.Log(fireTime + " " + heatTime);
-			if(heatTime > Time.timeSinceLevelLoad)
-				return;
-
-			camera.Target.GetComponent<FlightSystem>().WeaponControl.LaunchWeapon(0);
+			isGun = true;
 			break;
 		case ActionType.Fire2:
 			camera = FindObjectOfType<FlightView>();
@@ -162,6 +181,7 @@ public class ClickAction : MonoBehaviour
 	public void Reveal()
 	{
 		fireTime = 0;
+		isGun = false;
 	}
 
 	void OnClick()

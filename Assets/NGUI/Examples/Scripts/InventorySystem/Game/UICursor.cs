@@ -59,6 +59,20 @@ public class UICursor : MonoBehaviour
 	{
 		Vector3 pos = Input.mousePosition;
 
+		if(Input.GetMouseButtonDown(0))
+		{
+			if( Input.mousePosition.x < Screen.width * 0.3f &&
+			   Input.mousePosition.y < Screen.height * 0.3f)
+			{
+				GetComponent<UISprite>().enabled = true;
+			}
+		}
+
+		if(Input.GetMouseButtonUp(0))
+		{
+			GetComponent<UISprite>().enabled = false;
+		}
+
 		if (uiCamera != null)
 		{
 			// Since the screen can be of different than expected size, we want to convert
