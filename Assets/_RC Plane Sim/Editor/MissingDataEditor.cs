@@ -69,10 +69,7 @@ namespace Runner
 
 		private void Adjustment(GameObject gameObject) 
 		{
-			if(gameObject.name.Contains("Cube"))
-			{
-				gameObject.tag = "Scene";
-			}
+			gameObject.tag = "Scene";
 			
 			foreach (Transform child in gameObject.transform) 
 			{
