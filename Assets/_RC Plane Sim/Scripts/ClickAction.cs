@@ -113,6 +113,12 @@ public class ClickAction : MonoBehaviour
 				collider.enabled = false;
 			}
 			break;
+		case ActionType.PopUpSAS:
+			if(ProgressController.isSas)
+			{
+				GameObject.Find("SAS").SetActive(false);
+			}
+			break;
 		}
 	}
 
@@ -279,7 +285,9 @@ public class ClickAction : MonoBehaviour
 			if(go != null)
 			{
 				go.UpdatePlane(2);
+				GameObject.Find("SAS").SetActive(false);
 			}
+
 			ProgressController.SaveProgress();
 			panel = UIController.GetPanel(PanelType.Type.PopUpSAS);
 			panel.gameObject.SetActive(false);

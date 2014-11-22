@@ -43,7 +43,7 @@ public class EnemySpawner : MonoBehaviour
             ProgressController.expAdd += 50 * numberWave;
 			Enabled = true;
 		}
-		else if(gos.Length == 0 && !Enabled && TypeAction.type == 0 && UIController.current.panelType != PanelType.Type.Win && enemyCount == 0 && !LevelsLoader.isBlack)
+		else if(gos.Length == 0 && !Enabled && TypeAction.type == 0 && UIController.current.panelType != PanelType.Type.Win && UIController.current.panelType != PanelType.Type.WinSAS && enemyCount == 0 && !LevelsLoader.isBlack)
 		{
             // Free for all
 			Screen.lockCursor = false;
@@ -52,7 +52,10 @@ public class EnemySpawner : MonoBehaviour
 
             UIController.current.gameObject.SetActive(false);
             UIController.previous = UIController.current;
-            UIController.current = UIController.GetPanel(PanelType.Type.Win);
+			if(ProgressController.isSas)
+            	UIController.current = UIController.GetPanel(PanelType.Type.Win);
+			else
+				UIController.current = UIController.GetPanel(PanelType.Type.WinSAS);
             UIController.current.gameObject.SetActive(true);   
 		}
 

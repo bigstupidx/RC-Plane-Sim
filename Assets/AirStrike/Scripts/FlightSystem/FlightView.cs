@@ -81,7 +81,7 @@ public class FlightView : MonoBehaviour
 	Vector3 positionTargetUp; 
 	void FixedUpdate ()
 	{
-		if(dieTime != 0f && dieTime < Time.timeSinceLevelLoad && UIController.current.panelType != PanelType.Type.Win)
+		if(dieTime != 0f && dieTime < Time.timeSinceLevelLoad && UIController.current.panelType != PanelType.Type.Win && UIController.current.panelType != PanelType.Type.WinSAS)
 		{
 			Time.timeScale = 0;
 			Screen.lockCursor = false;
@@ -98,7 +98,10 @@ public class FlightView : MonoBehaviour
 
             UIController.current.gameObject.SetActive(false);
             UIController.previous = UIController.current;
-            UIController.current = UIController.GetPanel(PanelType.Type.Win);
+			if(ProgressController.isSas)
+				UIController.current = UIController.GetPanel(PanelType.Type.Win);
+			else
+				UIController.current = UIController.GetPanel(PanelType.Type.WinSAS);
             UIController.current.gameObject.SetActive(true);
 		}
 

@@ -13,7 +13,7 @@ public class ProgressController : MonoBehaviour
     public static int goldAdd;
     public static int expAdd;
 	public static bool isSas;
-	public static float sasBonus = 1.2f;
+	public static int sasBonus = 2;
 	public static bool[] planeLocked;
 	private static List<List<PlaneAction.Stat>> stats;
 
