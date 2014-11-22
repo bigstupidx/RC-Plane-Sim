@@ -55,7 +55,8 @@ public class PlaneAction : MonoBehaviour
 			currentPlane = plane;
 		}
 
-		isOwned = unlockPrice == 0;
+		if(!isOwned)
+			isOwned = unlockPrice == 0;
 	}
 
 	void OnLevelWasLoaded(int level) 
