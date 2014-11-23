@@ -46,6 +46,12 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\TerrainComposer\Editor\AssignTextures.js" />
+     <Compile Include="Assets\TerrainComposer\Editor\FilterTexture.js" />
+     <Compile Include="Assets\TerrainComposer\Editor\Info_tc.js" />
+     <Compile Include="Assets\TerrainComposer\Editor\MeasureTool.js" />
+     <Compile Include="Assets\TerrainComposer\Editor\ShowTexture.js" />
+     <Compile Include="Assets\TerrainComposer\Editor\TerrainComposer.js" />
      <Compile Include="Assets\level 5\Editor\Image Effects\AntialiasingAsPostEffectEditor.js" />
      <Compile Include="Assets\level 5\Editor\Image Effects\BloomAndLensFlaresEditor.js" />
      <Compile Include="Assets\level 5\Editor\Image Effects\BloomEditor.js" />
@@ -108,6 +114,7 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text (AlphaClip).shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Fantasy\Fantasy Font - Normal.txt" />
      <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Normal.txt" />
+     <None Include="Assets\AirplanePath\Documentation.txt" />
      <None Include="Assets\level 5\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\DepthOfField34.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Dynamic Font (SoftClip).shader" />
      <None Include="Assets\level 5\Environment-Alpine\SourceFile\Shader\DiffuseShine.shader" />

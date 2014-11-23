@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour {
 		} 
 		else 
 		{
-			if( Input.mousePosition.x < Screen.width * 0.3f &&
+			if( Input.mousePosition.x < Screen.width * 0.15f &&
 			   Input.mousePosition.y < Screen.height * 0.3f)
 			{
 				flight.FixedX = true;

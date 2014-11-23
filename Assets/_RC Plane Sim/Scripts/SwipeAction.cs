@@ -80,12 +80,10 @@ public class SwipeAction : MonoBehaviour
                     case SwipeDirection.Left:
 						currentLevel = Mathf.Min(twScale.Length - 1, currentLevel + 1);
                         levelDifficult = currentLevel + 1;
-                        Debug.Log(levelDifficult);
                         break;
                     case SwipeDirection.Right:
 						currentLevel = Mathf.Max(0, currentLevel - 1);
                         levelDifficult = currentLevel + 1;
-                        Debug.Log(levelDifficult);
                         break;
                 }
 
@@ -134,9 +132,11 @@ public class SwipeAction : MonoBehaviour
 				twScale[i].to = twScale[i].to - stepScale;
 			}
 
+			twPosition[i].duration = 0.2f;
 			twPosition[i].from = twPosition[i].to;
 			twPosition[i].to = twPosition[i].to - stepPosition * sign;
 
+			twScale[i].duration = 0.2f;
 			twScale[i].GetComponent<UISprite>().depth = currentLevel * sign + 165 - Mathf.Abs((int)twPosition[i].to.x);
 			twScale[i].transform.GetChild(0).GetComponent<UISprite>().depth = currentLevel * sign + 166 - Mathf.Abs((int)twPosition[i].to.x);
 
@@ -151,7 +151,7 @@ public class SwipeAction : MonoBehaviour
 
 	public IEnumerator releaseRotation()
 	{
-		yield return new WaitForSeconds (0.5f);
+		yield return new WaitForSeconds (0.2f);
 		text.text = DIFFICULT[currentLevel];
 		iTouchStateFlag = 0;
 	}

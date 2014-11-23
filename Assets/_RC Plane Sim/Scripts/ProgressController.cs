@@ -34,7 +34,7 @@ public class ProgressController : MonoBehaviour
 			}
 		}
 
-		return index + 1;
+		return 10;//index + 1;
 	}
 
     public static void SaveProgress() 

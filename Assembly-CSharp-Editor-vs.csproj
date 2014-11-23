@@ -46,6 +46,9 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\AirplanePath\Scripts\Editor\AirplaneNodeInspector.cs" />
+     <Compile Include="Assets\AirplanePath\Scripts\Editor\AirplanePathInspector.cs" />
+     <Compile Include="Assets\AirplanePath\Scripts\Editor\GizmoColorsDrawer.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Editor\InvDatabaseInspector.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Editor\InvFindItem.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\ActiveAnimationEditor.cs" />
@@ -118,6 +121,27 @@
      <Compile Include="Assets\NGUI\Scripts\Editor\UITweenerEditor.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UIWidgetContainerEditor.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UIWidgetInspector.cs" />
+     <Compile Include="Assets\UnityFS\Scripts\Editor\AerofoilEditor.cs" />
+     <Compile Include="Assets\UnityFS\Scripts\Editor\AircraftEditor.cs" />
+     <Compile Include="Assets\UnityFS\Scripts\Editor\ConfigureInput.cs" />
+     <Compile Include="Assets\UnityFS\Scripts\Editor\ControlSurfaceEditor.cs" />
+     <Compile Include="Assets\UnityFS\Scripts\Editor\CopyEngineCurve.cs" />
+     <Compile Include="Assets\UnityFS\Scripts\Editor\CopyGroundEffectCurves.cs" />
+     <Compile Include="Assets\UnityFS\Scripts\Editor\EngineEditor.cs" />
+     <Compile Include="Assets\UnityFS\Scripts\Editor\GroundEffectEditor.cs" />
+     <Compile Include="Assets\UnityFS\Scripts\Editor\HOEditorUndoManager.cs" />
+     <Compile Include="Assets\UnityFS\Scripts\Editor\ImportAerofoil.cs" />
+     <Compile Include="Assets\UnityFS\Scripts\Editor\InputEditor.cs" />
+     <Compile Include="Assets\UnityFS\Scripts\Editor\JavaFoil.cs" />
+     <Compile Include="Assets\UnityFS\Scripts\Editor\LandingGearEditor.cs" />
+     <Compile Include="Assets\UnityFS\Scripts\Editor\PropWashEditor.cs" />
+     <Compile Include="Assets\UnityFS\Scripts\Editor\RudderPedalEditor.cs" />
+     <Compile Include="Assets\UnityFS\Scripts\Editor\SteerableNosewheelEditor.cs" />
+     <Compile Include="Assets\UnityFS\Scripts\Editor\ThrottleStickEditor.cs" />
+     <Compile Include="Assets\UnityFS\Scripts\Editor\UnityFS.cs" />
+     <Compile Include="Assets\UnityFS\Scripts\Editor\WheelBrakeEditor.cs" />
+     <Compile Include="Assets\UnityFS\Scripts\Editor\WingEditor.cs" />
+     <Compile Include="Assets\UnityFS\Scripts\Editor\YokeEditor.cs" />
      <Compile Include="Assets\_RC Plane Sim\Editor\MissingDataEditor.cs" />
      <Compile Include="Assets\_RC Plane Sim\Editor\PlaneEditor.cs" />
      <Compile Include="Assets\_RC Plane Sim\Editor\PlaneEditorWindow.cs" />
@@ -170,6 +194,7 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text (AlphaClip).shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Fantasy\Fantasy Font - Normal.txt" />
      <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Normal.txt" />
+     <None Include="Assets\AirplanePath\Documentation.txt" />
      <None Include="Assets\level 5\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\DepthOfField34.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Dynamic Font (SoftClip).shader" />
      <None Include="Assets\level 5\Environment-Alpine\SourceFile\Shader\DiffuseShine.shader" />
