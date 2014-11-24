@@ -58,6 +58,24 @@ public class FlightView : MonoBehaviour
 
 		xBattle = new Vector2 (-1200, 1200);
 		zBattle = new Vector2 (-1200, 1200);
+
+		switch(TypeAction.type)
+		{
+		case 0:
+			var enemy = GameObject.FindGameObjectsWithTag("Enemy");
+			foreach(GameObject go in enemy)
+			{
+				go.GetComponent<DamageManager>().HP = 80 + 10 * SwipeAction.levelDifficult;
+			}
+			break;
+		case 2:
+			var planes = GameObject.FindObjectsOfType<AirplanePath>();
+			foreach(AirplanePath p in planes)
+			{
+				p.gameObject.SetActive(false);
+			}
+			break;
+		}
 	}
 	
 	public void AddCamera(GameObject cam)
@@ -81,12 +99,13 @@ public class FlightView : MonoBehaviour
 	Vector3 positionTargetUp; 
 	void FixedUpdate ()
 	{
-		if(dieTime != 0f && dieTime < Time.timeSinceLevelLoad && UIController.current.panelType != PanelType.Type.Win && UIController.current.panelType != PanelType.Type.WinSAS)
+		var enemy = GameObject.FindGameObjectsWithTag("Enemy");
+
+		if(((dieTime != 0f && dieTime < Time.timeSinceLevelLoad) || enemy.Length == 0) && UIController.current.panelType != PanelType.Type.Win && UIController.current.panelType != PanelType.Type.WinSAS && !LevelsLoader.isBlack)
 		{
 			Time.timeScale = 0;
 			Screen.lockCursor = false;
-
-            var enemy = GameObject.FindGameObjectsWithTag("Enemy");
+            
             if (enemy.Length == 0)
                 ProgressController.goldAdd += 100 * SwipeAction.levelDifficult;
             else if (enemy.Length == 1)

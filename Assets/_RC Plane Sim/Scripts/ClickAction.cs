@@ -301,16 +301,24 @@ public class ClickAction : MonoBehaviour
 			break;
 		case ActionType.PopUpSASYes:
 			ProgressController.isSas = true;
-			var go = GameObject.Find("Dragonfly").GetComponent<PlaneAction>();
+			var go = GameObject.Find("Dragonfly");
 			if(go != null)
 			{
-				go.UpdatePlane(2);
+				go.GetComponent<PlaneAction>().UpdatePlane(2);
 				GameObject.Find("SAS").SetActive(false);
 			}
 
 			ProgressController.SaveProgress();
 			panel = UIController.GetPanel(PanelType.Type.PopUpSAS);
 			panel.gameObject.SetActive(false);
+
+			if(UIController.current.panelType == PanelType.Type.WinSAS)
+			{
+				UIController.current.gameObject.SetActive(false);
+				UIController.previous = UIController.current;
+				UIController.current = UIController.GetPanel(PanelType.Type.Win);
+				UIController.current.gameObject.SetActive(true);
+			}
 			break;
 		case ActionType.Pause:
 			Time.timeScale = 0;

@@ -273,38 +273,47 @@ public class WeaponLauncher : WeaponBase
 
 	public void Shoot ()
 	{
-		if (InfinityAmmo) {
+		if (InfinityAmmo) 
+		{
 			Ammo = 1;	
 		}
-		if (Ammo > 0) {
-			if (Time.time > nextFireTime + FireRate) {
+		if (Ammo > 0) 
+		{
+			if (Time.time > nextFireTime + FireRate) 
+			{
 				nextFireTime = Time.time;
 				torqueTemp = TorqueSpeedAxis;
 				Ammo -= 1;
 				Vector3 missileposition = this.transform.position;
 				Quaternion missilerotate = this.transform.rotation;
-				if (MissileOuter.Length > 0) {
+				if (MissileOuter.Length > 0) 
+				{
 					missilerotate = MissileOuter [currentOuter].transform.rotation;	
 					missileposition = MissileOuter [currentOuter].transform.position;	
 				}
 
-				if (MissileOuter.Length > 0) {
+				if (MissileOuter.Length > 0) 
+				{
 					currentOuter += 1;
 					if (currentOuter >= MissileOuter.Length)
 						currentOuter = 0;
 				}
 			
-				if (Muzzle) {
+				if (Muzzle) 
+				{
 					GameObject muzzle = (GameObject)GameObject.Instantiate (Muzzle, missileposition, missilerotate);
 					muzzle.transform.parent = this.transform;
 					GameObject.Destroy (muzzle, MuzzleLifeTime);
-					if (MissileOuter.Length > 0) {
+					if (MissileOuter.Length > 0) 
+					{
 						muzzle.transform.parent = MissileOuter [currentOuter].transform;
 					}
 				}
 			
-				for (int i = 0; i < NumBullet; i++) {
-					if (Missile) {
+				for (int i = 0; i < NumBullet; i++) 
+				{
+					if (Missile) 
+					{
 						Vector3 spread = new Vector3 (Random.Range (-Spread, Spread), Random.Range (-Spread, Spread), Random.Range (-Spread, Spread)) / 100;
 						Vector3 direction = this.transform.forward + spread;
 					
@@ -312,20 +321,25 @@ public class WeaponLauncher : WeaponBase
 					
 						GameObject bullet = (GameObject)Instantiate (Missile, missileposition, missilerotate);
 						DamageBase damangeBase = bullet.GetComponent<DamageBase> ();
-						if (damangeBase) {
+						if (damangeBase) 
+						{
 							damangeBase.Owner = Owner;
 							damangeBase.TargetTag = TargetTag;
 						}
 						WeaponBase weaponBase = bullet.GetComponent<WeaponBase> ();
-						if (weaponBase) {
+						if (weaponBase) 
+						{
 							weaponBase.Owner = Owner;
 							weaponBase.Target = target;
 							weaponBase.TargetTag = TargetTag;
 						}
 						bullet.transform.forward = direction;
-						if (RigidbodyProjectile) {
-							if (bullet.rigidbody) {
-								if (Owner != null && Owner.rigidbody) {
+						if (RigidbodyProjectile) 
+						{
+							if (bullet.rigidbody) 
+							{
+								if (Owner != null && Owner.rigidbody) 
+								{
 									bullet.rigidbody.velocity = Owner.rigidbody.velocity;
 								}
 								bullet.rigidbody.AddForce (direction * ForceShoot);	
@@ -334,7 +348,8 @@ public class WeaponLauncher : WeaponBase
 					
 					}
 				}
-				if (Shell) {
+				if (Shell) 
+				{
 					Transform shelloutpos = this.transform;
 					if (ShellOuter.Length > 0) {
 						shelloutpos = ShellOuter [currentOuter];
@@ -347,8 +362,10 @@ public class WeaponLauncher : WeaponBase
 					}
 				}
 				
-				if (SoundGun.Length > 0) {
-					if (audio) {
+				if (SoundGun.Length > 0) 
+				{
+					if (audio) 
+					{
 						audio.PlayOneShot (SoundGun [Random.Range (0, SoundGun.Length)]);
 					}
 				}
@@ -356,9 +373,7 @@ public class WeaponLauncher : WeaponBase
 				nextFireTime += FireRate;
 			}
 		} 
-		
 	}
-
 }
 
 
