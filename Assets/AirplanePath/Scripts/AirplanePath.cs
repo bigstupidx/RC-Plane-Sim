@@ -155,7 +155,7 @@ public class AirplanePath : MonoBehaviour
 	
 	void Update () 
 	{
-		if (Playing)
+		if (Playing && plane != null)
 		{
 			//Find Bezier speed
 			Vector3 instantBezierVelocity = CalculateBezierDerivative(time, p0, p1, p2, p3);
