@@ -323,6 +323,11 @@ public class WeaponLauncher : WeaponBase
 						DamageBase damangeBase = bullet.GetComponent<DamageBase> ();
 						if (damangeBase) 
 						{
+							if(Owner.CompareTag("Enemy"))
+							{
+								damangeBase.Damage = 5 * SwipeAction.levelDifficult;
+							}
+
 							damangeBase.Owner = Owner;
 							damangeBase.TargetTag = TargetTag;
 						}
@@ -351,13 +356,15 @@ public class WeaponLauncher : WeaponBase
 				if (Shell) 
 				{
 					Transform shelloutpos = this.transform;
-					if (ShellOuter.Length > 0) {
+					if (ShellOuter.Length > 0) 
+					{
 						shelloutpos = ShellOuter [currentOuter];
 					}
 				
 					GameObject shell = (GameObject)Instantiate (Shell, shelloutpos.position, Random.rotation);
 					GameObject.Destroy (shell.gameObject, ShellLifeTime);
-					if (shell.rigidbody) {
+					if (shell.rigidbody) 
+					{
 						shell.rigidbody.AddForce (shelloutpos.forward * ShellOutForce);
 					}
 				}

@@ -121,9 +121,9 @@ public class PlayerController : MonoBehaviour {
 				flight.FixedZ = true;
 				// get axis control from touch screen
 				Vector2 dir = controllerTouch.OnDragDirection (true);
-				dir = Vector2.ClampMagnitude(dir,1.0f);
-				flight.AxisControl (new Vector2 (dir.x,-dir.y) * AccelerationSensitivity * 0.7f);
-				flight.TurnControl (dir.x * AccelerationSensitivity * 0.3f);
+				dir = Vector2.ClampMagnitude(dir, 1.0f);
+				flight.AxisControl (new Vector2 (dir.x, -dir.y) * AccelerationSensitivity * 0.5f);
+				flight.TurnControl (dir.x * AccelerationSensitivity * 0.5f);
 			}
 		}
 		sliceTouch.OnDragDirection(true);
