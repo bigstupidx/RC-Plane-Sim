@@ -56,8 +56,14 @@ public class DamageManager : MonoBehaviour
 			}
 		}
 		
-		
-        Destroy(this.gameObject);
+		if(gameObject.CompareTag("Enemy"))
+		{
+			gameObject.SetActive(false);
+		}
+		else
+		{
+			Destroy(this.gameObject);
+		}
     }
 
 }

@@ -22,6 +22,7 @@ public class FlightView : MonoBehaviour
 	private int indexCamera;// current camera index
 	public Vector3 Offset = new Vector3 (10, 0.5f, 10);// position offset between plan and camera
 	private float dieTime;
+	private int wave;
 	
 	// camera swith
 	public void SwitchCameras ()
@@ -49,6 +50,8 @@ public class FlightView : MonoBehaviour
 		// add this camera to primery
 		AddCamera(this.gameObject);
 
+		wave = 0;
+
 		Time.timeScale = 1;
 		UIController.HidePanels();
 		UIController.current.gameObject.SetActive(false);
@@ -63,6 +66,13 @@ public class FlightView : MonoBehaviour
 		{
 		case 0:
 			var enemy = GameObject.FindGameObjectsWithTag("Enemy");
+			foreach(GameObject go in enemy)
+			{
+				go.GetComponent<DamageManager>().HP = 80 + 10 * SwipeAction.levelDifficult;
+			}
+			break;
+		case 1:
+			var waves = GameObject.FindGameObjectsWithTag("Enemy");
 			foreach(GameObject go in enemy)
 			{
 				go.GetComponent<DamageManager>().HP = 80 + 10 * SwipeAction.levelDifficult;
@@ -100,6 +110,21 @@ public class FlightView : MonoBehaviour
 	void FixedUpdate ()
 	{
 		var enemy = GameObject.FindGameObjectsWithTag("Enemy");
+
+		if(enemy.Length == 0 && TypeAction.type == 1)
+		{
+			wave++;
+			var planes = GameObject.FindObjectsOfType<AirplanePath>();
+			foreach(AirplanePath p in planes)
+			{
+				p.plane.gameObject.SetActive(true);
+			}
+			var waves = GameObject.FindGameObjectsWithTag("Enemy");
+			foreach(GameObject go in enemy)
+			{
+				go.GetComponent<DamageManager>().HP = 80 + 10 * wave;
+			}
+		}
 
 		if(((dieTime != 0f && dieTime < Time.timeSinceLevelLoad) || enemy.Length == 0) && UIController.current.panelType != PanelType.Type.Win && UIController.current.panelType != PanelType.Type.WinSAS && !LevelsLoader.isBlack)
 		{
