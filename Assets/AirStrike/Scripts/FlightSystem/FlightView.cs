@@ -73,7 +73,7 @@ public class FlightView : MonoBehaviour
 			break;
 		case 1:
 			var waves = GameObject.FindGameObjectsWithTag("Enemy");
-			foreach(GameObject go in enemy)
+			foreach(GameObject go in waves)
 			{
 				go.GetComponent<DamageManager>().HP = 80 + 10 * SwipeAction.levelDifficult;
 			}
@@ -126,7 +126,8 @@ public class FlightView : MonoBehaviour
 			}
 		}
 
-		if(((dieTime != 0f && dieTime < Time.timeSinceLevelLoad) || enemy.Length == 0) && UIController.current.panelType != PanelType.Type.Win && UIController.current.panelType != PanelType.Type.WinSAS && !LevelsLoader.isBlack)
+		if(((dieTime != 0f && dieTime < Time.timeSinceLevelLoad) || (enemy.Length == 0 && TypeAction.type != 2)) 
+		   && UIController.current.panelType != PanelType.Type.Win && UIController.current.panelType != PanelType.Type.WinSAS && !LevelsLoader.isBlack)
 		{
 			Time.timeScale = 0;
 			Screen.lockCursor = false;

@@ -18,11 +18,15 @@ public class TypeAction : MonoBehaviour
 	{
 		if(left)
 		{
-			type = Mathf.Max(0, type - 1);
+			type = type - 1;
+			if(type < 0)
+				type = types.Length - 1;
 		}
 		else
 		{
-			type = Mathf.Min(types.Length - 1, type + 1);
+			type = type + 1;
+			if(type == types.Length)
+				type = 0;
 		}
 
 		label.text = types[type];

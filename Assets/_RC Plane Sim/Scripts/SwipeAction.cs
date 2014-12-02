@@ -39,6 +39,8 @@ public class SwipeAction : MonoBehaviour
 
 	public TweenScale[] twScale;
 	public TweenPosition[] twPosition;
+	public TweenAlpha[] twAlpha;
+	public TweenAlpha[] twAlphaChild;
 
 	private int currentLevel = 0;
 	private int prevLevel = 0;
@@ -111,25 +113,30 @@ public class SwipeAction : MonoBehaviour
 
 		for(int i = Mathf.Max(0, min); i < Mathf.Min(twScale.Length, max); i++)
 		{
+			twAlphaChild[i].from = twAlphaChild[i].GetComponent<UISprite>().alpha;
 			if(twPosition[i].to.x == 160 * sign)
 			{
 				twScale[i].from = twScale[i].to;
 				twScale[i].to = twScale[i].to + stepScale;
+				twAlphaChild[i].to = twAlphaChild[i].from + 0.3f;
 			}
 			else if(twPosition[i].to.x == -80)
 			{
 				twScale[i].from = twScale[i].to;
 				twScale[i].to = twScale[i].to - stepScale * sign;
+				twAlphaChild[i].to = twAlphaChild[i].from - 0.3f * sign;
 			}
 			else if(twPosition[i].to.x == 80)
 			{
 				twScale[i].from = twScale[i].to;
 				twScale[i].to = twScale[i].to + stepScale * sign;
+				twAlphaChild[i].to = twAlphaChild[i].from + 0.3f * sign;
 			}
 			else if(twPosition[i].to.x == 0)
 			{
 				twScale[i].from = twScale[i].to;
 				twScale[i].to = twScale[i].to - stepScale;
+				twAlphaChild[i].to = twAlphaChild[i].from - 0.3f;
 			}
 
 			twPosition[i].duration = 0.2f;
@@ -140,10 +147,14 @@ public class SwipeAction : MonoBehaviour
 			twScale[i].GetComponent<UISprite>().depth = currentLevel * sign + 165 - Mathf.Abs((int)twPosition[i].to.x);
 			twScale[i].transform.GetChild(0).GetComponent<UISprite>().depth = currentLevel * sign + 166 - Mathf.Abs((int)twPosition[i].to.x);
 
+			twAlphaChild[i].duration = 0.2f;
+
 			twScale[i].enabled = true;
 			twPosition[i].enabled = true;
+			twAlphaChild[i].enabled = true;
 			twScale[i].ResetToBeginning();
 			twPosition[i].ResetToBeginning();
+			twAlphaChild[i].ResetToBeginning();
 		}
 
 		StartCoroutine (releaseRotation ());

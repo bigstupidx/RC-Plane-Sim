@@ -6,16 +6,16 @@ public class ChangesAfterLevel : MonoBehaviour
     private UILabel goldAddLabel;
     private UILabel expAddLabel;
 
-	private Transform goldSAS;
-	private Transform expSAS;
+	private GameObject goldSAS;
+	private GameObject expSAS;
 
 	void Awake () 
     {
         goldAddLabel = transform.FindChild("Gold Add").GetComponent<UILabel>();
         expAddLabel = transform.FindChild("Exp Add").GetComponent<UILabel>();
 
-		goldSAS = transform.FindChild("Gold Add SAS");
-		expSAS = transform.FindChild("Exp Add SAS");
+		goldSAS = GameObject.Find("Gold Add SAS");
+		expSAS = GameObject.Find("Exp Add SAS");
 	}
 	
 	void OnEnable () 
@@ -33,6 +33,7 @@ public class ChangesAfterLevel : MonoBehaviour
         ProgressController.exp += ProgressController.expAdd;
         ProgressController.expAdd = 0;
 
-        ProgressController.SaveProgress();
+		if(Application.loadedLevel > 2)
+        	ProgressController.SaveProgress();
 	}
 }

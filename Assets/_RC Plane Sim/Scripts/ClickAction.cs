@@ -142,7 +142,7 @@ public class ClickAction : MonoBehaviour
 		case ActionType.PopUpSAS:
 			if(ProgressController.isSas)
 			{
-				GameObject.Find("SAS").SetActive(false);
+				GameObject.Find("SAS Button").SetActive(false);
 			}
 			break;
 		}
@@ -184,6 +184,20 @@ public class ClickAction : MonoBehaviour
 		isGun = false;
 	}
 
+	private void CloseLevels()
+	{
+		panel = UIController.GetPanel(PanelType.Type.PopUpLevel1);
+		panel.gameObject.SetActive(false);
+		panel = UIController.GetPanel(PanelType.Type.PopUpLevel2);
+		panel.gameObject.SetActive(false);
+		panel = UIController.GetPanel(PanelType.Type.PopUpLevel3);
+		panel.gameObject.SetActive(false);
+		panel = UIController.GetPanel(PanelType.Type.PopUpLevel4);
+		panel.gameObject.SetActive(false);
+		panel = UIController.GetPanel(PanelType.Type.PopUpLevel5);
+		panel.gameObject.SetActive(false);
+	}
+
 	void OnClick()
 	{
 		FlightView camera;
@@ -208,6 +222,7 @@ public class ClickAction : MonoBehaviour
 			UIController.current.gameObject.SetActive(true);
 			break;
 		case ActionType.FacebookPage:
+			Application.OpenURL("https://www.facebook.com/lunagames");
 			break;
 		case ActionType.MainMenu:
 			UIController.HidePanels();
@@ -225,18 +240,22 @@ public class ClickAction : MonoBehaviour
 			UIController.current.gameObject.SetActive(true);
 			break;
 		case ActionType.PopUpLevel1:
+			CloseLevels();
 			panel = UIController.GetPanel(PanelType.Type.PopUpLevel1);
 			panel.gameObject.SetActive(true);
 			break;
         case ActionType.PopUpLevel2:
+			CloseLevels();
             panel = UIController.GetPanel(PanelType.Type.PopUpLevel2);
             panel.gameObject.SetActive(true);
             break;
 		case ActionType.PopUpLevel3:
+			CloseLevels();
 			panel = UIController.GetPanel(PanelType.Type.PopUpLevel3);
 			panel.gameObject.SetActive(true);
 			break;
 		case ActionType.PopUpLevel4:
+			CloseLevels();
 			panel = UIController.GetPanel(PanelType.Type.PopUpLevel4);
 			panel.gameObject.SetActive(true);
 			break;
@@ -245,12 +264,7 @@ public class ClickAction : MonoBehaviour
 			panel.gameObject.SetActive(true);
 			break;
 		case ActionType.ClosePopUpLevel:
-			panel = UIController.GetPanel(PanelType.Type.PopUpLevel1);
-            panel.gameObject.SetActive(false);
-            panel = UIController.GetPanel(PanelType.Type.PopUpLevel2);
-			panel.gameObject.SetActive(false);
-			panel = UIController.GetPanel(PanelType.Type.PopUpLevel3);
-			panel.gameObject.SetActive(false);
+			CloseLevels();
 			break;
 		case ActionType.Upgrades:
 			panel = UIController.GetPanel(PanelType.Type.Upgrade);
@@ -305,7 +319,7 @@ public class ClickAction : MonoBehaviour
 			if(go != null)
 			{
 				go.GetComponent<PlaneAction>().UpdatePlane(2);
-				GameObject.Find("SAS").SetActive(false);
+				GameObject.Find("SAS Button").SetActive(false);
 			}
 
 			ProgressController.SaveProgress();
