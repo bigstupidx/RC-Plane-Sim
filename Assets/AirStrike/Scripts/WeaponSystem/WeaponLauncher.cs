@@ -106,38 +106,54 @@ public class WeaponLauncher : WeaponBase
 		}
 		
 		
-		if (OnActive) {
-			if (TorqueObject) {
+		if (OnActive) 
+		{
+			if (TorqueObject) 
+			{
 				TorqueObject.transform.Rotate (torqueTemp * Time.deltaTime);
 				torqueTemp = Vector3.Lerp (torqueTemp, Vector3.zero, Time.deltaTime);
 			}
-			if (Seeker) {
-			
-				for (int t=0; t<TargetTag.Length; t++) {
-					if (GameObject.FindGameObjectsWithTag (TargetTag [t]).Length > 0) {
+			if (Seeker) 
+			{
+				for (int t=0; t<TargetTag.Length; t++) 
+				{
+					if (GameObject.FindGameObjectsWithTag (TargetTag [t]).Length > 0) 
+					{
 						GameObject[] objs = GameObject.FindGameObjectsWithTag (TargetTag [t]);
 						float distance = int.MaxValue;
 						
-						if (AimObject != null && AimObject.tag == TargetTag [t]) {
+						if (AimObject != null && AimObject.tag == TargetTag [t]) 
+						{
 							float dis = Vector3.Distance (AimObject.transform.position, transform.position);
-							if (DistanceLock > dis) {
-								if (distance > dis) {
-									if (timetolockcount + TimeToLock < Time.time) {	
+							if (DistanceLock > dis) 
+							{
+								if (distance > dis) 
+								{
+									if (timetolockcount + TimeToLock < Time.time) 
+									{	
 										distance = dis;
 										target = AimObject;
 									}
 								}
 							}	
-						} else {
-							for (int i = 0; i < objs.Length; i++) {
-								if (objs [i]) {
+						} 
+						else 
+						{
+							for (int i = 0; i < objs.Length; i++) 
+							{
+								if (objs [i]) 
+								{
 									Vector3 dir = (objs [i].transform.position - transform.position).normalized;
 									float direction = Vector3.Dot (dir, transform.forward);
 									float dis = Vector3.Distance (objs [i].transform.position, transform.position);
-									if (direction >= AimDirection) {
-										if (DistanceLock > dis) {
-											if (distance > dis) {
-												if (timetolockcount + TimeToLock < Time.time) {	
+									if (direction >= AimDirection) 
+									{
+										if (DistanceLock > dis) 
+										{
+											if (distance > dis) 
+											{
+												if (timetolockcount + TimeToLock < Time.time) 
+												{	
 													distance = dis;
 													target = objs [i];
 												}

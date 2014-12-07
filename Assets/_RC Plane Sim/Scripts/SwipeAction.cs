@@ -22,7 +22,7 @@ public class SwipeAction : MonoBehaviour
 	private string[] DIFFICULT = new string[5] { "EASY", "MEDIUM", "HARD", "MASTER", "NIGHTMARE"};
 
     public UILabel text;
-    public static int levelDifficult;
+    public static int levelDifficult = 1;
 
     private SwipeDirection sSwipeDirection;
 

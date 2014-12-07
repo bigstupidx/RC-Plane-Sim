@@ -14,9 +14,22 @@ public class AIShootController : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		GameObject obj = GameObject.FindGameObjectWithTag ("Player");
+
+		if(obj == null)
+		{
+			return;
+		}
+
+		float distance = Vector3.Distance(transform.position + (transform.forward * 300), obj.transform.position);
+
 		foreach(WeaponLauncher wp in wpnlncr)
 		{
-			wp.Shoot();
+			if(distance < 300)
+			{
+				wp.transform.LookAt(obj.transform.position);
+				wp.Shoot();
+			}
 		}
 	}
 }

@@ -54,7 +54,25 @@ public class WeaponController : MonoBehaviour
 	public void LaunchWeapon (int index)
 	{
 		CurrentWeapon = index;
-		if (CurrentWeapon < WeaponLists.Length && WeaponLists [index] != null) {
+		if (CurrentWeapon < WeaponLists.Length && WeaponLists [index] != null) 
+		{
+			GameObject[] objs = GameObject.FindGameObjectsWithTag ("Enemy");
+
+			foreach(GameObject obj in objs)
+			{
+				float distance = Vector3.Distance(transform.position + (transform.forward * 300), obj.transform.position);
+
+				if(distance < 300)
+				{
+					WeaponLists [index].transform.LookAt(obj.transform.position);
+					break;
+				}
+				else
+				{
+					WeaponLists [index].transform.localEulerAngles = Vector3.zero;
+				}
+			}
+
 			WeaponLists [index].Shoot ();
 		}
 	}
