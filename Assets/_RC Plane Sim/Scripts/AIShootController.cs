@@ -4,11 +4,13 @@ using System.Collections;
 public class AIShootController : MonoBehaviour 
 {
 	private WeaponLauncher[] wpnlncr;
+	private FlightOnHit foh;
 
 	// Use this for initialization
 	void Start () 
 	{
 		wpnlncr = GetComponentsInChildren<WeaponLauncher> ();
+		foh = GetComponentInChildren<FlightOnHit> ();
 	}
 	
 	// Update is called once per frame
@@ -28,7 +30,7 @@ public class AIShootController : MonoBehaviour
 			if(distance < 300)
 			{
 				wp.transform.LookAt(obj.transform.position);
-				wp.Shoot();
+				wp.Shoot(foh.Damage);
 			}
 		}
 	}

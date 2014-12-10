@@ -45,49 +45,6 @@ public class FlightView : MonoBehaviour
 		}
 	}
 
-	void Awake ()
-	{
-		// add this camera to primery
-		AddCamera(this.gameObject);
-
-		wave = 0;
-
-		Time.timeScale = 1;
-		UIController.HidePanels();
-		UIController.current.gameObject.SetActive(false);
-		UIController.previous = UIController.current;
-		UIController.current = UIController.GetPanel(PanelType.Type.GameMenu);
-		UIController.current.gameObject.SetActive(true);
-
-		xBattle = new Vector2 (-1200, 1200);
-		zBattle = new Vector2 (-1200, 1200);
-
-		switch(TypeAction.type)
-		{
-		case 0:
-			var enemy = GameObject.FindGameObjectsWithTag("Enemy");
-			foreach(GameObject go in enemy)
-			{
-				go.GetComponent<DamageManager>().HP = 80 + 10 * SwipeAction.levelDifficult;
-			}
-			break;
-		case 1:
-			var waves = GameObject.FindGameObjectsWithTag("Enemy");
-			foreach(GameObject go in waves)
-			{
-				go.GetComponent<DamageManager>().HP = 80 + 10 * SwipeAction.levelDifficult;
-			}
-			break;
-		case 2:
-			var planes = GameObject.FindObjectsOfType<AirplanePath>();
-			foreach(AirplanePath p in planes)
-			{
-				p.gameObject.SetActive(false);
-			}
-			break;
-		}
-	}
-	
 	public void AddCamera(GameObject cam)
 	{
 		GameObject[] temp = new GameObject[Cameras.Length+1];
@@ -98,6 +55,58 @@ public class FlightView : MonoBehaviour
 	
 	void Start ()
 	{
+		// add this camera to primery
+		AddCamera(this.gameObject);
+		
+		wave = 0;
+		
+		Time.timeScale = 1;
+		UIController.HidePanels();
+		UIController.current.gameObject.SetActive(false);
+		UIController.previous = UIController.current;
+		UIController.current = UIController.GetPanel(PanelType.Type.GameMenu);
+		UIController.current.gameObject.SetActive(true);
+		
+		xBattle = new Vector2 (-1200, 1200);
+		zBattle = new Vector2 (-1200, 1200);
+		AirplanePath[] planes;
+		switch(TypeAction.type)
+		{
+		case 0:
+			var enemy = GameObject.FindGameObjectsWithTag("Enemy");
+			foreach(GameObject go in enemy)
+			{
+				go.GetComponent<DamageManager>().HP = 80 + 10 * SwipeAction.levelDifficult;
+			}
+			break;
+		case 1:
+			planes = GameObject.FindObjectsOfType<AirplanePath>();
+			for(int i = 0; i < planes.Length; i++)
+			{
+				if(WaveProps.waveProps[wave, i] != 0)
+				{
+					planes[i].speed = WaveProps.waveStats[WaveProps.waveProps[wave, i], 2];
+				}
+				else
+				{
+					planes[i].plane.gameObject.SetActive(false);
+				}
+			}
+			var waves = GameObject.FindGameObjectsWithTag("Enemy");
+			for(int i = 0; i < waves.Length; i++)
+			{
+				waves[i].GetComponent<DamageManager>().HP = WaveProps.waveStats[WaveProps.waveProps[wave, i], 1];
+				waves[i].GetComponent<FlightOnHit>().Damage = WaveProps.waveStats[WaveProps.waveProps[wave, i], 0];
+			}
+			break;
+		case 2:
+			planes = GameObject.FindObjectsOfType<AirplanePath>();
+			foreach(AirplanePath p in planes)
+			{
+				p.gameObject.SetActive(false);
+			}
+			break;
+		}
 		// if player is not included try to find a player
 		if(!Target)
 		{
@@ -113,16 +122,22 @@ public class FlightView : MonoBehaviour
 
 		if(enemy.Length == 0 && TypeAction.type == 1)
 		{
-			wave++;
+			wave = Mathf.Min(73, wave + 1);
 			var planes = GameObject.FindObjectsOfType<AirplanePath>();
-			foreach(AirplanePath p in planes)
+			for(int i = 0; i < planes.Length; i++)
 			{
-				p.plane.gameObject.SetActive(true);
+				if(WaveProps.waveProps[wave, i] != 0)
+				{
+					planes[i].plane.gameObject.SetActive(true);
+					if(planes[i].plane.childCount > 0) planes[i].plane.GetChild(0).gameObject.SetActive(true);
+					planes[i].speed = WaveProps.waveStats[WaveProps.waveProps[wave, i], 2];
+				}
 			}
 			var waves = GameObject.FindGameObjectsWithTag("Enemy");
-			foreach(GameObject go in enemy)
+			for(int i = 0; i < waves.Length; i++)
 			{
-				go.GetComponent<DamageManager>().HP = 80 + 10 * wave;
+				waves[i].GetComponent<DamageManager>().HP = WaveProps.waveStats[WaveProps.waveProps[wave, i], 1];
+				waves[i].GetComponent<FlightOnHit>().Damage = WaveProps.waveStats[WaveProps.waveProps[wave, i], 0];
 			}
 		}
 

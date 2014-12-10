@@ -58,18 +58,24 @@ public class TouchScreenVal : MonoBehaviour {
 		return direction;
 	}
 	
-	public Vector2 OnDragDirection(bool fixdrag){
+	public Vector2 OnDragDirection(bool fixdrag)
+	{
 		Vector2 direction = Vector2.zero;
-		for (var i = 0; i < Input.touchCount; ++i) {
+		for (var i = 0; i < Input.touchCount; ++i) 
+		{
 			Vector2 touchpos = Input.GetTouch(i).position;
-			if(touchpos.x >= AreaTouch.xMin && touchpos.x <= AreaTouch.xMax && touchpos.y >= AreaTouch.yMin && touchpos.y <= AreaTouch.yMax){
+			if(touchpos.x >= AreaTouch.xMin && touchpos.x <= AreaTouch.xMax && touchpos.y >= AreaTouch.yMin && touchpos.y <= AreaTouch.yMax)
+			{
 				slideVal.x = (1.0f/AreaTouch.xMax) * (touchpos.x - AreaTouch.xMin);
 				slideVal.y = (1.0f/AreaTouch.yMax) * (touchpos.y - AreaTouch.yMin);
 				
-				if(Input.GetTouch(i).phase == TouchPhase.Began){
+				if(Input.GetTouch(i).phase == TouchPhase.Began)
+				{
 					controllerPositionNext = new Vector2(Input.GetTouch(i).position.x,Screen.height - Input.GetTouch(i).position.y);
 					controllerPositionTemp = controllerPositionNext;
-				}else{
+				}
+				else
+				{
 					controllerPositionNext = new Vector2(Input.GetTouch(i).position.x,Screen.height - Input.GetTouch(i).position.y);
 					Vector2 deltagrag = (controllerPositionNext-controllerPositionTemp);
 					direction.x	= deltagrag.x;

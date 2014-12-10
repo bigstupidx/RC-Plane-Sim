@@ -93,7 +93,6 @@ public class AirplanePath : MonoBehaviour
 	{
 		if (CheckForProblems(firstNodeIndex)) {return;}
 		plane.position = nodes[firstNodeIndex].Position;
-		plane.gameObject.SetActive(true);
 		
 		time = 0;
 		Index = firstNodeIndex;

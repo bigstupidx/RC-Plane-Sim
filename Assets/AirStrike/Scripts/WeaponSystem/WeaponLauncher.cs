@@ -287,7 +287,7 @@ public class WeaponLauncher : WeaponBase
 	
 	private int currentOuter = 0;
 
-	public void Shoot ()
+	public void Shoot (int damage = 5)
 	{
 		if (InfinityAmmo) 
 		{
@@ -341,7 +341,7 @@ public class WeaponLauncher : WeaponBase
 						{
 							if(Owner.CompareTag("Enemy"))
 							{
-								damangeBase.Damage = 5 * SwipeAction.levelDifficult;
+								damangeBase.Damage = damage * SwipeAction.levelDifficult;
 							}
 
 							damangeBase.Owner = Owner;

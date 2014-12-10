@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour {
 		flight = this.GetComponent<FlightSystem>();
 		View = (FlightView)GameObject.FindObjectOfType(typeof(FlightView));
 		// setting all Touch screen controller in the position
-		controllerTouch = new TouchScreenVal (new Rect (0, 0, Screen.width / 2, Screen.height - 100));
+		controllerTouch = new TouchScreenVal (new Rect (0, 0, Screen.width / 4, Screen.height / 3));
 		fireTouch = new TouchScreenVal (new Rect (Screen.width / 2, 0, Screen.width / 2, Screen.height));
 		switchTouch = new TouchScreenVal (new Rect (0, Screen.height - 100, Screen.width / 2, 100));
 		
@@ -94,7 +94,8 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	
-	void MobileController(){
+	void MobileController()
+	{
 		// Mobile controller
 		
 		flight.SimpleControl = SimpleControl;
@@ -113,18 +114,14 @@ public class PlayerController : MonoBehaviour {
 		} 
 		else 
 		{
-			if( Input.mousePosition.x < Screen.width * 0.15f &&
-			   Input.mousePosition.y < Screen.height * 0.3f)
-			{
-				flight.FixedX = true;
-				flight.FixedY = false;
-				flight.FixedZ = true;
-				// get axis control from touch screen
-				Vector2 dir = controllerTouch.OnDragDirection (true);
-				dir = Vector2.ClampMagnitude(dir, 1.0f);
-				flight.AxisControl (new Vector2 (dir.x, -dir.y) * AccelerationSensitivity * 0.5f);
-				flight.TurnControl (dir.x * AccelerationSensitivity * 0.5f);
-			}
+			flight.FixedX = true;
+			flight.FixedY = false;
+			flight.FixedZ = true;
+			// get axis control from touch screen
+			Vector2 dir = controllerTouch.OnDragDirection (true);
+			dir = Vector2.ClampMagnitude(dir, 1.0f);
+			flight.AxisControl (new Vector2 (dir.x, -dir.y) * 10f);
+			flight.TurnControl (dir.x * 3f);
 		}
 		sliceTouch.OnDragDirection(true);
 		// slice speed
