@@ -38,7 +38,11 @@ public class ClickAction : MonoBehaviour
 		PopUpLevel4,
 		GamePlayLevel4,
 		PopUpLevel5,
-		GamePlayLevel5
+		GamePlayLevel5,
+		Gold1,
+		Gold2,
+		Gold3,
+		Gold4
 	}
 
 	public ActionType action;
@@ -204,6 +208,20 @@ public class ClickAction : MonoBehaviour
 
 		switch(action)
 		{
+		case ActionType.Gold1:
+			ProgressController.gold += 4000;
+			ProgressController.SaveProgress();
+			break;
+		case ActionType.Gold2:
+			ProgressController.gold += 10000;
+			ProgressController.SaveProgress();
+			break;
+		case ActionType.Gold3:
+			ProgressController.gold += 30000;
+			ProgressController.SaveProgress();
+			break;
+		case ActionType.Gold4:
+			break;
 		case ActionType.SinglePlayer:
 			UIController.HidePanels();
 			Time.timeScale = 1;
@@ -275,6 +293,8 @@ public class ClickAction : MonoBehaviour
 			panel.gameObject.SetActive(false);
 			break;
 		case ActionType.Shop:
+			panel = UIController.GetPanel(PanelType.Type.PopUpBuy);
+			panel.gameObject.SetActive(false);
 			panel = UIController.GetPanel(PanelType.Type.Shop);
 			panel.gameObject.SetActive(true);
 			break;

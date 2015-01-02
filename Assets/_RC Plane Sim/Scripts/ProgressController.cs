@@ -34,11 +34,17 @@ public class ProgressController : MonoBehaviour
 			}
 		}
 
-		return 10;//index + 1;
+		return index + 1;
 	}
 
     public static void SaveProgress() 
     {
+		GameObject goldLabel = GameObject.Find ("Gold Label");
+		if(goldLabel != null)
+		{
+			goldLabel.GetComponent<UILabel>().text = gold.ToString();
+		}
+
         PlayerPrefs.SetInt("Gold", gold);
         PlayerPrefs.SetInt("Exp", exp);
 		PlayerPrefs.SetInt ("SAS", Convert.ToInt16 (isSas));

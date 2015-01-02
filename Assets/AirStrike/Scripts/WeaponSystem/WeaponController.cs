@@ -60,9 +60,9 @@ public class WeaponController : MonoBehaviour
 
 			foreach(GameObject obj in objs)
 			{
-				float distance = Vector3.Distance(transform.position + (transform.forward * 300), obj.transform.position);
+				float distance = Vector3.Distance(transform.position + (transform.forward * 250), obj.transform.position);
 
-				if(distance < 300)
+				if(distance < 250)
 				{
 					WeaponLists [index].transform.LookAt(obj.transform.position);
 					break;

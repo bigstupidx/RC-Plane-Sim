@@ -104,13 +104,13 @@ public class PlayerController : MonoBehaviour {
 		{
 			// get axis control from device acceleration
 			Vector3 acceleration = Input.acceleration;
-			Vector2 accValActive = new Vector2 (acceleration.x, (acceleration.y + 0.3f) * 0.5f) * AccelerationSensitivity;
+			Vector2 accValActive = new Vector2 (acceleration.x, (acceleration.y + 0.3f) * 0.5f) * 1;
 			flight.FixedX = false;
 			flight.FixedY = false;
 			flight.FixedZ = true;
 			
-			flight.AxisControl (accValActive);
-			flight.TurnControl (accValActive.x);
+			flight.AxisControlTilt (accValActive);
+			flight.TurnControlTilt (accValActive.x);
 		} 
 		else 
 		{

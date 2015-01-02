@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerDead : FlightOnDead
 {
 	private GameObject eject;
-	void Awake ()
+	void Start ()
 	{
 		eject =	GameObject.FindGameObjectWithTag ("Eject");
 		if(eject != null) eject.SetActive (false);

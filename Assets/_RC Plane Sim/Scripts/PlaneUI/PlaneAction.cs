@@ -121,8 +121,16 @@ public class PlaneAction : MonoBehaviour
 
 	public void Click()
 	{
+		PanelType panel;
 		if(!isOwned)
 		{
+			if(ProgressController.gold < unlockPrice)
+			{
+				panel = UIController.GetPanel(PanelType.Type.PopUpBuy);
+				panel.gameObject.SetActive(true);
+				return;
+			}
+			ProgressController.gold -= unlockPrice;
 			isOwned = true;
 			transform.FindChild("Label").GetComponent<UILabel>().enabled = false;
 			ProgressController.SaveProgress();
@@ -151,7 +159,7 @@ public class PlaneAction : MonoBehaviour
 
 		planeModel.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 
-		PanelType panel = UIController.GetPanel(PanelType.Type.Upgrade);
+		panel = UIController.GetPanel(PanelType.Type.Upgrade);
 		panel.gameObject.SetActive(false);
 	}
 

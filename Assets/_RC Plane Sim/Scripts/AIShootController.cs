@@ -23,11 +23,11 @@ public class AIShootController : MonoBehaviour
 			return;
 		}
 
-		float distance = Vector3.Distance(transform.position + (transform.forward * 300), obj.transform.position);
+		float distance = Vector3.Distance(transform.position + (transform.forward * 250), obj.transform.position);
 
 		foreach(WeaponLauncher wp in wpnlncr)
 		{
-			if(distance < 300)
+			if(distance < 250)
 			{
 				wp.transform.LookAt(obj.transform.position);
 				wp.Shoot(foh.Damage);

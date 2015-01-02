@@ -77,6 +77,7 @@ public class FlightView : MonoBehaviour
 			foreach(GameObject go in enemy)
 			{
 				go.GetComponent<DamageManager>().HP = 80 + 10 * SwipeAction.levelDifficult;
+				go.GetComponent<FlightOnHit>().Damage = 5 + 1 * SwipeAction.levelDifficult;
 			}
 			break;
 		case 1:
