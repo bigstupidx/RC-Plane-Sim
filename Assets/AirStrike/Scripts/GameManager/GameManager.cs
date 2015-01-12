@@ -10,11 +10,6 @@ public class GameManager : MonoBehaviour {
 	{
 		Score = 0;
 		Killed = 0;
-
-        Vector3 positionCamera = transform.GetComponentInParent<Transform>().position;
-        Quaternion quaternionCamera = transform.GetComponentInParent<Transform>().rotation;
-
-		Instantiate (PlaneAction.currentPlane.gameObject, positionCamera, quaternionCamera);
 	}
 	
 	// Update is called once per frame

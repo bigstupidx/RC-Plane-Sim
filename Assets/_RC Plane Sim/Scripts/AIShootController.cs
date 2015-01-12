@@ -12,7 +12,7 @@ public class AIShootController : MonoBehaviour
 		wpnlncr = GetComponentsInChildren<WeaponLauncher> ();
 		foh = GetComponentInChildren<FlightOnHit> ();
 	}
-	
+
 	// Update is called once per frame
 	void Update () 
 	{

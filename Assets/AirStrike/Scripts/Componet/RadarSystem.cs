@@ -119,16 +119,14 @@ public class RadarSystem : MonoBehaviour
 		if (MapRotation) {
 			GUIUtility.RotateAroundPivot (-(this.transform.eulerAngles.y), inposition + new Vector2 (Size / 2f, Size / 2f)); 
 		}
-	
-		for (int i=0; i<EnemyTag.Length; i++) {
-			DrawNav (GameObject.FindGameObjectsWithTag (EnemyTag [i]), Navtexture [i]);
-		}
 		if (NavBG)
 			GUI.DrawTexture (new Rect (inposition.x, inposition.y, Size, Size), NavBG);
 		GUIUtility.RotateAroundPivot ((this.transform.eulerAngles.y), inposition + new Vector2 (Size / 2f, Size / 2f)); 
 		if (NavCompass)
 			GUI.DrawTexture (new Rect (inposition.x + (Size / 2f) - (NavCompass.width / 2f), inposition.y + (Size / 2f) - (NavCompass.height / 2f), NavCompass.width, NavCompass.height), NavCompass);
-
+		for (int i=0; i<EnemyTag.Length; i++) {
+			DrawNav (GameObject.FindGameObjectsWithTag (EnemyTag [i]), Navtexture [i]);
+		}
 	}
 }
 

@@ -3,13 +3,7 @@ guid: 215804ac2db6ef64987563fbc652c4bf
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
     4300000: Parachute
-    7400000: Default Take
-    11100000: //RootNode
   materials:
     importMaterials: 1
     materialName: 3

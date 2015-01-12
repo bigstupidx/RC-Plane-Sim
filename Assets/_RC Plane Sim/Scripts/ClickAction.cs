@@ -42,7 +42,8 @@ public class ClickAction : MonoBehaviour
 		Gold1,
 		Gold2,
 		Gold3,
-		Gold4
+		Gold4,
+		NextWave
 	}
 
 	public ActionType action;
@@ -55,7 +56,26 @@ public class ClickAction : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetKeyDown (KeyCode.Escape)) 
+		if(FlightView.eject && Input.acceleration.magnitude > 2f)
+		{
+			GameObject _parashute = GameObject.Instantiate(parashute) as GameObject;
+			
+			FlightView camera = FindObjectOfType<FlightView>();
+			
+			_parashute.transform.GetChild(0).gameObject.SetActive(true);
+			_parashute.transform.GetChild(1).gameObject.SetActive(true);
+			_parashute.transform.position = camera.transform.position;
+			
+			camera.Target.GetComponent<DamageManager>().Boom(10000, null);
+			
+			camera.Target = _parashute.transform.GetChild(0).gameObject;
+
+			ProgressController.goldAdd += 10;
+
+			FlightView.eject = false;
+		}
+
+		if (Input.GetKeyDown (KeyCode.Escape) && Application.loadedLevel > 2) 
 		{
 			Screen.lockCursor = false;
 			Time.timeScale = 0;
@@ -147,6 +167,44 @@ public class ClickAction : MonoBehaviour
 			if(ProgressController.isSas)
 			{
 				GameObject.Find("SAS Button").SetActive(false);
+			}
+			break;
+		case ActionType.NextWave:
+			if(TypeAction.type == TypeAction.FREE_FOR_ALL)
+			{
+				GameObject.Find("KillsLabelText").GetComponent<UILabel>().text = "PLAYER KILLS:";
+
+				GameObject.Find("Button - Next").GetComponent<UISprite>().enabled = false;
+				GameObject.Find("Button - Ok").GetComponent<UISprite>().enabled = true;
+				GameObject.Find("Button - Retry").GetComponent<UISprite>().enabled = true;
+				
+				GameObject.Find("Button - Next").GetComponentInChildren<UILabel>().text = "";
+				GameObject.Find("Button - Ok").GetComponentInChildren<UILabel>().text = "OK";
+				GameObject.Find("Button - Retry").GetComponentInChildren<UILabel>().text = "RETRY";
+			}
+			else if(TypeAction.type == TypeAction.SURVIVAL)
+			{
+				GameObject.Find("KillsLabelText").GetComponent<UILabel>().text = "WAVES CLEARED:";
+				if(FindObjectOfType<FlightView>().Target == null)
+				{
+					GameObject.Find("Button - Next").GetComponent<UISprite>().enabled = false;
+					GameObject.Find("Button - Ok").GetComponent<UISprite>().enabled = true;
+					GameObject.Find("Button - Retry").GetComponent<UISprite>().enabled = true;
+
+					GameObject.Find("Button - Next").GetComponentInChildren<UILabel>().text = "";
+					GameObject.Find("Button - Ok").GetComponentInChildren<UILabel>().text = "OK";
+					GameObject.Find("Button - Retry").GetComponentInChildren<UILabel>().text = "RETRY";
+				}
+				else
+				{
+					GameObject.Find("Button - Next").GetComponent<UISprite>().enabled = true;
+					GameObject.Find("Button - Ok").GetComponent<UISprite>().enabled = false;
+					GameObject.Find("Button - Retry").GetComponent<UISprite>().enabled = false;
+
+					GameObject.Find("Button - Next").GetComponentInChildren<UILabel>().text = "NEXT";
+					GameObject.Find("Button - Ok").GetComponentInChildren<UILabel>().text = "";
+					GameObject.Find("Button - Retry").GetComponentInChildren<UILabel>().text = "";
+				}
 			}
 			break;
 		}
@@ -350,7 +408,7 @@ public class ClickAction : MonoBehaviour
 			{
 				UIController.current.gameObject.SetActive(false);
 				UIController.previous = UIController.current;
-				UIController.current = UIController.GetPanel(PanelType.Type.Win);
+				UIController.current = UIController.GetPanel(PanelType.Type.WinSAS);
 				UIController.current.gameObject.SetActive(true);
 			}
 			break;
@@ -379,18 +437,47 @@ public class ClickAction : MonoBehaviour
 			UIController.current.gameObject.SetActive(true);
 			LevelsLoader.LoadLevel(1);
 			break;
+		case ActionType.NextWave:
+			Time.timeScale = 1;
+			FlightView.wave = Mathf.Min(73, FlightView.wave + 1);
+			var planes = GameObject.FindObjectsOfType<AirplanePath>();
+			for(int i = 0; i < planes.Length; i++)
+			{
+				if(WaveProps.waveProps[FlightView.wave, i] != 0)
+				{
+					planes[i].plane.gameObject.SetActive(true);
+					planes[i].speed = WaveProps.waveStats[WaveProps.waveProps[FlightView.wave, i], 2] * 3;
+				}
+			}
+			var waves = GameObject.FindGameObjectsWithTag("Enemy");
+			for(int i = 0; i < waves.Length; i++)
+			{
+				waves[i].GetComponent<DamageManager>().HP = WaveProps.waveStats[WaveProps.waveProps[FlightView.wave, i], 1];
+				waves[i].GetComponent<FlightOnHit>().Damage = WaveProps.waveStats[WaveProps.waveProps[FlightView.wave, i], 0];
+			}
+
+			UIController.current.gameObject.SetActive(false);
+			UIController.previous = UIController.current;
+			UIController.current = UIController.GetPanel(PanelType.Type.GameMenu);
+			UIController.current.gameObject.SetActive(true);
+			break;
 		case ActionType.Eject: 
-			var parashute = GameObject.FindGameObjectWithTag("Parashute");
+			GameObject _parashute = GameObject.Instantiate(parashute) as GameObject;
+
 			camera = FindObjectOfType<FlightView>();
 
-			parashute.transform.GetChild(0).gameObject.SetActive(true);
-			parashute.transform.GetChild(1).gameObject.SetActive(true);
-			parashute.transform.position = camera.transform.position;
+			_parashute.transform.GetChild(0).gameObject.SetActive(true);
+			_parashute.transform.GetChild(1).gameObject.SetActive(true);
+			_parashute.transform.position = camera.transform.position;
 
-			camera.Target = parashute.transform.GetChild(0).gameObject;
+			camera.Target.GetComponent<DamageManager>().Boom(10000, null);
+
+			camera.Target = _parashute.transform.GetChild(0).gameObject;
 
 			gameObject.SetActive(false);
 			break;
 		}
 	}
+
+	public GameObject parashute;
 }

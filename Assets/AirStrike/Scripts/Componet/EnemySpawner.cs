@@ -21,71 +21,19 @@ public class EnemySpawner : MonoBehaviour
 	
 	void Start ()
 	{
-		//indexSpawn = Random.Range (0, Objectman.Length);
 		timetemp = Time.time;
-
-		if(TypeAction.type == 2)
-		{
-			Enabled = false;
-		}
 	}
 
 	void Update ()
 	{
 		var gos = GameObject.FindGameObjectsWithTag (Tag);
 
-		if(gos.Length == 0 && !Enabled && TypeAction.type == 1)
-		{
-            numberWave += 1;
-            enemyCount += 2 * numberWave;
-            numberEliteEnemy = 2 * numberWave;
-
-            ProgressController.expAdd += 50 * numberWave;
-			Enabled = true;
-		}
-		else if(gos.Length == 0 && !Enabled && TypeAction.type == 0 && UIController.current.panelType != PanelType.Type.Win && UIController.current.panelType != PanelType.Type.WinSAS && enemyCount == 0 && !LevelsLoader.isBlack)
-		{
-            // Free for all
-			Screen.lockCursor = false;
-			Time.timeScale = 0;
-			ProgressController.goldAdd += 100 * SwipeAction.levelDifficult;
-
-            UIController.current.gameObject.SetActive(false);
-            UIController.previous = UIController.current;
-			if(ProgressController.isSas)
-            	UIController.current = UIController.GetPanel(PanelType.Type.Win);
-			else
-				UIController.current = UIController.GetPanel(PanelType.Type.WinSAS);
-            UIController.current.gameObject.SetActive(true);   
-		}
-
-		if (!Enabled)
-			return;
-
 		if (gos.Length < enemyCount && Time.time > timetemp + timeSpawn) 
 		{
 			timetemp = Time.time;
 
-            if (numberWave > 1 && numberEliteEnemy > 0)
-            {
-                numberEliteEnemy -= 1;
-
-                GameObject obj = (GameObject)GameObject.Instantiate(Objectman[0], transform.position + new Vector3(Random.Range(-radius, radius), 0, Random.Range(-radius, radius)), Quaternion.identity);
-                obj.GetComponent<DamageManager>().HP += 10 * numberWave;
-                obj.GetComponent<WeaponController>().WeaponLists[0].GetComponent<WeaponLauncher>().Missile.GetComponent<Damage>().Damage += 2 * numberWave;
-                obj.tag = Tag;
-            }
-            else 
-            {
-                GameObject obj = (GameObject)GameObject.Instantiate(Objectman[0], transform.position + new Vector3(Random.Range(-radius, radius), 0, Random.Range(-radius, radius)), Quaternion.identity);
-                obj.tag = Tag;
-            }
-		}
-
-		if(gos.Length == enemyCount)
-		{
-			enemyCount = 0;
-            Enabled = false;
+            GameObject obj = (GameObject)GameObject.Instantiate(Objectman[0], transform.position + new Vector3(Random.Range(-radius, radius), 0, Random.Range(-radius, radius)), Quaternion.identity);
+            obj.tag = Tag;
 		}
 	}
 }

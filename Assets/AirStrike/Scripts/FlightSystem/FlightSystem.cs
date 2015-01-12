@@ -133,11 +133,8 @@ public class FlightSystem : MonoBehaviour
 	}
 	public void AxisControlTilt (Vector2 axis)
 	{
-		if (SimpleControl) {
-			LimitAxisControl.y = LimitAxisControl.x;	
-		}
-		roll = Mathf.Lerp (roll, Mathf.Clamp (axis.x, -LimitAxisControl.x, LimitAxisControl.x) * 2, Time.deltaTime);
-		pitch = Mathf.Lerp (pitch, Mathf.Clamp (axis.y, -LimitAxisControl.y, LimitAxisControl.y) * 2, Time.deltaTime);
+		roll = Mathf.Clamp (axis.x, -LimitAxisControl.x, LimitAxisControl.x);
+		pitch = Mathf.Clamp (axis.y, -LimitAxisControl.y, LimitAxisControl.y);
 	}
 	// Input function ( yaw) 
 	public void TurnControl (float turn)

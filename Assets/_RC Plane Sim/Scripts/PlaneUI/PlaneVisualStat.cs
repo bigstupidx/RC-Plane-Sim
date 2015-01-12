@@ -113,7 +113,10 @@ public class PlaneVisualStat : MonoBehaviour
 			}
 			break;
 		case Type.Speed:
-			value1 = PlaneAction.currentPlane.GetComponent<FlightSystem>().Speed;
+			param1 = PlaneAction.FindStatType(PlaneAction.Stat.Type.Speed);
+			
+			value1 = param1.levels[param1.currentLevel].value;
+
 			value = (value1 / 89f) * 20f;
 			roundValue = Mathf.Min((int)value, 20);	
 

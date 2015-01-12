@@ -31,8 +31,9 @@ public class FlightOnHit : MonoBehaviour {
         {
 			if(SoundOnHit.Length>0)
 			AudioSource.PlayClipAtPoint(SoundOnHit[Random.Range(0,SoundOnHit.Length)],this.transform.position);
-			if(this.GetComponent<DamageManager>()){
-				this.GetComponent<DamageManager>().ApplyDamage(Damage,collision.gameObject);
+			if(this.GetComponent<DamageManager>())
+			{
+				this.GetComponent<DamageManager>().Boom(Damage, collision.gameObject);
 			}
 		}	
     }

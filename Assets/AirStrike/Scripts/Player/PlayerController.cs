@@ -60,8 +60,7 @@ public class PlayerController : MonoBehaviour {
 		
 		// lock mouse position to the center.
 		//Screen.lockCursor = true;
-		
-		flight.AxisControl(new Vector2(Input.GetAxis("Mouse X"),Input.GetAxis("Mouse Y") ));
+		flight.AxisControl(new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y") ));
 		if(SimpleControl)
 		{
 			flight.DirectVelocity = false;
@@ -104,13 +103,12 @@ public class PlayerController : MonoBehaviour {
 		{
 			// get axis control from device acceleration
 			Vector3 acceleration = Input.acceleration;
-			Vector2 accValActive = new Vector2 (acceleration.x, (acceleration.y + 0.3f) * 0.5f) * 1;
+			Vector2 accValActive = new Vector2 (acceleration.x, acceleration.normalized.y);
 			flight.FixedX = false;
 			flight.FixedY = false;
 			flight.FixedZ = true;
-			
 			flight.AxisControlTilt (accValActive);
-			flight.TurnControlTilt (accValActive.x);
+			flight.TurnControlTilt (accValActive.x * 2f);
 		} 
 		else 
 		{

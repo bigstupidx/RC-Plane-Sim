@@ -16,6 +16,10 @@ public class PlaneStatAdjustment : MonoBehaviour
 		var armour = PlaneAction.FindStatType (PlaneAction.Stat.Type.Armour);
 		GetComponent<DamageManager> ().HP = (int)armour.levels [armour.currentLevel].value;
 
+		var spd = PlaneAction.FindStatType (PlaneAction.Stat.Type.Speed);
+		GetComponent<FlightSystem>().Speed = spd.levels [spd.currentLevel].value;
+		GetComponent<FlightSystem>().SpeedMax = spd.levels [spd.currentLevel].value;
+
 		var mgun = PlaneAction.FindStatType (PlaneAction.Stat.Type.Machinegun);
 		var mtime = PlaneAction.FindStatType (PlaneAction.Stat.Type.GunFireTime);
 		var mheat = PlaneAction.FindStatType (PlaneAction.Stat.Type.GunHeatTime);

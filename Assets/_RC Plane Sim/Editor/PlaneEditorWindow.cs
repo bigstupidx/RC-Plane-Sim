@@ -54,6 +54,11 @@ public class PlaneEditorWindow : EditorWindow
 			target.stat.Add(new PlaneAction.Stat());
 		}
 
+		if(target.stat.Count < 8)
+		{
+			target.stat.Add(new PlaneAction.Stat());
+		}
+
 		PlaneAction.Stat stat;
 
 		for(int j = 0; j < target.stat.Count; j++)

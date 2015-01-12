@@ -12,6 +12,7 @@ public class ProgressController : MonoBehaviour
     public static int exp;
     public static int goldAdd;
     public static int expAdd;
+	public static int killAdd;
 	public static bool isSas;
 	public static int sasBonus = 2;
 	public static bool[] planeLocked;
@@ -73,11 +74,14 @@ public class ProgressController : MonoBehaviour
 		stats = Deserialize(PlayerPrefs.GetString ("Planes")) as List<List<PlaneAction.Stat>>;
 		planeLocked = Deserialize (PlayerPrefs.GetString ("Locked")) as bool[];
 
-		var planesArray = GameObject.FindObjectsOfType<PlaneAction> ();
-		for(int i = 0; i < planesArray.Length; i++)
+		if(stats != null)
 		{
-			planesArray[i].stat = stats[i];
-			planesArray[i].isOwned = planeLocked[i];
+			var planesArray = GameObject.FindObjectsOfType<PlaneAction> ();
+			for(int i = 0; i < planesArray.Length; i++)
+			{
+				planesArray[i].stat = stats[i];
+				planesArray[i].isOwned = planeLocked[i];
+			}
 		}
     }
 

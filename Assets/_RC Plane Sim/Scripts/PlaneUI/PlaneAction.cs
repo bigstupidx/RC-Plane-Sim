@@ -23,7 +23,8 @@ public class PlaneAction : MonoBehaviour
 			Range,
 			RocketsReload,
 			GunFireTime,
-			GunHeatTime
+			GunHeatTime,
+			Speed
 		}
 		
 		public Type type;

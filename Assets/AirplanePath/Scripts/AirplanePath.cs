@@ -151,9 +151,20 @@ public class AirplanePath : MonoBehaviour
 		               "Try moving nodes a little.", this);
 		enabled = false;
 	}
+	private float respawnTime;
+	public void StartRespawn()
+	{
+		respawnTime = 3 + Time.timeSinceLevelLoad;
+	}
 	
 	void Update () 
 	{
+		if(respawnTime != 0 && respawnTime < Time.timeSinceLevelLoad)
+		{
+			plane.gameObject.SetActive(true);
+			respawnTime = 0;
+		}
+
 		if (Playing && plane != null)
 		{
 			//Find Bezier speed
