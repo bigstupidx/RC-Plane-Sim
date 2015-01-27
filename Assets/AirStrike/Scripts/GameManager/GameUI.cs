@@ -33,7 +33,7 @@ public class GameUI : MonoBehaviour
 			play.Active = true;
 				
 			GUI.skin.label.alignment = TextAnchor.MiddleCenter;
-			GUI.Label (new Rect ((Screen.width - 200) / 2, 0, 200, 50), "ARMOR " + play.GetComponent<DamageManager> ().HP);
+			GUI.Label (new Rect ((Screen.width - Screen.width * 0.1f) / 2, Screen.height * 0.03f, Screen.width * 0.15f, Screen.width * 0.05f), (int)((play.GetComponent<DamageManager> ().HP / play.GetComponent<DamageManager> ().HPmax) * 100) + "%");
 
 			if(transform.position.x < -1000 || transform.position.x > 1000 || transform.position.z < -1000 || transform.position.z > 1000)
 			{
@@ -41,7 +41,7 @@ public class GameUI : MonoBehaviour
 				GUI.Label (new Rect (Screen.width / 2 - 300, 200, 600, 100), "Come back to battle zone or your plane will be crashed");
 			}
 
-			GUI.skin.label.fontSize = 16;
+			GUI.skin.label.fontSize = 26;
 		}
 		else if(Mode != 1)
 		{

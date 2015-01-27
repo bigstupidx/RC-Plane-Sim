@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour {
 		
 		if(flight)
 		directVelBack = flight.DirectVelocity;
+		Acceleration = UIController.acceleration;
+		AccelerationSensitivity = TiltSensativity.sensativity;
 	}
 	
 	void Update () 
@@ -41,7 +43,7 @@ public class PlayerController : MonoBehaviour {
 		if(!flight || !Active)
 			return;
 		SimpleControl = true;
-		Acceleration = UIController.acceleration;
+
 		#if UNITY_EDITOR || UNITY_WEBPLAYER || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX
 		// On Desktop
 		DesktopController();
@@ -103,12 +105,13 @@ public class PlayerController : MonoBehaviour {
 		{
 			// get axis control from device acceleration
 			Vector3 acceleration = Input.acceleration;
-			Vector2 accValActive = new Vector2 (acceleration.x, acceleration.normalized.y);
+			Vector2 accValActive = new Vector2 (acceleration.x, (acceleration.y + 0.3f) * 0.5f) * AccelerationSensitivity;
 			flight.FixedX = false;
 			flight.FixedY = false;
 			flight.FixedZ = true;
-			flight.AxisControlTilt (accValActive);
-			flight.TurnControlTilt (accValActive.x * 2f);
+			
+			flight.AxisControl (accValActive);
+			flight.TurnControl (accValActive.x);
 		} 
 		else 
 		{

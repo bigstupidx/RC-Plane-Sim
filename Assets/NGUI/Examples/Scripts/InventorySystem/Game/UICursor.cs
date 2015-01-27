@@ -61,8 +61,7 @@ public class UICursor : MonoBehaviour
 
 		if(Input.GetMouseButton(0))
 		{
-			if( Input.mousePosition.x < Screen.width * 0.25f &&
-			   Input.mousePosition.y < Screen.height * 0.35f)
+			if( Input.mousePosition.x < Screen.width * 0.4f)
 			{
 				GetComponent<UISprite>().enabled = true;
 			}

@@ -15,15 +15,15 @@ public class UpgradeSlot : MonoBehaviour
 		PlaneAction.Stat stat = PlaneAction.FindStatType (type);
 
 		if (stat == null)
-						return;
-
+			return;
 		transform.FindChild("Stat Name").GetComponent<UILabel>().text = stat.type.ToString() + ": " + stat.levels[stat.currentLevel].value.ToString();
 		if(stat.levels [stat.currentLevel].cost == 0)
 		{
-			transform.FindChild ("Button - Buy").gameObject.SetActive(false);
+			transform.FindChild ("Button - Buy").transform.localScale = Vector3.zero;
 		}
 		else
 		{
+			transform.FindChild ("Button - Buy").transform.localScale = Vector3.one;
 			transform.FindChild ("Button - Buy").GetComponentInChildren<UILabel> ().text = stat.levels [stat.currentLevel].cost.ToString ();
 		}
 

@@ -152,7 +152,7 @@ public class FlightView : MonoBehaviour
 
 		var enemy = GameObject.FindGameObjectsWithTag("Enemy");
 
-		if(enemy.Length == 0 && TypeAction.type == TypeAction.SURVIVAL && Time.timeScale == 1)
+		if(enemy.Length == 0 && TypeAction.type == TypeAction.SURVIVAL && Time.timeScale == 1 && UIController.current.panelType != PanelType.Type.WinSAS)
 		{
 			Time.timeScale = 0;
 			Screen.lockCursor = false;
@@ -163,7 +163,7 @@ public class FlightView : MonoBehaviour
 			UIController.current.gameObject.SetActive(true);
 		}
 
-		if(gameTime != 0f && gameTime < Time.timeSinceLevelLoad && TypeAction.type == TypeAction.FREE_FOR_ALL)
+		if(gameTime != 0f && gameTime < Time.timeSinceLevelLoad && TypeAction.type == TypeAction.FREE_FOR_ALL && UIController.current.panelType != PanelType.Type.WinSAS)
 		{
 			Time.timeScale = 0;
 			Screen.lockCursor = false;
@@ -174,7 +174,7 @@ public class FlightView : MonoBehaviour
 			UIController.current.gameObject.SetActive(true);
 		}
 
-		if(dieTime != 0f && dieTime < Time.timeSinceLevelLoad && TypeAction.type == TypeAction.SURVIVAL)
+		if(dieTime != 0f && dieTime < Time.timeSinceLevelLoad && TypeAction.type == TypeAction.SURVIVAL && UIController.current.panelType != PanelType.Type.WinSAS)
 		{
 			Time.timeScale = 0;
 			Screen.lockCursor = false;

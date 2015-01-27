@@ -38,17 +38,17 @@ public class PlaneVisualStat : MonoBehaviour
 			value2 = param2.levels[param1.currentLevel].value;
 
 			value = (value1 / 2.83f) + (value2 / 35) + 1;
-			roundValue = Mathf.Min((int)value, 20);	
+			roundValue = (int)value;	
 
 			transform.FindChild("Stat Param").GetComponent<UILabel>().text = roundValue.ToString();
 
-			for(; j <= roundValue / 2; j++)
+			for(; j <= Mathf.Min(roundValue, 20) / 2; j++)
 			{
-				transform.FindChild("Plane - StatDelim" + j).gameObject.SetActive(true);
+				transform.FindChild("Plane - StatDelim" + j).transform.localScale = Vector3.one;
 			}
 			for(; j <= 10; j++)
 			{
-				transform.FindChild("Plane - StatDelim" + j).gameObject.SetActive(false);
+				transform.FindChild("Plane - StatDelim" + j).transform.localScale = Vector3.zero;
 			}
 			break;
 		case Type.Firepower:
@@ -59,17 +59,17 @@ public class PlaneVisualStat : MonoBehaviour
 			value2 = param2.levels[param1.currentLevel].value;
 			
 			value = (value1 / 2.83f) + (value2 / 35) + 1;
-			roundValue = Mathf.Min((int)value, 20);
+			roundValue = (int)value;
 			
 			transform.FindChild("Stat Param").GetComponent<UILabel>().text = roundValue.ToString();
 
-			for(; j <= roundValue / 2; j++)
+			for(; j <= Mathf.Min(roundValue, 20) / 2; j++)
 			{
-				transform.FindChild("Plane - StatDelim" + j).gameObject.SetActive(true);
+				transform.FindChild("Plane - StatDelim" + j).transform.localScale = Vector3.one;
 			}
 			for(; j <= 10; j++)
 			{
-				transform.FindChild("Plane - StatDelim" + j).gameObject.SetActive(false);
+				transform.FindChild("Plane - StatDelim" + j).transform.localScale = Vector3.zero;
 			}
 			break;
 		case Type.Accuracy:
@@ -80,17 +80,17 @@ public class PlaneVisualStat : MonoBehaviour
 			value2 = param2.levels[param1.currentLevel].value;
 			
 			value = (value1 / 2.83f) + (value2 / 35) + 1;
-			roundValue = Mathf.Min((int)value, 20);	
+			roundValue = (int)value;	
 			
 			transform.FindChild("Stat Param").GetComponent<UILabel>().text = roundValue.ToString();
 
-			for(; j <= roundValue / 2; j++)
+			for(; j <= Mathf.Min(roundValue, 20) / 2; j++)
 			{
-				transform.FindChild("Plane - StatDelim" + j).gameObject.SetActive(true);
+				transform.FindChild("Plane - StatDelim" + j).transform.localScale = Vector3.one;
 			}
 			for(; j <= 10; j++)
 			{
-				transform.FindChild("Plane - StatDelim" + j).gameObject.SetActive(false);
+				transform.FindChild("Plane - StatDelim" + j).transform.localScale = Vector3.zero;
 			}
 			break;
 		case Type.Armor:
@@ -99,17 +99,17 @@ public class PlaneVisualStat : MonoBehaviour
 			value1 = param1.levels[param1.currentLevel].value;
 			
 			value = (value1 / 1382f) * 20f;
-			roundValue = Mathf.Min((int)value, 20);	
+			roundValue = (int)value;	
 			
 			transform.FindChild("Stat Param").GetComponent<UILabel>().text = roundValue.ToString();
 
-			for(; j <= roundValue / 2; j++)
+			for(; j <= Mathf.Min(roundValue, 20) / 2; j++)
 			{
-				transform.FindChild("Plane - StatDelim" + j).gameObject.SetActive(true);
+				transform.FindChild("Plane - StatDelim" + j).transform.localScale = Vector3.one;
 			}
 			for(; j <= 10; j++)
 			{
-				transform.FindChild("Plane - StatDelim" + j).gameObject.SetActive(false);
+				transform.FindChild("Plane - StatDelim" + j).transform.localScale = Vector3.zero;
 			}
 			break;
 		case Type.Speed:
@@ -118,28 +118,28 @@ public class PlaneVisualStat : MonoBehaviour
 			value1 = param1.levels[param1.currentLevel].value;
 
 			value = (value1 / 89f) * 20f;
-			roundValue = Mathf.Min((int)value, 20);	
+			roundValue = (int)value;	
 
-			if(roundValue <= 20)
+			if(roundValue <= 10)
 			{
 				transform.FindChild("Stat Param").GetComponent<UILabel>().text = "Slow";
 			}
-			else if(roundValue <= 40)
+			else if(roundValue <= 14)
 			{
 				transform.FindChild("Stat Param").GetComponent<UILabel>().text = "Medium";
 			}
-			else if(roundValue <= 60)
+			else if(roundValue <= 20)
 			{
 				transform.FindChild("Stat Param").GetComponent<UILabel>().text = "Fast";
 			}
 
-			for(; j <= roundValue / 2; j++)
+			for(; j <= Mathf.Min(roundValue, 20) / 2; j++)
 			{
-				transform.FindChild("Plane - StatDelim" + j).gameObject.SetActive(true);
+				transform.FindChild("Plane - StatDelim" + j).transform.localScale = Vector3.one;
 			}
 			for(; j <= 10; j++)
 			{
-				transform.FindChild("Plane - StatDelim" + j).gameObject.SetActive(false);
+				transform.FindChild("Plane - StatDelim" + j).transform.localScale = Vector3.zero;
 			}
 			break;
 		}

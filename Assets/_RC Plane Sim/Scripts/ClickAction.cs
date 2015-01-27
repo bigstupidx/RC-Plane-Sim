@@ -70,7 +70,7 @@ public class ClickAction : MonoBehaviour
 			
 			camera.Target = _parashute.transform.GetChild(0).gameObject;
 
-			ProgressController.goldAdd += 10;
+			ProgressController.ejectAdd += 10;
 
 			FlightView.eject = false;
 		}
@@ -84,29 +84,33 @@ public class ClickAction : MonoBehaviour
 			UIController.current = UIController.GetPanel(PanelType.Type.PauseMenu);
 			UIController.current.gameObject.SetActive(true);
 		}
-
+		PlaneStatAdjustment stat;
 		switch(action)
 		{
 		case ActionType.Fire1:
-			if(isGun )
+			stat = FindObjectOfType<PlaneStatAdjustment>();
+			if(isGun)
 			{ 
 				if(fireTime < Time.timeSinceLevelLoad)
 				{
-					PlaneStatAdjustment stat;
-					stat = FindObjectOfType<PlaneStatAdjustment>();
 					heatTime = Time.timeSinceLevelLoad + stat.minigun.AmmoMax;
 				}
 				if(heatTime > Time.timeSinceLevelLoad)
 				{
-					GetComponent<UISprite>().spriteName = "machine_gun_fire_stopped";
+					GetComponent<UISprite>().fillAmount = 1 - (heatTime - Time.timeSinceLevelLoad) / stat.minigun.AmmoMax;
 				}
 				else
 				{
 					FlightView camera = FindObjectOfType<FlightView>();camera = FindObjectOfType<FlightView>();
 					camera.Target.GetComponent<FlightSystem>().WeaponControl.LaunchWeapon(0);
-					GetComponent<UISprite>().spriteName = "machine_gun_fire";
 				}
 			}
+
+			GetComponent<UISprite>().fillAmount = 1 - (heatTime - Time.timeSinceLevelLoad) / stat.minigun.AmmoMax;
+			break;
+		case ActionType.Fire2:
+			stat = FindObjectOfType<PlaneStatAdjustment>();
+			GetComponent<UISprite>().fillAmount = 1 - (heatTime - Time.timeSinceLevelLoad) / stat.rocket.ReloadTime;
 			break;
 		}
 	}
@@ -115,6 +119,9 @@ public class ClickAction : MonoBehaviour
 	{
 		switch(action)
 		{
+		case ActionType.Fire1:
+			isGun = false;
+			break;
 		case ActionType.PopUpLevel2:
 			if(ProgressController.GetPlayerLevel() >= unlockMap[0])
 			{
@@ -185,7 +192,7 @@ public class ClickAction : MonoBehaviour
 			else if(TypeAction.type == TypeAction.SURVIVAL)
 			{
 				GameObject.Find("KillsLabelText").GetComponent<UILabel>().text = "WAVES CLEARED:";
-				if(FindObjectOfType<FlightView>().Target == null)
+				if(FindObjectOfType<FlightView>().Target == null || FindObjectOfType<FlightView>().Target.CompareTag("Parashute"))
 				{
 					GameObject.Find("Button - Next").GetComponent<UISprite>().enabled = false;
 					GameObject.Find("Button - Ok").GetComponent<UISprite>().enabled = true;
@@ -230,6 +237,11 @@ public class ClickAction : MonoBehaviour
 			isGun = true;
 			break;
 		case ActionType.Fire2:
+			if(heatTime < Time.timeSinceLevelLoad)
+			{
+				stat = FindObjectOfType<PlaneStatAdjustment>();
+				heatTime = Time.timeSinceLevelLoad + stat.rocket.ReloadTime;
+			}
 			camera = FindObjectOfType<FlightView>();
 			camera.Target.GetComponent<FlightSystem>().WeaponControl.LaunchWeapon(1);
 			break;
@@ -281,6 +293,13 @@ public class ClickAction : MonoBehaviour
 		case ActionType.Gold4:
 			break;
 		case ActionType.SinglePlayer:
+			camera = FindObjectOfType<FlightView>();
+
+			if(camera != null)
+			{
+				camera.enabled = false;
+			}
+
 			UIController.HidePanels();
 			Time.timeScale = 1;
 			if(Application.loadedLevel != 2)  LevelsLoader.LoadLevel(2);

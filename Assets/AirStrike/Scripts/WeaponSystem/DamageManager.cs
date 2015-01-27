@@ -8,8 +8,8 @@ public class DamageManager : MonoBehaviour
 {
     public AudioClip[] HitSound;
     public GameObject Effect;
-    public int HP = 100;
-	private int HPmax;
+    public float HP = 100;
+	public float HPmax;
 	public ParticleSystem OnFireParticle;
 	
     private void Start()

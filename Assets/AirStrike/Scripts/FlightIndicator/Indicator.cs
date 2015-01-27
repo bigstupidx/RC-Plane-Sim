@@ -34,39 +34,37 @@ public class Indicator : MonoBehaviour
 
 	void Awake ()
 	{
-		if (CockpitCamera.Length <= 0) {
-			if (this.transform.GetComponentsInChildren (typeof(Camera)).Length > 0) {
-				var cams = this.transform.GetComponentsInChildren (typeof(Camera));
-				CockpitCamera = new Camera[cams.Length];
-				for (int i=0; i<cams.Length; i++) {
-					CockpitCamera [i] = cams [i].camera;
-				}
-			}
-		}
 		flight = this.GetComponent<FlightSystem> ();
 	}
 	
 	void Start ()
 	{
-
+		Mode = NavMode.Third;
 	}
 
 	public void DrawNavEnemy ()
 	{
 		// find all target in TargetTag[]
-		for (int t=0; t<TargetTag.Length; t++) {
-			if (GameObject.FindGameObjectsWithTag (TargetTag [t]).Length > 0) {
+		for (int t = 0; t < TargetTag.Length; t++) 
+		{
+			if (GameObject.FindGameObjectsWithTag (TargetTag [t]).Length > 0) 
+			{
 				GameObject[] objs = GameObject.FindGameObjectsWithTag (TargetTag [t]);
-				for (int i = 0; i < objs.Length; i++) {
-					if (objs [i]) {
+				for (int i = 0; i < objs.Length; i++) 
+				{
+					if (objs [i]) 
+					{
 						Vector3 dir = (objs [i].transform.position - transform.position).normalized;
 						float direction = Vector3.Dot (dir, transform.forward);
-						if (direction >= 0.7f) {
+
+						if (direction >= 0.7f) 
+						{
 							float dis = Vector3.Distance (objs [i].transform.position, transform.position);
-							if (DistanceSee > dis) {
+
+							if (DistanceSee > dis) 
+							{
 								// Draw the indicator
 								DrawTargetLockon (objs [i].transform, t);
-							
 							}
 						}
 					}
@@ -77,9 +75,11 @@ public class Indicator : MonoBehaviour
 
 	void OnGUI ()
 	{
-		if (Show) {
+		if (Show) 
+		{
 			GUI.color = new Color (1, 1, 1, Alpha);
-			switch (Mode) {
+			switch (Mode) 
+			{
 			case NavMode.Third:
 				if (Crosshair)
 					GUI.DrawTexture (new Rect ((Screen.width / 2 - Crosshair.width / 2) + CrosshairOffset.x, (Screen.height / 2 - Crosshair.height / 2) + CrosshairOffset.y, Crosshair.width, Crosshair.height), Crosshair);	
@@ -91,39 +91,25 @@ public class Indicator : MonoBehaviour
 				DrawNavEnemy ();
 				break;
 			case NavMode.None:
-				
 				break;
 			}
-
-			
 		}
 	}
 	
 	public void DrawTargetLockon (Transform aimtarget, int type)
 	{
-		if (Camera.current && Camera.current.camera != null) {
-			Vector3 dir = (aimtarget.position - Camera.current.camera.transform.position).normalized;
-			float direction = Vector3.Dot (dir, Camera.current.camera.transform.forward);
-			if (direction > 0.5f) {
-				Vector3 screenPos = Camera.current.camera.WorldToScreenPoint (aimtarget.transform.position);
+		if (Camera.main && Camera.main.camera != null) 
+		{
+			Vector3 dir = (aimtarget.position - Camera.main.transform.position).normalized;
+			float direction = Vector3.Dot (dir, Camera.main.transform.forward);
+			
+			if (direction > 0.5f) 
+			{
+				Vector3 screenPos = Camera.main.WorldToScreenPoint (aimtarget.transform.position);
 				float distance = Vector3.Distance (transform.position, aimtarget.transform.position);
-				
-				GUI.DrawTexture (new Rect (screenPos.x - NavTexture [type].width / 2, Screen.height - screenPos.y - NavTexture [type].height / 2, NavTexture [type].width, NavTexture [type].height), NavTexture [type]);
+				Rect position = new Rect (screenPos.x - NavTexture [type].width / 2, Screen.height - screenPos.y - NavTexture [type].height / 2, NavTexture [type].width, NavTexture [type].height);
+				GUI.DrawTexture (position, NavTexture [type]);
             	
-			}
-		}
-	}
-	
-	void Update ()
-	{
-		// check a current camera
-		Mode = NavMode.Third;
-		for (int i=0; i<CockpitCamera.Length; i++) {
-			if (CockpitCamera [i] != null) {
-				if (CockpitCamera [i].camera.enabled) {
-					if (i == PrimaryCameraIndex)
-						Mode = NavMode.Cockpit;	
-				} 
 			}
 		}
 	}

@@ -61,6 +61,7 @@ public class WeaponLauncher : WeaponBase
 			}
 		}
 
+		CurrentCamera = Camera.main;
 	}
 
 	[HideInInspector]
@@ -71,12 +72,16 @@ public class WeaponLauncher : WeaponBase
 	private void rayAiming ()
 	{
 		RaycastHit hit;
-		if (Physics.Raycast (transform.position, this.transform.forward, out hit, MaxAimRange)) {
-			if (Missile != null && hit.collider.tag != Missile.tag) {
+		if (Physics.Raycast (transform.position, this.transform.forward, out hit, MaxAimRange)) 
+		{
+			if (Missile != null && hit.collider.tag != Missile.tag) 
+			{
 				AimPoint = hit.point;
 				AimObject = hit.collider.gameObject;
 			}
-		} else {
+		} 
+		else 
+		{
 			AimPoint = this.transform.position + (this.transform.forward * MaxAimRange);
 			AimObject = null;
 		}
@@ -92,20 +97,6 @@ public class WeaponLauncher : WeaponBase
 	
 	private void Update ()
 	{
-		if(CurrentCamera == null){
-			
-			CurrentCamera = Camera.main;
-			
-			if(CurrentCamera == null)
-				CurrentCamera = Camera.current;
-		}
-		if(Camera.current!=null){
-			if(CurrentCamera != Camera.current){
-				CurrentCamera = Camera.current;
-			}
-		}
-		
-		
 		if (OnActive) 
 		{
 			if (TorqueObject) 
@@ -237,35 +228,46 @@ public class WeaponLauncher : WeaponBase
 		if(!ShowCrosshair)
 			return;
 		
-		if (CurrentCamera) {
+		if (CurrentCamera) 
+		{
 			Vector3 screenPosAim = CurrentCamera.WorldToScreenPoint (AimPoint);
 			crosshairPos += ((screenPosAim - crosshairPos) / 5);
-			if (CrosshairTexture) {
-				GUI.DrawTexture (new Rect (crosshairPos.x - CrosshairTexture.width / 2, Screen.height - crosshairPos.y - CrosshairTexture.height / 2, CrosshairTexture.width, CrosshairTexture.height), CrosshairTexture);
-				
+			if (CrosshairTexture) 
+			{
+				Rect position = new Rect (crosshairPos.x - (Screen.width * 0.03f / 2) / 2, Screen.height - crosshairPos.y - (Screen.width * 0.03f / 2), Screen.width * 0.03f, Screen.width * 0.03f);
+				GUI.DrawTexture (position, CrosshairTexture);
 			}
 		}
 	}
 
 	private void OnGUI ()
 	{
-		if (OnActive) {
-			if (Seeker) {
+		if (OnActive) 
+		{
+			if (Seeker) 
+			{
            
-				if (target) {
+				if (target) 
+				{
 					DrawTargetLockon (target.transform, true);
 				}
             
-				for (int t=0; t<TargetTag.Length; t++) {
-					if (GameObject.FindGameObjectsWithTag (TargetTag [t]).Length > 0) {
+				for (int t = 0; t < TargetTag.Length; t++) 
+				{
+					if (GameObject.FindGameObjectsWithTag (TargetTag [t]).Length > 0) 
+					{
 						GameObject[] objs = GameObject.FindGameObjectsWithTag (TargetTag [t]);
-						for (int i = 0; i < objs.Length; i++) {
-							if (objs [i]) {
+						for (int i = 0; i < objs.Length; i++) 
+						{
+							if (objs [i]) 
+							{
 								Vector3 dir = (objs [i].transform.position - transform.position).normalized;
 								float direction = Vector3.Dot (dir, transform.forward);
-								if (direction >= AimDirection) {
+								if (direction >= AimDirection) 
+								{
 									float dis = Vector3.Distance (objs [i].transform.position, transform.position);
-									if (DistanceLock > dis) {
+									if (DistanceLock > dis) 
+									{
 										DrawTargetLockon (objs [i].transform, false);
 									}
 								}

@@ -11,6 +11,7 @@ public class ProgressController : MonoBehaviour
     public static int gold;
     public static int exp;
     public static int goldAdd;
+	public static int ejectAdd;
     public static int expAdd;
 	public static int killAdd;
 	public static bool isSas;
