@@ -81,11 +81,6 @@ public class DamageManager : MonoBehaviour
 
 			ProgressController.goldAdd += 10 * SwipeAction.levelDifficult;
 
-			if(TypeAction.type == TypeAction.SURVIVAL)
-			{
-				ProgressController.expAdd += 50 * SwipeAction.levelDifficult;
-			}
-
 			var aishoot = transform.GetComponentInParent<AirplanePath>();
 			if(aishoot && TypeAction.type == TypeAction.FREE_FOR_ALL)
 			{
@@ -96,7 +91,7 @@ public class DamageManager : MonoBehaviour
 		}
 		else
 		{
-			Camera.main.GetComponent<FlightView>().Target.GetComponent<FlightSystem>().enabled = false;
+			FlightView.Target.GetComponent<FlightSystem>().enabled = false;
 			FlightView.eject = true;
 		}
     }

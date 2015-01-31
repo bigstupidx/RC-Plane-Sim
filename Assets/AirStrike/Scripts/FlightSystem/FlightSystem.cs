@@ -70,11 +70,18 @@ public class FlightSystem : MonoBehaviour
 		if (!this.rigidbody)
 			return;
 
+		if(FlightView.Target == null || FlightView.Target.CompareTag("Parashute"))
+		{
+			return;
+		}
+
 		Quaternion AddRot = Quaternion.identity;
 		Vector3 velocityTarget = Vector3.zero;
 		
-		if (AutoPilot) {// if auto pilot
-			if (FollowTarget) {
+		if (AutoPilot) 
+		{// if auto pilot
+			if (FollowTarget) 
+			{
 				// rotation facing to the positionTarget
 				positionTarget = Vector3.Lerp (positionTarget, PositionTarget, Time.fixedDeltaTime * DampingTarget);
 				Vector3 relativePoint = this.transform.InverseTransformPoint (positionTarget).normalized;
@@ -84,12 +91,15 @@ public class FlightSystem : MonoBehaviour
 
 			}
 			velocityTarget = (rigidbody.rotation * Vector3.forward) * (Speed + MoveSpeed);
-		} else {
+		} 
+		else 
+		{
 			// axis control by input
 			AddRot.eulerAngles = new Vector3 (pitch, yaw, -roll);
 			mainRot *= AddRot;
 			
-			if (SimpleControl) {
+			if (SimpleControl) 
+			{
 				Quaternion saveQ = mainRot;
 				
 				Vector3 fixedAngles  = new Vector3 (mainRot.eulerAngles.x, mainRot.eulerAngles.y, mainRot.eulerAngles.z);
@@ -113,9 +123,12 @@ public class FlightSystem : MonoBehaviour
 			
 		}
 		// add velocity to the riggidbody
-		if(DirectVelocity){
+		if(DirectVelocity)
+		{
 			rigidbody.velocity = velocityTarget;
-		}else{
+		}
+		else
+		{
 			rigidbody.velocity = Vector3.Lerp (rigidbody.velocity, velocityTarget, Time.fixedDeltaTime * DampingVelocity);
 		}
 		yaw = Mathf.Lerp (yaw, 0, Time.deltaTime);

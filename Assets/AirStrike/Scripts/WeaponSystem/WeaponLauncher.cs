@@ -199,24 +199,30 @@ public class WeaponLauncher : WeaponBase
 		if (!ShowHUD)
 			return;
 		
-		if (CurrentCamera) {
+		if (CurrentCamera) 
+		{
 			Vector3 dir = (aimtarget.position - CurrentCamera.transform.position).normalized;
 			float direction = Vector3.Dot (dir, CurrentCamera.transform.forward);
-			if (direction > 0.5f) {
+			if (direction > 0.5f) 
+			{
 				Vector3 screenPos = CurrentCamera.WorldToScreenPoint (aimtarget.transform.position);
 				float distance = Vector3.Distance (transform.position, aimtarget.transform.position);
-				if (locked) {
+				if (locked) 
+				{
 					if (TargetLockedTexture)
 						GUI.DrawTexture (new Rect (screenPos.x - (TargetLockedTexture.width / 2), Screen.height - screenPos.y - (TargetLockedTexture.height / 2), TargetLockedTexture.width, TargetLockedTexture.height), TargetLockedTexture);
-					GUI.Label (new Rect (screenPos.x + 40, Screen.height - screenPos.y, 200, 30), aimtarget.name + " " + Mathf.Floor (distance) + "m.");
-				} else {
+				} 
+				else 
+				{
 					if (TargetLockOnTexture)
 						GUI.DrawTexture (new Rect (screenPos.x - TargetLockOnTexture.width / 2, Screen.height - screenPos.y - TargetLockOnTexture.height / 2, TargetLockOnTexture.width, TargetLockOnTexture.height), TargetLockOnTexture);
 				}
 				
             	
 			}
-		} else {
+		} 
+		else 
+		{
 			//Debug.Log("Can't Find camera");
 		}
 	}

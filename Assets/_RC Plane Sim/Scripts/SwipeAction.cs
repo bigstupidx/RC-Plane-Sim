@@ -19,6 +19,7 @@ public enum Difficult
 
 public class SwipeAction : MonoBehaviour 
 {
+	private int[] unlock = new int[5] {0, 2, 4, 6, 8 };
 	private string[] DIFFICULT = new string[5] { "EASY", "MEDIUM", "HARD", "MASTER", "NIGHTMARE"};
 
     public UILabel text;
@@ -52,7 +53,31 @@ public class SwipeAction : MonoBehaviour
     {
         iTouchStateFlag = 0;
 
-		text.text = DIFFICULT[currentLevel];
+		if(unlock[currentLevel] > ProgressController.GetPlayerLevel())
+		{
+			text.text = "Unlock on lvl " + unlock[currentLevel];
+		}
+		else
+		{
+			levelDifficult = currentLevel + 1;
+			text.text = DIFFICULT[currentLevel];
+		}
+
+		for(int i = 0; i < twAlpha.Length; i++)
+		{
+			if(unlock[i] > ProgressController.GetPlayerLevel())
+			{
+				twAlphaChild[i].GetComponent<UISprite>().spriteName = "Icon_lock";
+				twAlphaChild[i].GetComponent<UISprite>().width = 54;
+				twAlphaChild[i].GetComponent<UISprite>().height = 82;
+			}
+			else
+			{
+				twAlphaChild[i].GetComponent<UISprite>().spriteName = DIFFICULT[i].ToLower();
+				twAlphaChild[i].GetComponent<UISprite>().width = 130;
+				twAlphaChild[i].GetComponent<UISprite>().height = 126;
+			}
+		}
     }
 
     void Update()
@@ -81,11 +106,9 @@ public class SwipeAction : MonoBehaviour
                 {
                     case SwipeDirection.Left:
 						currentLevel = Mathf.Min(twScale.Length - 1, currentLevel + 1);
-                        levelDifficult = currentLevel + 1;
                         break;
                     case SwipeDirection.Right:
 						currentLevel = Mathf.Max(0, currentLevel - 1);
-                        levelDifficult = currentLevel + 1;
                         break;
                 }
 
@@ -163,7 +186,17 @@ public class SwipeAction : MonoBehaviour
 	public IEnumerator releaseRotation()
 	{
 		yield return new WaitForSeconds (0.2f);
-		text.text = DIFFICULT[currentLevel];
+		
+		if(unlock[currentLevel] > ProgressController.GetPlayerLevel())
+		{
+			text.text = "Unlock on lvl " + unlock[currentLevel];
+		}
+		else
+		{
+			levelDifficult = currentLevel + 1;
+			text.text = DIFFICULT[currentLevel];
+		}
+
 		iTouchStateFlag = 0;
 	}
 

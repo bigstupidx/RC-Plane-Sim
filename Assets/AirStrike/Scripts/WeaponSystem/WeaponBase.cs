@@ -12,7 +12,6 @@ public class DamageBase : MonoBehaviour {
 
 public class WeaponBase : MonoBehaviour {
     public GameObject Owner;
-	[HideInInspector]
 	public GameObject Target;
     public string[] TargetTag;
 	public bool RigidbodyProjectile;

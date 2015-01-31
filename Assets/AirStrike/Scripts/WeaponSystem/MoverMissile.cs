@@ -28,63 +28,63 @@ public class MoverMissile : WeaponBase
 		rigidbody.velocity = new Vector3 (transform.forward.x * Speed * Time.fixedDeltaTime, transform.forward.y * Speed * Time.fixedDeltaTime, transform.forward.z * Speed * Time.fixedDeltaTime);
 		rigidbody.velocity += new Vector3 (Random.Range (-Noise.x, Noise.x), Random.Range (-Noise.y, Noise.y), Random.Range (-Noise.z, Noise.z));
 		
-		if (Speed < SpeedMax) {
+		if (Speed < SpeedMax) 
+		{
 			Speed += SpeedMult * Time.fixedDeltaTime;
 		}
 	}
 
 	private void Update ()
 	{
-		if (Time.time >= (timeCount + LifeTime) - 0.5f) {
-			if (GetComponent<Damage> ()) {
+		if (Time.time >= (timeCount + LifeTime) - 0.5f) 
+		{
+			if (GetComponent<Damage> ()) 
+			{
 				GetComponent<Damage> ().Active ();
 			}
 		}
-		
-		if (Target) {
+
+		if (Target) 
+		{
 			Quaternion rotation = Quaternion.LookRotation (Target.transform.position - transform.transform.position);
 			transform.rotation = Quaternion.Slerp (transform.rotation, rotation, Time.deltaTime * Damping);
-			Vector3 dir = (Target.transform.position - transform.position).normalized;
-			float direction = Vector3.Dot (dir, transform.forward);
-			if (direction < TargetLockDirection) {
-				Target = null;
-			}
 		}
 		
-		if (Seeker) {
-			if (timetorock > DurationLock) {
-				if (!locked && !Target) {
-					float distance = int.MaxValue;
-					for (int t=0; t<TargetTag.Length; t++) {
-						if (GameObject.FindGameObjectsWithTag (TargetTag [t]).Length > 0) {
-							GameObject[] objs = GameObject.FindGameObjectsWithTag (TargetTag [t]);
-
-							for (int i = 0; i < objs.Length; i++) {
-								if (objs [i]) {
-									Vector3 dir = (objs [i].transform.position - transform.position).normalized;
-									float direction = Vector3.Dot (dir, transform.forward);
-									float dis = Vector3.Distance (objs [i].transform.position, transform.position);
-									if (direction >= TargetLockDirection) {
-										if (DistanceLock > dis) {
-											if (distance > dis) {
-												distance = dis;
-												Target = objs [i];
-											}
-											locked = true;
-										}
-									}
+		if (Seeker) 
+		{
+			for (int t = 0; t < TargetTag.Length; t++) 
+			{
+				if (GameObject.FindGameObjectsWithTag (TargetTag [t]).Length > 0) 
+				{
+					GameObject[] objs = GameObject.FindGameObjectsWithTag (TargetTag [t]);
+					for (int i = 0; i < objs.Length; i++) 
+					{
+						if (objs [i]) 
+						{
+							Vector3 dir = (objs [i].transform.position - transform.position).normalized;
+							float direction = Vector3.Dot (dir, transform.forward);
+							
+							if (direction >= 0.7f) 
+							{
+								float dis = Vector3.Distance (objs [i].transform.position, transform.position);
+								
+								if (DistanceLock > dis) 
+								{
+									// Draw the indicator
+									Target = objs [i];
 								}
 							}
 						}
 					}
 				}
-			} else {
-				timetorock += 1;
 			}
 
-			if (Target) {
+			if (Target) 
+			{
 				
-			} else {
+			} 
+			else 
+			{
 				locked = false;
 
 			}

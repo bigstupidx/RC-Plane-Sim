@@ -36,13 +36,8 @@ public class ChangesAfterLevel : MonoBehaviour
 		ProgressController.expAdd *= ProgressController.isSas ? ProgressController.sasBonus : 1;
 
         ProgressController.gold += ProgressController.goldAdd + ProgressController.ejectAdd;
-		ProgressController.goldAdd = 0;
-		ProgressController.ejectAdd = 0;
         
         ProgressController.exp += ProgressController.expAdd;
-        ProgressController.expAdd = 0;
-
-		ProgressController.killAdd = 0;
 
 		if(Application.loadedLevel > 2)
         	ProgressController.SaveProgress();

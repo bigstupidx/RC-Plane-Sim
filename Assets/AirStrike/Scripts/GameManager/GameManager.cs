@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour {
 	// add score function
 	public void AddExp(int exp)
 	{
-		ProgressController.expAdd += exp;
         Score += exp;
 		Killed += 1;
 	}

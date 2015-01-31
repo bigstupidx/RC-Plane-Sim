@@ -15,14 +15,14 @@ public class FlightView : MonoBehaviour
     [HideInInspector]
     public Vector2 zBattle;
 
-	public GameObject Target;// player ( Your Plane)
+	public static GameObject Target;// player ( Your Plane)
 	public GameObject[] Cameras;// all cameras in the game ( in case of able to swith the views).
 	public float FollowSpeedMult = 0.5f; // camera following speed 
 	public float TurnSpeedMult = 5; // camera turning speed 
 	private int indexCamera;// current camera index
 	public Vector3 Offset = new Vector3 (10, 0.5f, 10);// position offset between plan and camera
 	private float dieTime;
-	private float gameTime;
+	public float gameTime;
 	public static int wave;
 	public static bool eject;
 
@@ -129,6 +129,11 @@ public class FlightView : MonoBehaviour
 			PlayerManager player = (PlayerManager)GameObject.FindObjectOfType(typeof(PlayerManager));	
 			Target = player.gameObject;
 		}
+
+		ProgressController.goldAdd = 0;
+		ProgressController.ejectAdd = 0;
+		ProgressController.expAdd = 0;
+		ProgressController.killAdd = 0;
 	}
 
 	Vector3 positionTargetUp; 
@@ -157,6 +162,7 @@ public class FlightView : MonoBehaviour
 			Time.timeScale = 0;
 			Screen.lockCursor = false;
 			ProgressController.killAdd++;
+			ProgressController.expAdd += 50 * ProgressController.killAdd;
 			UIController.current.gameObject.SetActive(false);
 			UIController.previous = UIController.current;
 			UIController.current = UIController.GetPanel(PanelType.Type.WinSAS);
@@ -185,7 +191,7 @@ public class FlightView : MonoBehaviour
 			UIController.current.gameObject.SetActive(true);
 		}
 
-		if(dieTime != 0f && dieTime < Time.timeSinceLevelLoad && TypeAction.type == TypeAction.FREE_FOR_ALL)
+		if(dieTime != 0f && dieTime < Time.timeSinceLevelLoad && (TypeAction.type == TypeAction.FREE_FOR_ALL || TypeAction.type == TypeAction.FREE_FLIGHT))
 		{	
 			Instantiate (PlaneAction.currentPlane.gameObject, positionCamera, quaternionCamera);
 
@@ -203,8 +209,18 @@ public class FlightView : MonoBehaviour
 		if (!Target)
 		{
 			if(dieTime == 0f)
+			{
+				GetComponent<CC_AnalogTV>().enabled = true;
 				dieTime = Time.timeSinceLevelLoad + 3f;
+			}
 			return;
+		}
+		else
+		{
+			if(dieTime == 0f)
+			{
+				GetComponent<CC_AnalogTV>().enabled = false;
+			}
 		}
 
 		this.transform.LookAt (Target.transform.position + Target.transform.forward * Offset.x);
@@ -223,9 +239,8 @@ public class FlightView : MonoBehaviour
 		if(transform.position.x < xBattle.x || transform.position.x > xBattle.y || transform.position.z < zBattle.x || transform.position.z > zBattle.y)
 		{
 			Target.GetComponent<FlightSystem>().enabled = false;
-
+			GetComponent<CC_AnalogTV>().enabled = true;
 			eject = true;
-
 			Screen.lockCursor = false;
 		}
 	}

@@ -33,8 +33,11 @@ public class GameUI : MonoBehaviour
 			play.Active = true;
 				
 			GUI.skin.label.alignment = TextAnchor.MiddleCenter;
-			GUI.Label (new Rect ((Screen.width - Screen.width * 0.1f) / 2, Screen.height * 0.03f, Screen.width * 0.15f, Screen.width * 0.05f), (int)((play.GetComponent<DamageManager> ().HP / play.GetComponent<DamageManager> ().HPmax) * 100) + "%");
-
+			GUI.Label (new Rect ((Screen.width) / 2, Screen.height * 0.03f, Screen.width * 0.15f, Screen.width * 0.05f), (int)((play.GetComponent<DamageManager> ().HP / play.GetComponent<DamageManager> ().HPmax) * 100) + "%");
+			if(GetComponent<FlightView>().gameTime - Time.timeSinceLevelLoad > 0)
+			{
+				GUI.Label (new Rect ((Screen.width - Screen.width * 0.3f) / 2, Screen.height * 0.03f, Screen.width * 0.15f, Screen.width * 0.05f), ToStringTime(GetComponent<FlightView>().gameTime - Time.timeSinceLevelLoad));
+			}
 			if(transform.position.x < -1000 || transform.position.x > 1000 || transform.position.z < -1000 || transform.position.z > 1000)
 			{
 				GUI.skin.label.alignment = TextAnchor.MiddleCenter;
@@ -47,5 +50,14 @@ public class GameUI : MonoBehaviour
 		{
 			play = (PlayerController)GameObject.FindObjectOfType (typeof(PlayerController));
 		}
+	}
+
+	private string ToStringTime(float time)
+	{
+		var minutes = ((int)(time / 60)).ToString();
+		var seconds = ((int)(time % 60)).ToString();
+		if (minutes.Length == 1) minutes = "0" + minutes;
+		if (seconds.Length == 1) seconds = "0" + seconds;
+		return minutes + ":" + seconds;
 	}
 }

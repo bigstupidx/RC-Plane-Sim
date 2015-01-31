@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour {
 		flight = this.GetComponent<FlightSystem>();
 		View = (FlightView)GameObject.FindObjectOfType(typeof(FlightView));
 		// setting all Touch screen controller in the position
-		controllerTouch = new TouchScreenVal (new Rect (0, 0, Screen.width / 4, Screen.height / 3));
+		controllerTouch = new TouchScreenVal (new Rect (0, 0, Screen.width / 2, Screen.height));
 		fireTouch = new TouchScreenVal (new Rect (Screen.width / 2, 0, Screen.width / 2, Screen.height));
 		switchTouch = new TouchScreenVal (new Rect (0, Screen.height - 100, Screen.width / 2, 100));
 		

@@ -33,6 +33,17 @@ public class TypeAction : MonoBehaviour
 				type = 0;
 		}
 
+		if(type == FREE_FLIGHT)
+		{
+			GameObject.FindObjectOfType<SwipeAction>().enabled = false;
+			GameObject.FindObjectOfType<SwipeAction>().transform.localScale = Vector3.zero;
+		}
+		else
+		{
+			GameObject.FindObjectOfType<SwipeAction>().enabled = true;
+			GameObject.FindObjectOfType<SwipeAction>().transform.localScale = Vector3.one;
+		}
+
 		label.text = types[type];
 	}
 }
