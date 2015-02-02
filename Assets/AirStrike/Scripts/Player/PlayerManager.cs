@@ -15,6 +15,7 @@ public class PlayerManager : MonoBehaviour {
 	public PlayerController PlayerControl;
 	[HideInInspector]
 	public Indicator Indicate;
+	public GameObject plane;
 	
 	void Awake(){
 		Indicate = this.GetComponent<Indicator>();

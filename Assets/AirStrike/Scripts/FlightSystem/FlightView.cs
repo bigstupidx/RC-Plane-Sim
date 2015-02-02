@@ -215,13 +215,6 @@ public class FlightView : MonoBehaviour
 			}
 			return;
 		}
-		else
-		{
-			if(dieTime == 0f)
-			{
-				GetComponent<CC_AnalogTV>().enabled = false;
-			}
-		}
 
 		this.transform.LookAt (Target.transform.position + Target.transform.forward * Offset.x);
 		positionTargetUp = Vector3.Lerp(positionTargetUp,(-Target.transform.forward + (Target.transform.up * Offset.y)),Time.fixedDeltaTime * TurnSpeedMult);

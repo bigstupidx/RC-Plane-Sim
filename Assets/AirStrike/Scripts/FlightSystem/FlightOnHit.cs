@@ -4,36 +4,52 @@
 using UnityEngine;
 using System.Collections;
 
-public class FlightOnHit : MonoBehaviour {
-	
-	public string[] Tag = new string[1]{"Scene"};// All scene object tag.
+public class FlightOnHit : MonoBehaviour 
+{
+	public string[] Tag = new string[2]{"Scene", "SceneLimit"};// All scene object tag.
 	public string AirportTag = "Airport";// air port tag.
 	public int Damage = 100;
 	public AudioClip[] SoundOnHit;
-	void Start(){
-		
+
+	void Awake()
+	{
+		if(Camera.main.GetComponent<CC_AnalogTV>() != null)
+			Camera.main.GetComponent<CC_AnalogTV>().enabled = false;
 	}
-	
+
     private void OnCollisionEnter(Collision collision)
     {
 		bool hit = false;
-		
-		for(int i = 0;i<Tag.Length;i++){
-			if(collision.gameObject.tag == Tag[i]){
+		bool off = false;
+
+		for(int i = 0; i < Tag.Length; i++)
+		{
+			if(collision.gameObject.tag == Tag[i])
+			{
+				if(collision.gameObject.tag == "SceneLimit")
+				{
+					off = true;
+				}
+
 				hit = true;
-			}
-			if(collision.gameObject.tag == AirportTag){
-				hit = false;
 			}
 		}
 		
         if (hit)
         {
-			if(SoundOnHit.Length>0)
-			AudioSource.PlayClipAtPoint(SoundOnHit[Random.Range(0,SoundOnHit.Length)],this.transform.position);
-			if(this.GetComponent<DamageManager>())
+			if(SoundOnHit.Length > 0)
+				AudioSource.PlayClipAtPoint(SoundOnHit[Random.Range(0,SoundOnHit.Length)],this.transform.position);
+
+			if(this.GetComponent<DamageManager>() && !off)
 			{
 				this.GetComponent<DamageManager>().Boom(Damage, collision.gameObject);
+			}
+			else
+			{
+				FlightView.Target.GetComponent<FlightSystem>().enabled = false;
+				Camera.main.GetComponent<CC_AnalogTV>().enabled = true;
+				FlightView.eject = true;
+				Screen.lockCursor = false;
 			}
 		}	
     }

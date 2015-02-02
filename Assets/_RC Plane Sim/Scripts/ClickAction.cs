@@ -59,15 +59,17 @@ public class ClickAction : MonoBehaviour
 		if(FlightView.eject && Input.acceleration.magnitude > 2f)
 		{
 			GameObject _parashute = GameObject.Instantiate(parashute) as GameObject;
-			
-			FlightView camera = FindObjectOfType<FlightView>();
-			
+
 			_parashute.transform.GetChild(0).gameObject.SetActive(true);
 			_parashute.transform.GetChild(1).gameObject.SetActive(true);
 			_parashute.transform.position = camera.transform.position;
+
+			FlightView.Target.GetComponent<PlayerManager>().plane.transform.SetParent(_parashute.transform.FindChild("Crate"));
+			FlightView.Target.GetComponent<PlayerManager>().plane.transform.localPosition = Vector3.zero;
+			_parashute.transform.FindChild("Crate").GetComponent<MeshRenderer>().enabled = false;
 			
-			FlightView.Target.GetComponent<DamageManager>().Boom(10000, null);
-			
+			Destroy(FlightView.Target);
+
 			FlightView.Target = _parashute.transform.GetChild(0).gameObject;
 
 			ProgressController.ejectAdd += 10;
@@ -510,7 +512,11 @@ public class ClickAction : MonoBehaviour
 			_parashute.transform.GetChild(1).gameObject.SetActive(true);
 			_parashute.transform.position = camera.transform.position;
 
-			FlightView.Target.GetComponent<DamageManager>().Boom(10000, null);
+			FlightView.Target.GetComponent<PlayerManager>().plane.transform.SetParent(_parashute.transform.FindChild("Crate"));
+			FlightView.Target.GetComponent<PlayerManager>().plane.transform.localPosition = Vector3.zero;
+			_parashute.transform.FindChild("Crate").GetComponent<MeshRenderer>().enabled = false;
+			
+			Destroy(FlightView.Target);
 
 			FlightView.Target = _parashute.transform.GetChild(0).gameObject;
 
