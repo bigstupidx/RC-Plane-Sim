@@ -162,6 +162,7 @@ public class AirplanePath : MonoBehaviour
 		if(respawnTime != 0 && respawnTime < Time.timeSinceLevelLoad)
 		{
 			plane.gameObject.SetActive(true);
+			plane.GetComponentInChildren<DamageManager>().HP = plane.GetComponentInChildren<DamageManager>().HPmax;
 			respawnTime = 0;
 		}
 

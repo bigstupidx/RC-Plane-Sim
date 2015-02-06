@@ -15,12 +15,16 @@ public class TextureAction : MonoBehaviour
 	{
 		if(left)
 		{
-			PlaneAction.currentMaterial = Mathf.Max(0, PlaneAction.currentMaterial - 1);
+			PlaneAction.currentMaterial = PlaneAction.currentMaterial - 1;
+			if(PlaneAction.currentMaterial < 0)
+				PlaneAction.currentMaterial = PlaneAction.currentPlane.materials.Length - 1;
 			label.text = PlaneAction.currentPlane.materials [PlaneAction.currentMaterial].name;
 		}
 		else
 		{
-			PlaneAction.currentMaterial = Mathf.Min(PlaneAction.currentPlane.materials.Length - 1, PlaneAction.currentMaterial + 1);
+			PlaneAction.currentMaterial = PlaneAction.currentMaterial + 1;
+			if(PlaneAction.currentMaterial == PlaneAction.currentPlane.materials.Length)
+				PlaneAction.currentMaterial = 0;
 			label.text = PlaneAction.currentPlane.materials [PlaneAction.currentMaterial].name;
 		}
 		PlaneAction.currentPlane.Adjust();

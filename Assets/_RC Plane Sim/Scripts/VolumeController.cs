@@ -3,8 +3,8 @@ using System.Collections;
 
 public class VolumeController : MonoBehaviour 
 {
-	private float music;
-	private float sound;
+	public float music;
+	public float sound;
 
 	// Use this for initialization
 	void OnLevelWasLoaded (int level) 
@@ -27,7 +27,7 @@ public class VolumeController : MonoBehaviour
 		}
 	}
 
-	private void Adjust ()
+	public void Adjust ()
 	{
 		sound = PlayerPrefs.GetFloat ("Sound");
 		music = PlayerPrefs.GetFloat ("Music");
@@ -56,12 +56,30 @@ public class VolumeController : MonoBehaviour
 		Adjust ();
 	}
 
+	public void ChangeSound(float value)
+	{
+		sound = value;
+		
+		PlayerPrefs.SetFloat ("Sound", sound);
+		
+		Adjust ();
+	}
+
 	public void ChangeMusic()
 	{
 		music = UISlider.current.value;
 
 		PlayerPrefs.SetFloat ("Music", music);
 
+		Adjust ();
+	}
+
+	public void ChangeMusic(float value)
+	{
+		music = value;
+		
+		PlayerPrefs.SetFloat ("Music", music);
+		
 		Adjust ();
 	}
 }

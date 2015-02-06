@@ -21,7 +21,8 @@ public class PanelType : MonoBehaviour
 		PopUpLevel3,
 		PopUpLevel4,
 		PopUpLevel5,
-		WinSAS
+		WinSAS,
+		Exit
     }
 
     public Type panelType;

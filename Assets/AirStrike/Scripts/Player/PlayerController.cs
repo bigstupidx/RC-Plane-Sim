@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour {
 		directVelBack = flight.DirectVelocity;
 		Acceleration = UIController.acceleration;
 		AccelerationSensitivity = TiltSensativity.sensativity;
+
+		GameObject.FindObjectOfType<VolumeController> ().Adjust ();
 	}
 	
 	void Update () 

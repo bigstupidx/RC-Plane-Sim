@@ -43,7 +43,11 @@ public class ClickAction : MonoBehaviour
 		Gold2,
 		Gold3,
 		Gold4,
-		NextWave
+		NextWave,
+		Music,
+		Sound,
+		PopUpExit,
+		ClosePopUpExit
 	}
 
 	public ActionType action;
@@ -56,13 +60,13 @@ public class ClickAction : MonoBehaviour
 
 	void Update()
 	{
-		if(FlightView.eject && Input.acceleration.magnitude > 2f)
+		if(action == ActionType.Eject && FlightView.eject && Input.acceleration.magnitude > 2f)
 		{
 			GameObject _parashute = GameObject.Instantiate(parashute) as GameObject;
 
 			_parashute.transform.GetChild(0).gameObject.SetActive(true);
 			_parashute.transform.GetChild(1).gameObject.SetActive(true);
-			_parashute.transform.position = camera.transform.position;
+			_parashute.transform.position = FlightView.Target.transform.position;
 
 			FlightView.Target.GetComponent<PlayerManager>().plane.transform.SetParent(_parashute.transform.FindChild("Crate"));
 			FlightView.Target.GetComponent<PlayerManager>().plane.transform.localPosition = Vector3.zero;
@@ -73,6 +77,9 @@ public class ClickAction : MonoBehaviour
 			FlightView.Target = _parashute.transform.GetChild(0).gameObject;
 
 			ProgressController.ejectAdd += 10;
+
+			GameObject.Find("Button - Eject").GetComponent<UISprite>().enabled = false;
+			GameObject.Find("Button - Eject").GetComponent<TweenRotation>().enabled = false;
 
 			FlightView.eject = false;
 		}
@@ -128,8 +135,32 @@ public class ClickAction : MonoBehaviour
 
 	void OnEnable()
 	{
+		VolumeController cntrl;
+	
 		switch(action)
 		{
+		case ActionType.Music:
+			cntrl = GameObject.FindObjectOfType<VolumeController>();
+			if(cntrl.music == 0)
+			{
+				GetComponent<UISprite>().spriteName = "Button_BG_reflection_grey";
+			}
+			else
+			{
+				GetComponent<UISprite>().spriteName = "Button_BG_reflection";
+			}
+			break;
+		case ActionType.Sound:
+			cntrl = GameObject.FindObjectOfType<VolumeController>();
+			if(cntrl.sound == 0)
+			{
+				GetComponent<UISprite>().spriteName = "Button_BG_reflection_grey";
+			}
+			else
+			{
+				GetComponent<UISprite>().spriteName = "Button_BG_reflection";
+			}
+			break;
 		case ActionType.Fire1:
 			isGun = false;
 			heatTime = 0;
@@ -147,6 +178,7 @@ public class ClickAction : MonoBehaviour
 			if(ProgressController.GetPlayerLevel() >= unlockMap[0])
 			{
 				transform.GetComponentInChildren<UILabel>().enabled = false;
+				GetComponent<TweenColor>().PlayReverse();
 				collider.enabled = true;
 			}
 			else
@@ -159,6 +191,7 @@ public class ClickAction : MonoBehaviour
 			if(ProgressController.GetPlayerLevel() >= unlockMap[1])
 			{
 				transform.GetComponentInChildren<UILabel>().enabled = false;
+				GetComponent<TweenColor>().PlayReverse();
 				collider.enabled = true;
 			}
 			else
@@ -171,6 +204,7 @@ public class ClickAction : MonoBehaviour
 			if(ProgressController.GetPlayerLevel() >= unlockMap[2])
 			{
 				transform.GetComponentInChildren<UILabel>().enabled = false;
+				GetComponent<TweenColor>().PlayReverse();
 				collider.enabled = true;
 			}
 			else
@@ -183,6 +217,7 @@ public class ClickAction : MonoBehaviour
 			if(ProgressController.isSas)
 			{
 				transform.GetComponentInChildren<UILabel>().enabled = false;
+				GetComponent<TweenColor>().PlayReverse();
 				collider.enabled = true;
 			}
 			else
@@ -297,9 +332,36 @@ public class ClickAction : MonoBehaviour
 	void OnClick()
 	{
 		FlightView camera;
+		VolumeController cntrl;
 
 		switch(action)
 		{
+		case ActionType.Music:
+			cntrl = GameObject.FindObjectOfType<VolumeController>();
+			if(cntrl.music == 0)
+			{
+				GetComponent<UISprite>().spriteName = "Button_BG_reflection";
+				cntrl.ChangeMusic(1);
+			}
+			else
+			{
+				GetComponent<UISprite>().spriteName = "Button_BG_reflection_grey";
+				cntrl.ChangeMusic(0);
+			}
+			break;
+		case ActionType.Sound:
+			cntrl = GameObject.FindObjectOfType<VolumeController>();
+			if(cntrl.sound == 0)
+			{
+				GetComponent<UISprite>().spriteName = "Button_BG_reflection";
+				cntrl.ChangeSound(1);
+			}
+			else
+			{
+				GetComponent<UISprite>().spriteName = "Button_BG_reflection_grey";
+				cntrl.ChangeSound(0);
+			}
+			break;
 		case ActionType.Gold1:
 			ProgressController.gold += 4000;
 			ProgressController.SaveProgress();
@@ -417,6 +479,14 @@ public class ClickAction : MonoBehaviour
 			panel = UIController.GetPanel(PanelType.Type.PopUpSAS);
 			panel.gameObject.SetActive(false);
 			break;
+		case ActionType.PopUpExit:
+			panel = UIController.GetPanel(PanelType.Type.Exit);
+			panel.gameObject.SetActive(true);
+			break;
+		case ActionType.ClosePopUpExit:
+			panel = UIController.GetPanel(PanelType.Type.Exit);
+			panel.gameObject.SetActive(false);
+			break;
 		case ActionType.GamePlayLevel1:
 			if(Application.loadedLevel != 3)  LevelsLoader.LoadLevel(3);
 			break;
@@ -504,23 +574,26 @@ public class ClickAction : MonoBehaviour
 			UIController.current.gameObject.SetActive(true);
 			break;
 		case ActionType.Eject: 
-			GameObject _parashute = GameObject.Instantiate(parashute) as GameObject;
-
-			camera = FindObjectOfType<FlightView>();
-
-			_parashute.transform.GetChild(0).gameObject.SetActive(true);
-			_parashute.transform.GetChild(1).gameObject.SetActive(true);
-			_parashute.transform.position = camera.transform.position;
-
-			FlightView.Target.GetComponent<PlayerManager>().plane.transform.SetParent(_parashute.transform.FindChild("Crate"));
-			FlightView.Target.GetComponent<PlayerManager>().plane.transform.localPosition = Vector3.zero;
-			_parashute.transform.FindChild("Crate").GetComponent<MeshRenderer>().enabled = false;
-			
-			Destroy(FlightView.Target);
-
-			FlightView.Target = _parashute.transform.GetChild(0).gameObject;
-
-			gameObject.SetActive(false);
+			if(FlightView.eject)
+			{
+				GameObject _parashute = GameObject.Instantiate(parashute) as GameObject;
+				
+				_parashute.transform.GetChild(0).gameObject.SetActive(true);
+				_parashute.transform.GetChild(1).gameObject.SetActive(true);
+				_parashute.transform.position = FlightView.Target.transform.position;
+				
+				FlightView.Target.GetComponent<PlayerManager>().plane.transform.SetParent(_parashute.transform.FindChild("Crate"));
+				FlightView.Target.GetComponent<PlayerManager>().plane.transform.localPosition = Vector3.zero;
+				_parashute.transform.FindChild("Crate").GetComponent<MeshRenderer>().enabled = false;
+				
+				Destroy(FlightView.Target);
+				
+				FlightView.Target = _parashute.transform.GetChild(0).gameObject;
+				
+				ProgressController.ejectAdd += 10;
+				
+				FlightView.eject = false;
+			}
 			break;
 		}
 	}

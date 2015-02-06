@@ -92,6 +92,8 @@ public class DamageManager : MonoBehaviour
 		else
 		{
 			FlightView.Target.GetComponent<FlightSystem>().enabled = false;
+			GameObject.Find("Button - Eject").GetComponent<UISprite>().enabled = true;
+			GameObject.Find("Button - Eject").GetComponent<TweenRotation>().enabled = true;
 			FlightView.eject = true;
 		}
     }

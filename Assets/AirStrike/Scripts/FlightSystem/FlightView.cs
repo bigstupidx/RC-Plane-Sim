@@ -9,12 +9,6 @@ using System.Collections;
 
 public class FlightView : MonoBehaviour
 {
-    // Zone of battle
-    [HideInInspector]
-    public Vector2 xBattle;
-    [HideInInspector]
-    public Vector2 zBattle;
-
 	public static GameObject Target;// player ( Your Plane)
 	public GameObject[] Cameras;// all cameras in the game ( in case of able to swith the views).
 	public float FollowSpeedMult = 0.5f; // camera following speed 
@@ -61,9 +55,9 @@ public class FlightView : MonoBehaviour
 	void Start ()
 	{
 		// add this camera to primery
-		positionCamera = transform.GetComponentInParent<Transform>().position;
-		quaternionCamera = transform.GetComponentInParent<Transform>().rotation;
-		
+		positionCamera = transform.position;
+		quaternionCamera = transform.rotation;
+
 		Instantiate (PlaneAction.currentPlane.gameObject, positionCamera, quaternionCamera);
 
 		AddCamera(this.gameObject);
@@ -79,9 +73,7 @@ public class FlightView : MonoBehaviour
 		UIController.previous = UIController.current;
 		UIController.current = UIController.GetPanel(PanelType.Type.GameMenu);
 		UIController.current.gameObject.SetActive(true);
-		
-		xBattle = new Vector2 (-1200, 1200);
-		zBattle = new Vector2 (-1200, 1200);
+
 		AirplanePath[] planes;
 		switch(TypeAction.type)
 		{
@@ -93,12 +85,17 @@ public class FlightView : MonoBehaviour
 				go.GetComponent<FlightOnHit>().Damage = 5 + 1 * SwipeAction.levelDifficult;
 			}
 
-			gameTime = Time.timeSinceLevelLoad + 300;
+			gameTime = Time.timeSinceLevelLoad + 180;
 			break;
 		case TypeAction.SURVIVAL:
 			planes = GameObject.FindObjectsOfType<AirplanePath>();
 			for(int i = 0; i < planes.Length; i++)
 			{
+				if(planes[i].CompareTag("Train"))
+				{
+					continue;
+				}
+
 				if(WaveProps.waveProps[wave, i] != 0)
 				{
 					planes[i].speed = WaveProps.waveStats[WaveProps.waveProps[wave, i], 2] * 3;
@@ -139,6 +136,35 @@ public class FlightView : MonoBehaviour
 	Vector3 positionTargetUp; 
 	void FixedUpdate ()
 	{
+		//NEW
+		var go = GameObject.Find ("Colliders");
+		for(int i = 0; i < go.transform.childCount; i++)
+		{
+			var child = go.transform.GetChild(i);
+			float dis;
+
+			if(child.localScale.x == 0)
+			{
+				dis = Vector2.Distance(new Vector2(0, child.position.z), new Vector2(0, transform.position.z));
+			}
+			else
+			{
+				dis = Vector2.Distance(new Vector2(0, child.position.x), new Vector2(0, transform.position.x));
+			}
+
+			Debug.Log(i + " " + dis);
+			if(dis < 250 && !eject)
+			{
+				GameObject.Find("CrashedLabel").GetComponent<UILabel>().enabled = true;
+				break;
+			}
+			else
+			{
+				GameObject.Find("CrashedLabel").GetComponent<UILabel>().enabled = false;
+			}
+		}
+		//NEW
+
 		bool activecheck = false;
 		for (int i =0; i<Cameras.Length; i++) 
 		{
@@ -174,6 +200,8 @@ public class FlightView : MonoBehaviour
 			Time.timeScale = 0;
 			Screen.lockCursor = false;
 
+			ProgressController.expAdd += 100 * SwipeAction.levelDifficult;
+
 			UIController.current.gameObject.SetActive(false);
 			UIController.previous = UIController.current;
 			UIController.current = UIController.GetPanel(PanelType.Type.WinSAS);
@@ -194,7 +222,9 @@ public class FlightView : MonoBehaviour
 		if(dieTime != 0f && dieTime < Time.timeSinceLevelLoad && (TypeAction.type == TypeAction.FREE_FOR_ALL || TypeAction.type == TypeAction.FREE_FLIGHT))
 		{	
 			Instantiate (PlaneAction.currentPlane.gameObject, positionCamera, quaternionCamera);
-
+			GameObject.Find("Button - Eject").GetComponent<UISprite>().enabled = false;
+			GameObject.Find("Button - Eject").GetComponent<TweenRotation>().enabled = false;
+			eject = false;
 			PlayerManager player = (PlayerManager)GameObject.FindObjectOfType(typeof(PlayerManager));	
 			Target = player.gameObject;
 
@@ -210,7 +240,6 @@ public class FlightView : MonoBehaviour
 		{
 			if(dieTime == 0f)
 			{
-				GetComponent<CC_AnalogTV>().enabled = true;
 				dieTime = Time.timeSinceLevelLoad + 3f;
 			}
 			return;
@@ -227,14 +256,6 @@ public class FlightView : MonoBehaviour
 			if(dieTime == 0f)
 				dieTime = Time.timeSinceLevelLoad + 3f;
 			return;
-		}
-
-		if(transform.position.x < xBattle.x || transform.position.x > xBattle.y || transform.position.z < zBattle.x || transform.position.z > zBattle.y)
-		{
-			Target.GetComponent<FlightSystem>().enabled = false;
-			GetComponent<CC_AnalogTV>().enabled = true;
-			eject = true;
-			Screen.lockCursor = false;
 		}
 	}
 }

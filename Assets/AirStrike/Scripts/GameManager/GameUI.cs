@@ -33,15 +33,15 @@ public class GameUI : MonoBehaviour
 			play.Active = true;
 				
 			GUI.skin.label.alignment = TextAnchor.MiddleCenter;
-			GUI.Label (new Rect ((Screen.width) / 2, Screen.height * 0.03f, Screen.width * 0.15f, Screen.width * 0.05f), (int)((play.GetComponent<DamageManager> ().HP / play.GetComponent<DamageManager> ().HPmax) * 100) + "%");
-			if(GetComponent<FlightView>().gameTime - Time.timeSinceLevelLoad > 0)
+			if(GameObject.Find("LabelGame - Health"))
+				GameObject.Find("LabelGame - Health").GetComponent<UILabel>().text = (int)((play.GetComponent<DamageManager> ().HP / play.GetComponent<DamageManager> ().HPmax) * 100) + "%";
+			if(GetComponent<FlightView>().gameTime - Time.timeSinceLevelLoad > 0 && GameObject.Find("LabelGame - Time"))
 			{
-				GUI.Label (new Rect ((Screen.width - Screen.width * 0.3f) / 2, Screen.height * 0.03f, Screen.width * 0.15f, Screen.width * 0.05f), ToStringTime(GetComponent<FlightView>().gameTime - Time.timeSinceLevelLoad));
+				GameObject.Find("LabelGame - Time").GetComponent<UILabel>().text = ToStringTime(GetComponent<FlightView>().gameTime - Time.timeSinceLevelLoad);
 			}
-			if(transform.position.x < -1000 || transform.position.x > 1000 || transform.position.z < -1000 || transform.position.z > 1000)
+			else if(GameObject.Find("LabelGame - Time"))
 			{
-				GUI.skin.label.alignment = TextAnchor.MiddleCenter;
-				GUI.Label (new Rect (Screen.width / 2 - 300, 200, 600, 100), "Come back to battle zone or your plane will be crashed");
+				GameObject.Find("LabelGame - Time").GetComponent<UILabel>().text = "";
 			}
 
 			GUI.skin.label.fontSize = 26;

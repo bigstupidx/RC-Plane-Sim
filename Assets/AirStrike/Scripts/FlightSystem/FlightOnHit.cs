@@ -13,8 +13,7 @@ public class FlightOnHit : MonoBehaviour
 
 	void Awake()
 	{
-		if(Camera.main.GetComponent<CC_AnalogTV>() != null)
-			Camera.main.GetComponent<CC_AnalogTV>().enabled = false;
+
 	}
 
     private void OnCollisionEnter(Collision collision)
@@ -47,7 +46,8 @@ public class FlightOnHit : MonoBehaviour
 			else
 			{
 				FlightView.Target.GetComponent<FlightSystem>().enabled = false;
-				Camera.main.GetComponent<CC_AnalogTV>().enabled = true;
+				GameObject.Find("Button - Eject").GetComponent<UISprite>().enabled = true;
+				GameObject.Find("Button - Eject").GetComponent<TweenRotation>().enabled = true;
 				FlightView.eject = true;
 				Screen.lockCursor = false;
 			}

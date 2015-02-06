@@ -231,7 +231,7 @@ public class WeaponLauncher : WeaponBase
 
 	private void DrawCrosshair ()
 	{
-		if(!ShowCrosshair)
+		if(!ShowCrosshair || Time.timeScale == 0)
 			return;
 		
 		if (CurrentCamera) 
