@@ -34,10 +34,10 @@ public class ExplosionObject : MonoBehaviour
 
                 if (scale > 0)
                     obj.transform.localScale = new Vector3(scale, scale, scale);
-                if (obj.rigidbody)
+                if (obj.GetComponent<Rigidbody>())
                 {
 					Vector3 force = new Vector3(Random.Range(-Force.x, Force.x), Random.Range(-Force.y, Force.y),Random.Range(-Force.z, Force.z));
-                    obj.rigidbody.AddForce(force);
+                    obj.GetComponent<Rigidbody>().AddForce(force);
                 }
             }
         }

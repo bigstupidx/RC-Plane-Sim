@@ -47,6 +47,9 @@ public class PlaneAction : MonoBehaviour
 	public static List<Stat> currentStat;
 	public static GameObject planeModel;
 	
+	private static UISprite sprite;
+	private static string spriteName;
+
 	void Awake()
 	{
 		if(name.Contains("Superbolt"))
@@ -54,6 +57,9 @@ public class PlaneAction : MonoBehaviour
 			currentStat = stat;
 			currentMaterial = material;
 			currentPlane = plane;
+			sprite = transform.GetChild(0).GetComponent<UISprite>();
+			spriteName = sprite.spriteName;
+			sprite.spriteName = spriteName + "_highlighted";
 		}
 
 		if(!isOwned)
@@ -141,9 +147,14 @@ public class PlaneAction : MonoBehaviour
 		if (planeModel != null)
 						Destroy (planeModel);
 
+		sprite.spriteName = spriteName;
+
 		currentStat = stat;
 		currentMaterial = material;
 		currentPlane = plane;
+		sprite = transform.GetChild(0).GetComponent<UISprite>();
+		spriteName = sprite.spriteName;
+		sprite.spriteName = spriteName + "_highlighted";
 
 		planeModel = Instantiate (plane.gameObject, new Vector3 (-42f, 10f, -20f), Quaternion.identity) as GameObject;
 		planeModel.transform.localScale = new Vector3 (2.5f, 2.5f, 2.5f);

@@ -15,15 +15,15 @@ public class MoverBullet : WeaponBase
 	// move bullet by force
     private void FixedUpdate()
     {
-		if(!this.rigidbody)
+		if(!this.GetComponent<Rigidbody>())
 			return;
 		
         if (!RigidbodyProjectile)
         {
-            rigidbody.velocity = transform.forward*Speed;
+            GetComponent<Rigidbody>().velocity = transform.forward*Speed;
         }else{
-			if(this.rigidbody.velocity.normalized!=Vector3.zero)
-			this.transform.forward = this.rigidbody.velocity.normalized;	
+			if(this.GetComponent<Rigidbody>().velocity.normalized!=Vector3.zero)
+			this.transform.forward = this.GetComponent<Rigidbody>().velocity.normalized;	
 		}
         if (Speed < SpeedMax)
         {

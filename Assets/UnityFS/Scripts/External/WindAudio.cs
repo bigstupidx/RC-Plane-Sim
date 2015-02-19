@@ -32,7 +32,7 @@ public class WindAudio : MonoBehaviour
 			Wind.dopplerLevel = 0.0f;
 		}
 		
-		AicraftRigdbody = gameObject.rigidbody;
+		AicraftRigdbody = gameObject.GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame

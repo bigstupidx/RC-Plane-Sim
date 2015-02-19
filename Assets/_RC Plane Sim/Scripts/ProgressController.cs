@@ -18,6 +18,9 @@ public class ProgressController : MonoBehaviour
 	public static int sasBonus = 2;
 	public static bool[] planeLocked;
 	private static List<List<PlaneAction.Stat>> stats;
+	public static int[] scoreFree = new int[5];
+	public static int[] scoreWave = new int[5];
+	public static int level;
 
 	void Awake () 
     {
@@ -65,6 +68,9 @@ public class ProgressController : MonoBehaviour
 			PlayerPrefs.SetString("Planes", Serialize(stats));
 			PlayerPrefs.SetString("Locked", Serialize(planeLocked));
 		}
+
+		PlayerPrefs.SetString ("ScoreFree", Serialize (scoreFree));
+		PlayerPrefs.SetString ("ScoreWave", Serialize (scoreWave));
     }
 
 	public static void LoadProgress()
@@ -74,6 +80,19 @@ public class ProgressController : MonoBehaviour
 		isSas = Convert.ToBoolean(PlayerPrefs.GetInt ("SAS"));
 		stats = Deserialize(PlayerPrefs.GetString ("Planes")) as List<List<PlaneAction.Stat>>;
 		planeLocked = Deserialize (PlayerPrefs.GetString ("Locked")) as bool[];
+
+		var _free = Deserialize (PlayerPrefs.GetString ("ScoreFree")) as int[];
+		var _wave = Deserialize (PlayerPrefs.GetString ("ScoreWave")) as int[];
+
+		if(_free != null)
+		{
+			scoreFree = _free;
+		}
+
+		if(_wave != null)
+		{
+			scoreWave = _wave;
+		}
 
 		if(stats != null)
 		{

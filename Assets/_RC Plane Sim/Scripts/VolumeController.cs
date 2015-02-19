@@ -6,6 +6,9 @@ public class VolumeController : MonoBehaviour
 	public float music;
 	public float sound;
 
+	public AudioSource _click;
+	public static AudioSource click;
+
 	// Use this for initialization
 	void OnLevelWasLoaded (int level) 
 	{
@@ -14,6 +17,11 @@ public class VolumeController : MonoBehaviour
 
 	void OnEnable()
 	{
+		if(_click != null)
+		{
+			click = _click;
+		}
+
 		sound = PlayerPrefs.GetFloat ("Sound");
 		music = PlayerPrefs.GetFloat ("Music");
 

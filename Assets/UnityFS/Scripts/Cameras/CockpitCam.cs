@@ -25,7 +25,7 @@ public class CockpitCam : AircraftCamera
 	// Use this for initialization
 	public void Start () 
 	{
-		gameObject.camera.enabled = false;
+		gameObject.GetComponent<Camera>().enabled = false;
 		
 		startOrientation = gameObject.transform.localRotation;
 		lastMousePosition = Input.mousePosition;
@@ -53,18 +53,18 @@ public class CockpitCam : AircraftCamera
 			//Zoom.
 			if ( ZoomInputAxis != "" )
 			{
-				gameObject.camera.fieldOfView += -Input.GetAxis(ZoomInputAxis) * ZoomSpeed * Time.deltaTime;
+				gameObject.GetComponent<Camera>().fieldOfView += -Input.GetAxis(ZoomInputAxis) * ZoomSpeed * Time.deltaTime;
 			}
-			gameObject.camera.fieldOfView = Mathf.Clamp( gameObject.camera.fieldOfView, MinFOV, MaxFOV );
+			gameObject.GetComponent<Camera>().fieldOfView = Mathf.Clamp( gameObject.GetComponent<Camera>().fieldOfView, MinFOV, MaxFOV );
 			lastMousePosition = Input.mousePosition;
 			
 			//Apply to main camera.
 			Camera.main.transform.position = transform.position;
 			Camera.main.transform.rotation = transform.rotation;
 			
-			Camera.main.fieldOfView = gameObject.camera.fieldOfView;
-			Camera.main.nearClipPlane = gameObject.camera.nearClipPlane;
-			Camera.main.farClipPlane = gameObject.camera.farClipPlane;
+			Camera.main.fieldOfView = gameObject.GetComponent<Camera>().fieldOfView;
+			Camera.main.nearClipPlane = gameObject.GetComponent<Camera>().nearClipPlane;
+			Camera.main.farClipPlane = gameObject.GetComponent<Camera>().farClipPlane;
 		}
 	}
 	

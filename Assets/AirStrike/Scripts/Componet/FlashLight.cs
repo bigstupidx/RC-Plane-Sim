@@ -10,9 +10,9 @@ public class FlashLight : MonoBehaviour {
 	
 	public float LightMult = 2;
 	void Update () {
-		if(!this.light)
+		if(!this.GetComponent<Light>())
 			return;
 		
-		this.light.intensity -= LightMult*Time.deltaTime;
+		this.GetComponent<Light>().intensity -= LightMult*Time.deltaTime;
 	}
 }

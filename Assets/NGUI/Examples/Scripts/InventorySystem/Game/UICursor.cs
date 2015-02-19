@@ -51,6 +51,11 @@ public class UICursor : MonoBehaviour
 		}
 	}
 
+	void OnEnable()
+	{
+		GetComponent<UISprite>().enabled = false;
+	}
+
 	/// <summary>
 	/// Reposition the widget.
 	/// </summary>
@@ -85,7 +90,7 @@ public class UICursor : MonoBehaviour
 			mTrans.position = uiCamera.ViewportToWorldPoint(pos);
 
 			// For pixel-perfect results
-			if (uiCamera.isOrthoGraphic)
+			if (uiCamera.orthographic)
 			{
 				Vector3 lp = mTrans.localPosition;
 				lp.x = Mathf.Round(lp.x);

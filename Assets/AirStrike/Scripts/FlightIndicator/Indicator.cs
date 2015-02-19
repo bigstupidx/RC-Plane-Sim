@@ -98,7 +98,7 @@ public class Indicator : MonoBehaviour
 	
 	public void DrawTargetLockon (Transform aimtarget, int type)
 	{
-		if (Camera.main && Camera.main.camera != null) 
+		if (Camera.main && Camera.main.GetComponent<Camera>() != null) 
 		{
 			Vector3 dir = (aimtarget.position - Camera.main.transform.position).normalized;
 			float direction = Vector3.Dot (dir, Camera.main.transform.forward);

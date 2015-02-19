@@ -49,6 +49,8 @@ public class AIShootController : MonoBehaviour
 	{
 		GameObject obj = GameObject.FindGameObjectWithTag ("Player");
 
+		float distance;
+
 		if(obj == null)
 		{
 			if(shoot)
@@ -62,7 +64,7 @@ public class AIShootController : MonoBehaviour
 			return;
 		}
 
-		float distance = Vector3.Distance(transform.position + (transform.forward * 250), obj.transform.position);
+	 	distance = Vector3.Distance(transform.position + (transform.forward * 250), obj.transform.position);
 
 		foreach(WeaponLauncher wp in wpnlncr)
 		{
@@ -70,6 +72,21 @@ public class AIShootController : MonoBehaviour
 			{
 				wp.transform.LookAt(obj.transform.position);
 				wp.Shoot(foh.Damage);
+			}
+			else
+			{
+				GameObject[] objs = GameObject.FindGameObjectsWithTag ("Enemy");
+				
+				foreach(GameObject o in objs)
+				{
+					distance = Vector3.Distance(transform.position + (transform.forward * 250), o.transform.position);
+
+					if(distance < 500)
+					{
+						wp.transform.LookAt(o.transform.position);
+						wp.Shoot(foh.Damage);
+					}
+				}
 			}
 		}
 	}

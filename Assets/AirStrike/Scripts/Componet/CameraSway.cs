@@ -35,8 +35,8 @@ public class CameraSway : MonoBehaviour
 			parentRotationMagnitude = transform.parent.localRotation.eulerAngles - parentRotationTemp.eulerAngles;
 			
 			// get magnitude from the parent.
-			if (transform.parent.rigidbody)
-				parentMagnitude = transform.parent.rigidbody.velocity.magnitude * 0.05f;
+			if (transform.parent.GetComponent<Rigidbody>())
+				parentMagnitude = transform.parent.GetComponent<Rigidbody>().velocity.magnitude * 0.05f;
 	
 		
 			this.transform.localPosition = positionTemp + (SwaySensitivity * new Vector3(swayMagX,parentPositionMagnitude.y,swayMagZ)) * Time.fixedDeltaTime;

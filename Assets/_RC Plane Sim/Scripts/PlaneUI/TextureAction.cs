@@ -6,7 +6,7 @@ public class TextureAction : MonoBehaviour
 	public bool left;
 	public UILabel label;
 
-	void Start()
+	void OnEnable()
 	{
 		label.text = PlaneAction.currentPlane.materials [PlaneAction.currentMaterial].name;
 	}

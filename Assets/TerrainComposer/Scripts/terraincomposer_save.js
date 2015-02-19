@@ -7437,7 +7437,7 @@ function assign_rtp(active: boolean,open_link: boolean)
 		if (active) {
 			terrains[count_terrain].rtp_script = terrains[count_terrain].terrain.GetComponent("ReliefTerrain");
 			if (!terrains[count_terrain].rtp_script) {
-				terrains[count_terrain].rtp_script = terrains[count_terrain].terrain.gameObject.AddComponent("ReliefTerrain");
+				terrains[count_terrain].rtp_script = UnityEngineInternal.APIUpdaterRuntimeServices.AddComponent(terrains[count_terrain].terrain.gameObject, "Assets/TerrainComposer/Scripts/terraincomposer_save.js(7440,70)", "ReliefTerrain");
 				
 				if (terrains[count_terrain].rtp_script) {
 				 	
@@ -7463,7 +7463,7 @@ function assign_rtp_single(terrain1: terrain_class)
 {
 	terrain1.rtp_script = terrain1.terrain.GetComponent("ReliefTerrain");
 	if (!terrain1.rtp_script) {
-		terrain1.rtp_script = terrain1.terrain.gameObject.AddComponent("ReliefTerrain");
+		terrain1.rtp_script = UnityEngineInternal.APIUpdaterRuntimeServices.AddComponent(terrain1.terrain.gameObject, "Assets/TerrainComposer/Scripts/terraincomposer_save.js(7466,39)", "ReliefTerrain");
 	}
 }
 

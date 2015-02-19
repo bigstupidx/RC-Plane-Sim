@@ -36,7 +36,7 @@ public class ModernIndicator : Indicator
 				
 				GUI.matrix = matrixBackup;
 				GUI.skin.label.alignment = TextAnchor.UpperLeft;
-				GUI.Label (new Rect (Screen.width / 2 - 170, Screen.height / 2 - 150, 400, 30), flight.gameObject.rigidbody.velocity.magnitude.ToString ());
+				GUI.Label (new Rect (Screen.width / 2 - 170, Screen.height / 2 - 150, 400, 30), flight.gameObject.GetComponent<Rigidbody>().velocity.magnitude.ToString ());
 				break;
 			case NavMode.None:
 				

@@ -7,7 +7,6 @@ public class ParachuteLogic : MonoBehaviour
 {
     public GameObject payload;
     public Vector3 windForce;
-    public InteractiveCloth clothParachute;
     public GameObject rigidParachute;
     public float maximumParachuteUnitsOfLift = 1.0f;
     public float slowestFallingSpeed = 5.0f;
@@ -23,9 +22,8 @@ public class ParachuteLogic : MonoBehaviour
     {
         payloadComp = payload.AddComponent<ParachutePayloadLogic>();
         payloadComp.coreParachuteLogic = this;
-        clothParachute.gameObject.active = false;
 
-        rigidParachute.GetComponent<ConfigurableJoint>().connectedBody = payload.rigidbody;
+        rigidParachute.GetComponent<ConfigurableJoint>().connectedBody = payload.GetComponent<Rigidbody>();
 
         CreateCables();
     }
@@ -77,14 +75,7 @@ public class ParachuteLogic : MonoBehaviour
 
     public void Update()
     {
-        if (!clothParachute.gameObject.active)
-        {
-            UpdateCables();
-        }
-        else if (parachuteCablesContainer.active)
-        {
-            parachuteCablesContainer.SetActiveRecursively(false);
-        }
+    	UpdateCables();
     }
 
     private void UpdateCables()
@@ -102,13 +93,6 @@ public class ParachuteLogic : MonoBehaviour
 
     public void payloadCollisionEnter(Collision collision)
     {
-        Vector3 clothOriginalRotation = clothParachute.transform.localRotation.eulerAngles;
-        clothParachute.transform.position = rigidParachute.transform.position + Vector3.down;
-        clothParachute.transform.rotation = rigidParachute.transform.rotation;
-        clothParachute.transform.Rotate(clothOriginalRotation);
-        clothParachute.gameObject.active = true;
-
-        clothParachute.externalAcceleration = new Vector3(0, rigidParachute.rigidbody.velocity.y, 0);
         rigidParachute.SetActiveRecursively(false);
 
         StartCoroutine(DelayClothDeactivation());
@@ -117,8 +101,6 @@ public class ParachuteLogic : MonoBehaviour
     private IEnumerator DelayClothDeactivation()
     {
         yield return new WaitForSeconds(2f);
-
-        clothParachute.enabled = false;
     }
 
     public void FixedUpdate()
@@ -141,7 +123,7 @@ public class ParachuteLogic : MonoBehaviour
         Vector3 appliedForceAngle = Vector3.Slerp(rigidParachute.transform.up, Vector3.up, 0.33f);
 
 
-        rigidParachute.rigidbody.AddForce(appliedForceAngle * (-rigidParachute.rigidbody.velocity.y + additionalUpwardForce));
+        rigidParachute.GetComponent<Rigidbody>().AddForce(appliedForceAngle * (-rigidParachute.GetComponent<Rigidbody>().velocity.y + additionalUpwardForce));
     }
 
 

@@ -142,13 +142,13 @@ public class Engine : AircraftAttachment
 			{
 				if ( CurrentRPM > RPMToUseFastProp )
 				{
-					SlowPropeller.renderer.enabled = false;
-					FastPropeller.renderer.enabled = true;
+					SlowPropeller.GetComponent<Renderer>().enabled = false;
+					FastPropeller.GetComponent<Renderer>().enabled = true;
 				}
 				else
 				{
-					SlowPropeller.renderer.enabled = true;
-					FastPropeller.renderer.enabled = false;
+					SlowPropeller.GetComponent<Renderer>().enabled = true;
+					FastPropeller.GetComponent<Renderer>().enabled = false;
 				}
 			}
 			

@@ -17,8 +17,8 @@ public class Explosion : MonoBehaviour
         }
         foreach (Collider hit in colliders)
         {
-            if (hit.rigidbody){
-                hit.rigidbody.AddExplosionForce(Force, explosionPos, Radius, 3.0f);
+            if (hit.GetComponent<Rigidbody>()){
+                hit.GetComponent<Rigidbody>().AddExplosionForce(Force, explosionPos, Radius, 3.0f);
 			}
         }
     }

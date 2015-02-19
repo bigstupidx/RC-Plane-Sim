@@ -1806,7 +1806,7 @@ class TerrainComposer extends EditorWindow
 					light = Instantiate(AssetDatabase.LoadAssetAtPath("Assets/TerrainComposer Examples/Assets/Prefabs/Directional light.prefab",GameObject));
 					light.name = "Directional light";
 				}
-				script.settings.directional_light = light.light;
+				script.settings.directional_light = light.GetComponent.<Light>();
 				if (!wind) {
 					wind = Instantiate(AssetDatabase.LoadAssetAtPath("Assets/TerrainComposer Examples/Assets/Prefabs/WindZone.prefab",GameObject));
 					wind.name = "WindZone";
@@ -3197,7 +3197,7 @@ class TerrainComposer extends EditorWindow
         				
         				if (script.settings.directional_light == null) {
         					var lightObject: GameObject =  GameObject.Find("Directional light");
-        					if (lightObject != null) script.settings.directional_light = lightObject.light;
+        					if (lightObject != null) script.settings.directional_light = lightObject.GetComponent.<Light>();
         				}
         				
         				EditorGUILayout.LabelField("Directional Light",GUILayout.Width(160));
@@ -16034,7 +16034,7 @@ class TerrainComposer extends EditorWindow
 	{
 		var Trees: GameObject;
 		Trees = new GameObject();
-		var tree_script: save_trees = Trees.AddComponent("save_trees");
+		var tree_script: save_trees = Trees.AddComponent.<save_trees>();
 		var treeInstances: TreeInstance[];
 		var treeTypes: int = 0;
 		
@@ -16087,7 +16087,7 @@ class TerrainComposer extends EditorWindow
 	{
 		var Grass: GameObject;
 		Grass = new GameObject();
-		var grass_script: save_grass = Grass.AddComponent("save_grass");
+		var grass_script: save_grass = Grass.AddComponent.<save_grass>();
 		var grassCount: int;
 		var length: int;
 		var detail: int[,];
@@ -17568,7 +17568,7 @@ class TerrainComposer extends EditorWindow
 			if (camera1.tag == "MainCamera") {
 				var cull_script: MultiTerrainBoost = camera1.GetComponent("MultiTerrainBoost");  
 				if (!cull_script) {
-					camera1.AddComponent("MultiTerrainBoost");
+					camera1.AddComponent.<MultiTerrainBoost>();
 				}
 			}
 		}

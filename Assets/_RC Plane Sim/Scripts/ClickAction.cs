@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ClickAction : MonoBehaviour 
 {
@@ -167,6 +169,26 @@ public class ClickAction : MonoBehaviour
 			fireTime = 0;
 			break;
 		case ActionType.Fire2:
+			if(PlaneAction.FindStatType(PlaneAction.Stat.Type.Rockets).playerLevel == 1)
+			{
+				transform.localScale = Vector3.zero;
+			}
+			else
+			{
+				transform.localScale = Vector3.one;
+			}
+
+			if(PlaneAction.currentPlane.name.Contains("Dragon"))
+			{
+				GetComponent<UISprite>().spriteName = "laser_fire";
+				transform.GetChild(0).GetComponent<UISprite>().spriteName = "laser_realoading";
+			}
+			else
+			{
+				GetComponent<UISprite>().spriteName = "rocket_fire";
+				transform.GetChild(0).GetComponent<UISprite>().spriteName = "rocket_fire_stopped";
+			}
+
 			heatTime = 0;
 			fireTime = 0;
 			break;
@@ -179,12 +201,12 @@ public class ClickAction : MonoBehaviour
 			{
 				transform.GetComponentInChildren<UILabel>().enabled = false;
 				GetComponent<TweenColor>().PlayReverse();
-				collider.enabled = true;
+				GetComponent<Collider>().enabled = true;
 			}
 			else
 			{
 				transform.GetComponentInChildren<UILabel>().text = "unlock on lvl " + unlockMap[0];
-				collider.enabled = false;
+				GetComponent<Collider>().enabled = false;
 			}
 			break;
 		case ActionType.PopUpLevel3:
@@ -192,12 +214,12 @@ public class ClickAction : MonoBehaviour
 			{
 				transform.GetComponentInChildren<UILabel>().enabled = false;
 				GetComponent<TweenColor>().PlayReverse();
-				collider.enabled = true;
+				GetComponent<Collider>().enabled = true;
 			}
 			else
 			{
 				transform.GetComponentInChildren<UILabel>().text = "unlock on lvl " + unlockMap[1];
-				collider.enabled = false;
+				GetComponent<Collider>().enabled = false;
 			}
 			break;
 		case ActionType.PopUpLevel4:
@@ -205,12 +227,12 @@ public class ClickAction : MonoBehaviour
 			{
 				transform.GetComponentInChildren<UILabel>().enabled = false;
 				GetComponent<TweenColor>().PlayReverse();
-				collider.enabled = true;
+				GetComponent<Collider>().enabled = true;
 			}
 			else
 			{
 				transform.GetComponentInChildren<UILabel>().text = "unlock on lvl " + unlockMap[2];
-				collider.enabled = false;
+				GetComponent<Collider>().enabled = false;
 			}
 			break;
 		case ActionType.PopUpLevel5:
@@ -218,12 +240,12 @@ public class ClickAction : MonoBehaviour
 			{
 				transform.GetComponentInChildren<UILabel>().enabled = false;
 				GetComponent<TweenColor>().PlayReverse();
-				collider.enabled = true;
+				GetComponent<Collider>().enabled = true;
 			}
 			else
 			{
 				transform.GetComponentInChildren<UILabel>().text = "join the sas to unlock";
-				collider.enabled = false;
+				GetComponent<Collider>().enabled = false;
 			}
 			break;
 		case ActionType.PopUpSAS:
@@ -235,7 +257,43 @@ public class ClickAction : MonoBehaviour
 		case ActionType.NextWave:
 			if(TypeAction.type == TypeAction.FREE_FOR_ALL)
 			{
-				GameObject.Find("KillsLabelText").GetComponent<UILabel>().text = "PLAYER KILLS:";
+				int[] points = new int[5];
+
+				for(int i = 0; i < points.Length - 1; i++)
+				{
+					points[i] = UnityEngine.Random.Range(0, 25);
+				}
+
+				points[4] = ProgressController.killAdd;
+
+				Array.Sort(points);
+
+				List<string> names = new List<string>();
+				names.Add("Warthog");
+				names.Add("Golden Eagle");
+				names.Add("War Angel");
+				names.Add("Predator");
+				names.Add("Superbolt");
+
+				int j = 4;
+				foreach(UILabel l in GameObject.Find("LeaderBoard").GetComponentsInChildren<UILabel>())
+				{
+					if(points[j] != ProgressController.killAdd)
+					{
+						int index = UnityEngine.Random.Range(0, names.Count);
+						l.text = names[index] + ":  " + points[j];
+						names.RemoveAt(index);
+					}
+					else
+					{
+						l.text = "Player:  " + points[j]; 
+					}
+					j--;
+				}
+
+				GameObject.Find("LeaderBoard").transform.localScale = Vector3.one;
+				GameObject.Find("KillsLabelText").GetComponent<UILabel>().text = "";
+				GameObject.Find("killAddLabel").GetComponent<UILabel>().text = "";
 
 				GameObject.Find("Button - Next").GetComponent<UISprite>().enabled = false;
 				GameObject.Find("Button - Ok").GetComponent<UISprite>().enabled = true;
@@ -248,6 +306,8 @@ public class ClickAction : MonoBehaviour
 			else if(TypeAction.type == TypeAction.SURVIVAL)
 			{
 				GameObject.Find("KillsLabelText").GetComponent<UILabel>().text = "WAVES CLEARED:";
+				GameObject.Find("killAddLabel").GetComponent<UILabel>().text = ProgressController.killAdd.ToString ();
+				GameObject.Find("LeaderBoard").transform.localScale = Vector3.zero;
 				if(FlightView.Target == null || FlightView.Target.CompareTag("Parashute"))
 				{
 					GameObject.Find("Button - Next").GetComponent<UISprite>().enabled = false;
@@ -333,6 +393,8 @@ public class ClickAction : MonoBehaviour
 	{
 		FlightView camera;
 		VolumeController cntrl;
+
+		VolumeController.click.Play ();
 
 		switch(action)
 		{
@@ -480,12 +542,16 @@ public class ClickAction : MonoBehaviour
 			panel.gameObject.SetActive(false);
 			break;
 		case ActionType.PopUpExit:
-			panel = UIController.GetPanel(PanelType.Type.Exit);
-			panel.gameObject.SetActive(true);
+			UIController.current.gameObject.SetActive(false);
+			UIController.previous = UIController.current;
+			UIController.current = UIController.GetPanel(PanelType.Type.Exit);
+			UIController.current.gameObject.SetActive(true);
 			break;
 		case ActionType.ClosePopUpExit:
-			panel = UIController.GetPanel(PanelType.Type.Exit);
-			panel.gameObject.SetActive(false);
+			UIController.current.gameObject.SetActive(false);
+			UIController.previous = UIController.current;
+			UIController.current = UIController.GetPanel(PanelType.Type.PauseMenu);
+			UIController.current.gameObject.SetActive(true);
 			break;
 		case ActionType.GamePlayLevel1:
 			if(Application.loadedLevel != 3)  LevelsLoader.LoadLevel(3);
@@ -555,6 +621,11 @@ public class ClickAction : MonoBehaviour
 			var planes = GameObject.FindObjectsOfType<AirplanePath>();
 			for(int i = 0; i < planes.Length; i++)
 			{
+				if(planes[i].plane.name.Contains("Subway"))
+				{
+					continue;
+				}
+
 				if(WaveProps.waveProps[FlightView.wave, i] != 0)
 				{
 					planes[i].plane.gameObject.SetActive(true);
@@ -565,8 +636,13 @@ public class ClickAction : MonoBehaviour
 			for(int i = 0; i < waves.Length; i++)
 			{
 				waves[i].GetComponent<DamageManager>().HP = WaveProps.waveStats[WaveProps.waveProps[FlightView.wave, i], 1];
+				waves[i].GetComponent<DamageManager>().level = WaveProps.waveProps[FlightView.wave, i] % 4;
 				waves[i].GetComponent<FlightOnHit>().Damage = WaveProps.waveStats[WaveProps.waveProps[FlightView.wave, i], 0];
 			}
+
+			ProgressController.goldAdd = 0;
+			ProgressController.ejectAdd = 0;
+			ProgressController.expAdd = 0;
 
 			UIController.current.gameObject.SetActive(false);
 			UIController.previous = UIController.current;

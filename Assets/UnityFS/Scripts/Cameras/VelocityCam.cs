@@ -20,7 +20,7 @@ public class VelocityCam : AircraftCamera
 	// Use this for initialization
 	public void Start () 
 	{
-		gameObject.camera.enabled = false;
+		gameObject.GetComponent<Camera>().enabled = false;
 		TargetAeroplane = transform.root.gameObject.GetComponent<Aircraft>();
 	}
 	
@@ -51,9 +51,9 @@ public class VelocityCam : AircraftCamera
 			Camera.main.transform.position = CurrentPosition;
 			Camera.main.transform.LookAt( cameraTarget );
 			
-			Camera.main.fieldOfView = gameObject.camera.fieldOfView;
-			Camera.main.nearClipPlane = gameObject.camera.nearClipPlane;
-			Camera.main.farClipPlane = gameObject.camera.farClipPlane;
+			Camera.main.fieldOfView = gameObject.GetComponent<Camera>().fieldOfView;
+			Camera.main.nearClipPlane = gameObject.GetComponent<Camera>().nearClipPlane;
+			Camera.main.farClipPlane = gameObject.GetComponent<Camera>().farClipPlane;
 		}
 	}
 	
@@ -63,7 +63,7 @@ public class VelocityCam : AircraftCamera
 		{
 			CurrentPosition = TargetAeroplane.transform.position + (  StartOffset );
 			
-			Velocity = TargetAeroplane.rigidbody.velocity;
+			Velocity = TargetAeroplane.GetComponent<Rigidbody>().velocity;
 			Velocity.y = 0.0f;
 			
 			CurrentTime = 0.0f;

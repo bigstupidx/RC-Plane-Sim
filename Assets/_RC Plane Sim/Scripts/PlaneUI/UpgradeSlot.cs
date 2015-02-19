@@ -23,6 +23,7 @@ public class UpgradeSlot : MonoBehaviour
 		if(stat.playerLevel == 1)
 		{
 			transform.FindChild("Stat Name").GetComponent<UILabel>().text = "Unlock";
+			if(type == PlaneAction.Stat.Type.Rockets) transform.FindChild("Icon - Front").GetComponent<UISprite>().spriteName = "rocket";
 			stats = transform.FindChild ("Plane - StatDelim");
 			j = 1;
 			for(; j <= 4; j++)
@@ -34,7 +35,17 @@ public class UpgradeSlot : MonoBehaviour
 			return;
 		}
 
-		transform.FindChild("Stat Name").GetComponent<UILabel>().text = stat.type.ToString() + ": " + stat.levels[stat.currentLevel].value.ToString();
+		if(PlaneAction.currentPlane.name.Contains("Dragon") && type == PlaneAction.Stat.Type.Rockets)
+		{
+			transform.FindChild("Stat Name").GetComponent<UILabel>().text = "laser" + ": " + stat.levels[stat.currentLevel].value.ToString();
+			transform.FindChild("Icon - Front").GetComponent<UISprite>().spriteName = "Icon_energy";
+		}
+		else
+		{
+			transform.FindChild("Stat Name").GetComponent<UILabel>().text = stat.type.ToString() + ": " + stat.levels[stat.currentLevel].value.ToString();
+			if(type == PlaneAction.Stat.Type.Rockets) transform.FindChild("Icon - Front").GetComponent<UISprite>().spriteName = "rocket";
+		}
+
 		if(stat.levels [stat.currentLevel].cost == 0)
 		{
 			transform.FindChild ("Button - Buy").transform.localScale = Vector3.zero;

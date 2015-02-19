@@ -16,7 +16,6 @@ public class ChangesAfterLevel : MonoBehaviour
         goldAddLabel = transform.FindChild("Gold Add").GetComponent<UILabel>();
         expAddLabel = transform.FindChild("Exp Add").GetComponent<UILabel>();
 		ejectAddLabel = transform.FindChild("Eject Add").GetComponent<UILabel>();
-		killAddLabel = transform.FindChild ("killAddLabel").GetComponent<UILabel> ();
 
 		goldSAS = GameObject.Find("Gold Add SAS");
 		expSAS = GameObject.Find("Exp Add SAS");
@@ -27,7 +26,15 @@ public class ChangesAfterLevel : MonoBehaviour
 		goldAddLabel.text = "Gold: + " + ProgressController.goldAdd.ToString();
 		expAddLabel.text = "Experience: + " + ProgressController.expAdd.ToString();
 		ejectAddLabel.text = "Eject: + " + ProgressController.ejectAdd.ToString ();
-		killAddLabel.text = ProgressController.killAdd.ToString ();
+
+		if(TypeAction.type == TypeAction.FREE_FOR_ALL)
+		{
+			ProgressController.scoreFree[ProgressController.level] = Mathf.Max(ProgressController.scoreFree[ProgressController.level], ProgressController.killAdd);
+		}
+		else if(TypeAction.type == TypeAction.SURVIVAL)
+		{
+			ProgressController.scoreWave[ProgressController.level] = Mathf.Max(ProgressController.scoreWave[ProgressController.level], ProgressController.killAdd);
+		}
 
 		if(goldSAS != null)  goldSAS.GetComponent<UILabel>().text = "Gold: + " + ProgressController.goldAdd.ToString();
 		if(expSAS != null)  expSAS.GetComponent<UILabel>().text = "Experience: + " + ProgressController.expAdd.ToString();

@@ -13,15 +13,15 @@ public class AddForce : MonoBehaviour
 	
 	void Start ()
 	{
-		if (!rigidbody)
+		if (!GetComponent<Rigidbody>())
 			return;
 		if (RandomForce) {
 			Force = new Vector3 (Random.Range (-Force.x, Force.x), Random.Range (-Force.y, Force.y), Random.Range (-Force.z, Force.z));
 		}
-		this.rigidbody.AddForce (Force);
+		this.GetComponent<Rigidbody>().AddForce (Force);
 		if (RandomTurque) {
 			TurqueForce = new Vector3 (Random.Range (-TurqueForce.x, TurqueForce.x), Random.Range (-TurqueForce.y, TurqueForce.y), Random.Range (-TurqueForce.z, TurqueForce.z));
 		}
-		this.rigidbody.AddTorque (TurqueForce);
+		this.GetComponent<Rigidbody>().AddTorque (TurqueForce);
 	}
 }

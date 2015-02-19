@@ -9,6 +9,7 @@ public class DamageManager : MonoBehaviour
     public AudioClip[] HitSound;
     public GameObject Effect;
     public float HP = 100;
+	public int level;
 	public float HPmax;
 	public ParticleSystem OnFireParticle;
 	
@@ -44,6 +45,7 @@ public class DamageManager : MonoBehaviour
 			{
 				this.gameObject.GetComponent<FlightOnDead>().OnDead(killer);
 			}
+
             Dead();
         }
     }
@@ -53,10 +55,10 @@ public class DamageManager : MonoBehaviour
 		if (Effect)
 		{
 			GameObject obj = (GameObject)GameObject.Instantiate(Effect, transform.position, transform.rotation);
-			if(this.rigidbody){
-				if(obj.rigidbody){
-					obj.rigidbody.velocity = this.rigidbody.velocity;
-					obj.rigidbody.AddTorque(Random.rotation.eulerAngles * Random.Range(100, 2000));
+			if(this.GetComponent<Rigidbody>()){
+				if(obj.GetComponent<Rigidbody>()){
+					obj.GetComponent<Rigidbody>().velocity = this.GetComponent<Rigidbody>().velocity;
+					obj.GetComponent<Rigidbody>().AddTorque(Random.rotation.eulerAngles * Random.Range(100, 2000));
 				}
 			}
 		}
@@ -71,26 +73,30 @@ public class DamageManager : MonoBehaviour
 			if (Effect)
 			{
 				GameObject obj = (GameObject)GameObject.Instantiate(Effect, transform.position, transform.rotation);
-				if(this.rigidbody){
-					if(obj.rigidbody){
-						obj.rigidbody.velocity = this.rigidbody.velocity;
-						obj.rigidbody.AddTorque(Random.rotation.eulerAngles * Random.Range(100, 2000));
+				if(this.GetComponent<Rigidbody>()){
+					if(obj.GetComponent<Rigidbody>()){
+						obj.GetComponent<Rigidbody>().velocity = this.GetComponent<Rigidbody>().velocity;
+						obj.GetComponent<Rigidbody>().AddTorque(Random.rotation.eulerAngles * Random.Range(100, 2000));
 					}
 				}
 			}
 
-			ProgressController.goldAdd += 10 * SwipeAction.levelDifficult;
-
 			var aishoot = transform.GetComponentInParent<AirplanePath>();
 			if(aishoot && TypeAction.type == TypeAction.FREE_FOR_ALL)
 			{
+				ProgressController.goldAdd += 10 * SwipeAction.levelDifficult;
 				ProgressController.killAdd++;
 				aishoot.StartRespawn();
 			}
+			else
+			{
+				ProgressController.goldAdd += 10 * level;
+			}
 			transform.parent.gameObject.SetActive(false);
 		}
-		else
+		else if(gameObject.CompareTag("Player"))
 		{
+			Debug.Log("blabla");
 			FlightView.Target.GetComponent<FlightSystem>().enabled = false;
 			GameObject.Find("Button - Eject").GetComponent<UISprite>().enabled = true;
 			GameObject.Find("Button - Eject").GetComponent<TweenRotation>().enabled = true;

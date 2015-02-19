@@ -42,7 +42,7 @@ public class Wing : AircraftAttachment
 	// Use this for initialization
 	public void Start () 
 	{
-		WingBoxCollider = (BoxCollider)gameObject.collider;
+		WingBoxCollider = (BoxCollider)gameObject.GetComponent<Collider>();
 		Parent = transform.root.gameObject.GetComponent<Rigidbody>();
 		ParentAircraft = transform.root.gameObject.GetComponent<Aircraft>();
 		AttachedControlSurface = gameObject.GetComponent<ControlSurface>();
@@ -257,7 +257,7 @@ public class Wing : AircraftAttachment
 		//Draw icon.
 		Gizmos.DrawIcon (transform.position, "wing.png", true);
 		
-		WingBoxCollider = (BoxCollider)gameObject.collider;
+		WingBoxCollider = (BoxCollider)gameObject.GetComponent<Collider>();
 		if ( null != WingBoxCollider )
 		{
 			//Clamp box collider scales.

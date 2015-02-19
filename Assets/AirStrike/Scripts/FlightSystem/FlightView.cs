@@ -31,14 +31,14 @@ public class FlightView : MonoBehaviour
 			indexCamera = 0;
 		}
 		for (int i =0; i<Cameras.Length; i++) {
-			if (Cameras [i] && Cameras [i].camera)
-				Cameras [i].camera.enabled = false;
+			if (Cameras [i] && Cameras [i].GetComponent<Camera>())
+				Cameras [i].GetComponent<Camera>().enabled = false;
 			if (Cameras [i] && Cameras [i].GetComponent<AudioListener> ())
 				Cameras [i].GetComponent<AudioListener> ().enabled = false;
 		}
 		if (Cameras [indexCamera]) {
-			if (Cameras [indexCamera] && Cameras [indexCamera].camera)
-				Cameras [indexCamera].camera.enabled = true;
+			if (Cameras [indexCamera] && Cameras [indexCamera].GetComponent<Camera>())
+				Cameras [indexCamera].GetComponent<Camera>().enabled = true;
 			if (Cameras [indexCamera] && Cameras [indexCamera].GetComponent<AudioListener> ())
 				Cameras [indexCamera].GetComponent<AudioListener> ().enabled = true;
 		}
@@ -109,6 +109,7 @@ public class FlightView : MonoBehaviour
 			for(int i = 0; i < waves.Length; i++)
 			{
 				waves[i].GetComponent<DamageManager>().HP = WaveProps.waveStats[WaveProps.waveProps[wave, i], 1];
+				waves[i].GetComponent<DamageManager>().level = WaveProps.waveProps[wave, i] % 4;
 				waves[i].GetComponent<FlightOnHit>().Damage = WaveProps.waveStats[WaveProps.waveProps[wave, i], 0];
 			}
 			break;
@@ -125,6 +126,7 @@ public class FlightView : MonoBehaviour
 		{
 			PlayerManager player = (PlayerManager)GameObject.FindObjectOfType(typeof(PlayerManager));	
 			Target = player.gameObject;
+			Target.GetComponent<AudioSource>().enabled = true;
 		}
 
 		ProgressController.goldAdd = 0;
@@ -138,29 +140,33 @@ public class FlightView : MonoBehaviour
 	{
 		//NEW
 		var go = GameObject.Find ("Colliders");
-		for(int i = 0; i < go.transform.childCount; i++)
+		if(go != null && Target != null)
 		{
-			var child = go.transform.GetChild(i);
-			float dis;
+			for(int i = 0; i < go.transform.childCount; i++)
+			{
+				var child = go.transform.GetChild(i);
+				float dis;
 
-			if(child.localScale.x == 0)
-			{
-				dis = Vector2.Distance(new Vector2(0, child.position.z), new Vector2(0, transform.position.z));
-			}
-			else
-			{
-				dis = Vector2.Distance(new Vector2(0, child.position.x), new Vector2(0, transform.position.x));
-			}
+				if(child.localScale.x == 0)
+				{
+					dis = Vector2.Distance(new Vector2(0, child.position.z), new Vector2(0, Target.transform.position.z));
+				}
+				else
+				{
+					dis = Vector2.Distance(new Vector2(0, child.position.x), new Vector2(0, Target.transform.position.x));
+				}
 
-			Debug.Log(i + " " + dis);
-			if(dis < 250 && !eject)
-			{
-				GameObject.Find("CrashedLabel").GetComponent<UILabel>().enabled = true;
-				break;
-			}
-			else
-			{
-				GameObject.Find("CrashedLabel").GetComponent<UILabel>().enabled = false;
+
+				if(dis < 100 && !eject)
+				{
+					GameObject.Find("CrashedLabel").GetComponent<UILabel>().enabled = true;
+					GameObject.Find("CrashedLabel").GetComponent<UILabel>().text = "Come back to battle zone or your plane will be crashed " + Mathf.RoundToInt(Mathf.Max(0, dis)) + " meters";
+					break;
+				}
+				else
+				{
+					GameObject.Find("CrashedLabel").GetComponent<UILabel>().enabled = false;
+				}
 			}
 		}
 		//NEW
@@ -168,7 +174,7 @@ public class FlightView : MonoBehaviour
 		bool activecheck = false;
 		for (int i =0; i<Cameras.Length; i++) 
 		{
-			if (Cameras [i] && Cameras [i].camera.enabled) 
+			if (Cameras [i] && Cameras [i].GetComponent<Camera>().enabled) 
 			{
 				activecheck = true;
 				break;	
@@ -176,7 +182,7 @@ public class FlightView : MonoBehaviour
 		}
 		if (!activecheck) 
 		{
-			this.camera.enabled = true;
+			this.GetComponent<Camera>().enabled = true;
 			if (this.gameObject.GetComponent<AudioListener> ())
 				this.gameObject.GetComponent<AudioListener> ().enabled = true;
 		}

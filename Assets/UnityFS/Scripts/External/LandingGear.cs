@@ -77,7 +77,7 @@ public class LandingGear : MonoBehaviour
 			GearDown = !GearDown;
 			
 			//Set drag.
-			gameObject.rigidbody.drag = GearDown? GearDownDrag : GearUpDrag;
+			gameObject.GetComponent<Rigidbody>().drag = GearDown? GearDownDrag : GearUpDrag;
 			
 			//Enable/disable wheel colliders based on new gear state.
 			if ( null != AircraftWheels )

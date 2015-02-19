@@ -365,13 +365,13 @@ public class WeaponLauncher : WeaponBase
 						bullet.transform.forward = direction;
 						if (RigidbodyProjectile) 
 						{
-							if (bullet.rigidbody) 
+							if (bullet.GetComponent<Rigidbody>()) 
 							{
-								if (Owner != null && Owner.rigidbody) 
+								if (Owner != null && Owner.GetComponent<Rigidbody>()) 
 								{
-									bullet.rigidbody.velocity = Owner.rigidbody.velocity;
+									bullet.GetComponent<Rigidbody>().velocity = Owner.GetComponent<Rigidbody>().velocity;
 								}
-								bullet.rigidbody.AddForce (direction * ForceShoot);	
+								bullet.GetComponent<Rigidbody>().AddForce (direction * ForceShoot);	
 							}
 						}
 					
@@ -387,9 +387,9 @@ public class WeaponLauncher : WeaponBase
 				
 					GameObject shell = (GameObject)Instantiate (Shell, shelloutpos.position, Random.rotation);
 					GameObject.Destroy (shell.gameObject, ShellLifeTime);
-					if (shell.rigidbody) 
+					if (shell.GetComponent<Rigidbody>()) 
 					{
-						shell.rigidbody.AddForce (shelloutpos.forward * ShellOutForce);
+						shell.GetComponent<Rigidbody>().AddForce (shelloutpos.forward * ShellOutForce);
 					}
 				}
 				

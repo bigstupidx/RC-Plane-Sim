@@ -46,7 +46,7 @@ public class Aircraft : MonoBehaviour
 		//Override inertia tensor if so desired.
 		if ( OverrideInertiaTensor )
 		{
-			rigidbody.inertiaTensor = InertiaTensor;
+			GetComponent<Rigidbody>().inertiaTensor = InertiaTensor;
 		}
 		
 		//Clamp rollwise damping.
@@ -143,7 +143,7 @@ public class Aircraft : MonoBehaviour
 	
 	public float GetAirspeedKnots()
 	{
-		return gameObject.rigidbody.velocity.magnitude * Conversions.MetersPerSecondToKnots;
+		return gameObject.GetComponent<Rigidbody>().velocity.magnitude * Conversions.MetersPerSecondToKnots;
 	}
 	
 	public float GetAltitudeThousandsFeet()
@@ -173,7 +173,7 @@ public class Aircraft : MonoBehaviour
 	
 	public float GetRateOfClimbFPM()
 	{
-		float yRate = gameObject.rigidbody.velocity.y;
+		float yRate = gameObject.GetComponent<Rigidbody>().velocity.y;
 		yRate *= Conversions.MetersToFeet;
 		yRate *= 60.0f;
 		return yRate;

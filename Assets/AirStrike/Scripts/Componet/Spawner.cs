@@ -14,8 +14,8 @@ public class Spawner : MonoBehaviour
 
 	private void Start ()
 	{
-		if (renderer)
-			renderer.enabled = false;
+		if (GetComponent<Renderer>())
+			GetComponent<Renderer>().enabled = false;
 
 	}
 

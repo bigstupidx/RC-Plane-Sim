@@ -21,7 +21,7 @@ public class CenterOfGravity : AircraftAttachment
 	public void Update () 
 	{		
 		//Update center of mass.
-		Rigidbody rigidBody = Parent.rigidbody;
+		Rigidbody rigidBody = Parent.GetComponent<Rigidbody>();
 		if ( null != rigidBody )
 		{
 			rigidBody.centerOfMass = gameObject.transform.localPosition;

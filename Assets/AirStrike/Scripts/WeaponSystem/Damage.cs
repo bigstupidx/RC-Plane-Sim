@@ -20,8 +20,8 @@ public class Damage : DamageBase
 		if(RandomTimeActive)
 			TimeActive = Random.Range(TimeActive/2f,TimeActive);
 		
-        if (!Owner || !Owner.collider) return;
-        Physics.IgnoreCollision(collider, Owner.collider);
+        if (!Owner || !Owner.GetComponent<Collider>()) return;
+        Physics.IgnoreCollision(GetComponent<Collider>(), Owner.GetComponent<Collider>());
 		
 		
     }
@@ -48,8 +48,8 @@ public class Damage : DamageBase
 
 		if(DestroyAfterObject){
 			DestroyAfterObject.transform.parent = null;
-			if(DestroyAfterObject.particleSystem)
-				DestroyAfterObject.particleSystem.emissionRate = 0;
+			if(DestroyAfterObject.GetComponent<ParticleSystem>())
+				DestroyAfterObject.GetComponent<ParticleSystem>().emissionRate = 0;
 			
 			Destroy(DestroyAfterObject,DestryAfterDuration);
 		}
@@ -73,8 +73,8 @@ public class Damage : DamageBase
                     hit.gameObject.GetComponent<DamageManager>().ApplyDamage(Damage,Owner);
                 }
             }
-            if (hit.rigidbody)
-                hit.rigidbody.AddExplosionForce(ExplosionForce, transform.position, ExplosionRadius, 3.0f);
+            if (hit.GetComponent<Rigidbody>())
+                hit.GetComponent<Rigidbody>().AddExplosionForce(ExplosionForce, transform.position, ExplosionRadius, 3.0f);
         }
 
     }
