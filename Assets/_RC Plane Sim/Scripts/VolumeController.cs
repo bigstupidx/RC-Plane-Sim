@@ -5,9 +5,12 @@ public class VolumeController : MonoBehaviour
 {
 	public float music;
 	public float sound;
+	public bool first;
 
 	public AudioSource _click;
 	public static AudioSource click;
+
+	public static VolumeController instance;
 
 	// Use this for initialization
 	void OnLevelWasLoaded (int level) 
@@ -22,23 +25,36 @@ public class VolumeController : MonoBehaviour
 			click = _click;
 		}
 
-		sound = PlayerPrefs.GetFloat ("Sound");
-		music = PlayerPrefs.GetFloat ("Music");
+		if(instance == null)
+		{
+			instance = this;
+		}
+
+		first = PlayerPrefs.GetInt ("First") == 0;
+
+		if(first)
+		{
+			PlayerPrefs.SetFloat ("Sound", 1f);
+			PlayerPrefs.SetFloat ("Music", 1f);
+			PlayerPrefs.SetInt("First", 1);
+		}
+
+		Adjust ();
 
 		if(name == "Slider - Sound")
 		{
-			GetComponent<UISlider>().value = sound;
+			GetComponent<UISlider>().value = instance.sound;
 		}
 		else if(name == "Slider - Music")
 		{
-			GetComponent<UISlider>().value = music;
+			GetComponent<UISlider>().value = instance.music;
 		}
 	}
 
 	public void Adjust ()
 	{
-		sound = PlayerPrefs.GetFloat ("Sound");
-		music = PlayerPrefs.GetFloat ("Music");
+		instance.sound = PlayerPrefs.GetFloat ("Sound");
+		instance.music = PlayerPrefs.GetFloat ("Music");
 		
 		var audio = FindObjectsOfType<AudioSource> ();
 		
@@ -46,47 +62,47 @@ public class VolumeController : MonoBehaviour
 		{
 			if(a.tag == "MainCamera")
 			{
-				a.volume = music;
+				a.volume = instance.music;
 			}
 			else
 			{
-				a.volume = sound;
+				a.volume = instance.sound;
 			}
 		}
 	}
 	
 	public void ChangeSound()
 	{
-		sound = UISlider.current.value;
+		instance.sound = UISlider.current.value;
 		
-		PlayerPrefs.SetFloat ("Sound", sound);
+		PlayerPrefs.SetFloat ("Sound", instance.sound);
 
 		Adjust ();
 	}
 
 	public void ChangeSound(float value)
 	{
-		sound = value;
+		instance.sound = value;
 		
-		PlayerPrefs.SetFloat ("Sound", sound);
+		PlayerPrefs.SetFloat ("Sound", instance.sound);
 		
 		Adjust ();
 	}
 
 	public void ChangeMusic()
 	{
-		music = UISlider.current.value;
+		instance.music = UISlider.current.value;
 
-		PlayerPrefs.SetFloat ("Music", music);
+		PlayerPrefs.SetFloat ("Music", instance.music);
 
 		Adjust ();
 	}
 
 	public void ChangeMusic(float value)
 	{
-		music = value;
+		instance.music = value;
 		
-		PlayerPrefs.SetFloat ("Music", music);
+		PlayerPrefs.SetFloat ("Music", instance.music);
 		
 		Adjust ();
 	}

@@ -23,7 +23,7 @@ public class RadarSystem : MonoBehaviour
 {
 
 	private Vector2 inposition;
-	public float Size = 400; // size of minimap
+	private float Size = 400; // size of minimap
 	public float Distance = 100;// maximum distance of objects
 	public float Alpha = 0.5f;
 	public Texture2D[] Navtexture;// textutes list
@@ -40,7 +40,7 @@ public class RadarSystem : MonoBehaviour
 	
 	void Start ()
 	{
-	
+		Size = Screen.width * 0.25f;
 	}
 
 	void Update ()
@@ -106,7 +106,7 @@ public class RadarSystem : MonoBehaviour
 						{
 							navscale = 1;
 						}
-						GUI.DrawTexture (new Rect (pos.x - (navtexture.width / navscale) / 2, pos.y - (navtexture.height / navscale) / 2, navtexture.width / navscale, navtexture.height / navscale), navtexture);
+					GUI.DrawTexture (new Rect (pos.x - (Screen.width * 0.04f) / 2, pos.y - (Screen.width * 0.04f) / 2, Screen.width * 0.04f, Screen.width * 0.04f), navtexture);
 			}
 		}
 	}
@@ -121,16 +121,18 @@ public class RadarSystem : MonoBehaviour
 		GUI.color = new Color (ColorMult.r, ColorMult.g, ColorMult.b, Alpha);
 		if (MapRotation) 
 		{
-			GUIUtility.RotateAroundPivot (-(this.transform.eulerAngles.y), inposition + new Vector2 (Size / 2f, Size / 2f)); 
+			//GUIUtility.RotateAroundPivot (-(this.transform.eulerAngles.y), inposition + new Vector2 (Size / 2f, Size / 2f)); 
 		}
 
 		if (NavBG)
 			GUI.DrawTexture (new Rect (inposition.x, inposition.y, Size, Size), NavBG);
 
-		GUIUtility.RotateAroundPivot ((this.transform.eulerAngles.y), inposition + new Vector2 (Size / 2f, Size / 2f)); 
+		GUIUtility.RotateAroundPivot ((this.transform.eulerAngles.y - 90f), inposition + new Vector2 (Size / 2f, Size / 2f)); 
 
 		if (NavCompass)
 			GUI.DrawTexture (new Rect (inposition.x + (Size / 2f) - (NavCompass.width / 2f), inposition.y + (Size / 2f) - (NavCompass.height / 2f), NavCompass.width, NavCompass.height), NavCompass);
+
+		GUIUtility.RotateAroundPivot ((-this.transform.eulerAngles.y), inposition + new Vector2 (Size / 2f, Size / 2f)); 
 
 		for (int i = 0; i < EnemyTag.Length; i++) 
 		{

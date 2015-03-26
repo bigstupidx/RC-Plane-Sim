@@ -22,7 +22,10 @@ public class PanelType : MonoBehaviour
 		PopUpLevel4,
 		PopUpLevel5,
 		WinSAS,
-		Exit
+		Exit,
+		Unlock,
+		BuyPlane,
+		Info
     }
 
     public Type panelType;

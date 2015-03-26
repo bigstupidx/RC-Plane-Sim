@@ -94,13 +94,6 @@ public class ParachuteLogic : MonoBehaviour
     public void payloadCollisionEnter(Collision collision)
     {
         rigidParachute.SetActiveRecursively(false);
-
-        StartCoroutine(DelayClothDeactivation());
-    }
-
-    private IEnumerator DelayClothDeactivation()
-    {
-        yield return new WaitForSeconds(2f);
     }
 
     public void FixedUpdate()

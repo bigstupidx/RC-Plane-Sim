@@ -32,7 +32,7 @@ public class PlaneAction : MonoBehaviour
 		public int startLevel;
 		public int currentLevel;
 		public bool fold;
-		public List<StatLevel> levels = new List<StatLevel>();
+		public StatLevel[] levels;
 	}
 
 	public int unlockLevel;
@@ -40,11 +40,9 @@ public class PlaneAction : MonoBehaviour
 	public bool isOwned;
 	public PlaneStatAdjustment plane;
 	public int material;
-	public List<Stat> stat = new List<Stat>();
-
-	public static PlaneStatAdjustment currentPlane;
-	public static int currentMaterial;
-	public static List<Stat> currentStat;
+	public Stat[] stat;
+	
+	public static PlaneAction currentPlane;
 	public static GameObject planeModel;
 	
 	private static UISprite sprite;
@@ -52,11 +50,9 @@ public class PlaneAction : MonoBehaviour
 
 	void Awake()
 	{
-		if(name.Contains("Superbolt"))
+		if(name.Contains("Superbolt") && currentPlane == null)
 		{
-			currentStat = stat;
-			currentMaterial = material;
-			currentPlane = plane;
+			currentPlane = this;
 			sprite = transform.GetChild(0).GetComponent<UISprite>();
 			spriteName = sprite.spriteName;
 			sprite.spriteName = spriteName + "_highlighted";
@@ -77,11 +73,12 @@ public class PlaneAction : MonoBehaviour
 		{
 			if(name.Contains("Superbolt"))
 			{
-				currentStat = stat;
-				currentMaterial = material;
-				currentPlane = plane;
+				if(currentPlane == null)
+				{
+					currentPlane = this;
+				}
 				
-				planeModel = Instantiate (plane.gameObject, new Vector3 (-42f, 10f, -20f), Quaternion.identity) as GameObject;
+				planeModel = Instantiate (currentPlane.plane.gameObject, new Vector3 (-42f, 10f, -20f), Quaternion.identity) as GameObject;
 				planeModel.transform.localScale = new Vector3 (2.5f, 2.5f, 2.5f);
 				planeModel.transform.localEulerAngles = new Vector3 (0, 144f, 0);
 				
@@ -119,7 +116,7 @@ public class PlaneAction : MonoBehaviour
 			else
 			{
 				transform.FindChild("Lock").GetComponent<UISprite>().enabled = false;
-				transform.FindChild("Label").GetComponent<UILabel>().text = unlockPrice.ToString();
+                transform.FindChild("Label").GetComponent<UILabel>().text = unlockPrice + "\ncoins";
 				transform.FindChild("Sprite").GetComponent<UISprite>().color = Color.white;
 				GetComponent<UIButton>().enabled = true;
 			}
@@ -131,16 +128,9 @@ public class PlaneAction : MonoBehaviour
 		PanelType panel;
 		if(!isOwned)
 		{
-			if(ProgressController.gold < unlockPrice)
-			{
-				panel = UIController.GetPanel(PanelType.Type.PopUpBuy);
-				panel.gameObject.SetActive(true);
-				return;
-			}
-			ProgressController.gold -= unlockPrice;
-			isOwned = true;
-			transform.FindChild("Label").GetComponent<UILabel>().enabled = false;
-			ProgressController.SaveProgress();
+			BuyPlane.plane = this;
+			UIController.GetPanel(PanelType.Type.BuyPlane).gameObject.SetActive(false);
+			UIController.GetPanel(PanelType.Type.BuyPlane).gameObject.SetActive(true);
 			return;
 		}
 
@@ -149,9 +139,7 @@ public class PlaneAction : MonoBehaviour
 
 		sprite.spriteName = spriteName;
 
-		currentStat = stat;
-		currentMaterial = material;
-		currentPlane = plane;
+		currentPlane = this;
 		sprite = transform.GetChild(0).GetComponent<UISprite>();
 		spriteName = sprite.spriteName;
 		sprite.spriteName = spriteName + "_highlighted";
@@ -177,13 +165,13 @@ public class PlaneAction : MonoBehaviour
 
 	public static Stat FindStatType(Stat.Type type)
 	{
-		if (currentStat == null)
+		if (currentPlane == null)
 						return null;
 
-		for(int i = 0; i < currentStat.Count; i++)
+		for(int i = 0; i < currentPlane.stat.Length; i++)
 		{
-			if(currentStat[i].type == type)
-				return currentStat[i];
+			if(currentPlane.stat[i].type == type)
+				return currentPlane.stat[i];
 		}
 
 		return null;

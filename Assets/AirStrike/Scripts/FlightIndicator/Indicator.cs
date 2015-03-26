@@ -32,8 +32,11 @@ public class Indicator : MonoBehaviour
 	[HideInInspector]
 	public FlightSystem flight;// core plane system
 
+	private float scale;
+
 	void Awake ()
 	{
+		scale = 500f / Screen.width;
 		flight = this.GetComponent<FlightSystem> ();
 	}
 	
@@ -63,9 +66,32 @@ public class Indicator : MonoBehaviour
 
 							if (DistanceSee > dis) 
 							{
-								// Draw the indicator
 								DrawTargetLockon (objs [i].transform, t);
 							}
+						}
+						else
+						{
+							Vector3 screenPos = Camera.main.WorldToScreenPoint (objs [i].transform.position);
+							int type = 0;
+							if(screenPos.x - (Screen.width * 0.05f) / 2 <= 0)
+							{
+								GUI.color = Color.red;
+								type = 1;
+							}
+							else if(screenPos.x - (Screen.width * 0.05f) / 2 >= Screen.width)
+							{
+								GUI.color = Color.red;
+								type = 2;
+							}
+
+							if(type == 0)
+								return;
+
+							Rect position = new Rect (Mathf.Clamp(screenPos.x - (Screen.width * 0.05f) / 2, 0, Screen.width - (Screen.width * 0.05f)), 
+							                          Mathf.Clamp(Screen.height - screenPos.y - (Screen.width * 0.05f) / 2, 0, Screen.height), 
+							                          Screen.width * 0.05f, 
+							                          Screen.width * 0.05f);
+							GUI.DrawTexture (position, NavTexture [type]);
 						}
 					}
 				}
@@ -75,6 +101,9 @@ public class Indicator : MonoBehaviour
 
 	void OnGUI ()
 	{
+		if(Time.timeScale == 0)
+			return;
+
 		if (Show) 
 		{
 			GUI.color = new Color (1, 1, 1, Alpha);
@@ -82,7 +111,7 @@ public class Indicator : MonoBehaviour
 			{
 			case NavMode.Third:
 				if (Crosshair)
-					GUI.DrawTexture (new Rect ((Screen.width / 2 - Crosshair.width / 2) + CrosshairOffset.x, (Screen.height / 2 - Crosshair.height / 2) + CrosshairOffset.y, Crosshair.width, Crosshair.height), Crosshair);	
+					GUI.DrawTexture (new Rect ((Screen.width / 2 - Crosshair.width / 2) + CrosshairOffset.x, (Screen.height / 2 - Crosshair.height / 2) + CrosshairOffset.y, Crosshair.width * scale, Crosshair.height * scale), Crosshair);	
 				DrawNavEnemy ();
 				break;
 			case NavMode.Cockpit:
@@ -106,10 +135,14 @@ public class Indicator : MonoBehaviour
 			if (direction > 0.5f) 
 			{
 				Vector3 screenPos = Camera.main.WorldToScreenPoint (aimtarget.transform.position);
-				float distance = Vector3.Distance (transform.position, aimtarget.transform.position);
-				Rect position = new Rect (screenPos.x - NavTexture [type].width / 2, Screen.height - screenPos.y - NavTexture [type].height / 2, NavTexture [type].width, NavTexture [type].height);
+				type = 0;
+				GUI.color = Color.white;
+
+				Rect position = new Rect (screenPos.x - (Screen.width * 0.1f) / 2, 
+				                          Screen.height - screenPos.y - (Screen.width * 0.1f) / 2, 
+				                          Screen.width * 0.1f, 
+				                          Screen.width * 0.1f);
 				GUI.DrawTexture (position, NavTexture [type]);
-            	
 			}
 		}
 	}

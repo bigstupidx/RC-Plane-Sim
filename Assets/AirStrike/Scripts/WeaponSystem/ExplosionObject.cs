@@ -10,14 +10,14 @@ public class ExplosionObject : MonoBehaviour
     public AudioClip[] Sounds;
     public float LifeTimeObject = 2;
 	public bool RandomScale;
-	
+
+	void Awake()
+	{
+		GetComponent<AudioSource> ().volume = VolumeController.instance.sound;
+	}
+
     private void Start()
     {
-
-        if (Sounds.Length > 0)
-        {
-            AudioSource.PlayClipAtPoint(Sounds[Random.Range(0, Sounds.Length)], transform.position);
-        }
         if (Prefab)
         {
 			// Spawn Prefab x Num when start.

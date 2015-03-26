@@ -9,13 +9,14 @@ public class GameUI : MonoBehaviour
 	public int Mode;
 	private GameManager game;
 	private PlayerController play;
+
+	UILabel healthLabel;
+	UILabel timeLabel;
 			
-	void Start ()
+	void OnEnable()
 	{
 		game = (GameManager)GameObject.FindObjectOfType (typeof(GameManager));
 		play = (PlayerController)GameObject.FindObjectOfType (typeof(PlayerController));
-		// define player
-		
 	}
 
 	public void OnGUI ()
@@ -33,15 +34,34 @@ public class GameUI : MonoBehaviour
 			play.Active = true;
 				
 			GUI.skin.label.alignment = TextAnchor.MiddleCenter;
-			if(GameObject.Find("LabelGame - Health"))
-				GameObject.Find("LabelGame - Health").GetComponent<UILabel>().text = (int)((play.GetComponent<DamageManager> ().HP / play.GetComponent<DamageManager> ().HPmax) * 100) + "%";
-			if(GetComponent<FlightView>().gameTime - Time.timeSinceLevelLoad > 0 && GameObject.Find("LabelGame - Time"))
+			if(healthLabel)
 			{
-				GameObject.Find("LabelGame - Time").GetComponent<UILabel>().text = ToStringTime(GetComponent<FlightView>().gameTime - Time.timeSinceLevelLoad);
+				healthLabel.text = (int)((play.GetComponent<DamageManager> ().HP / play.GetComponent<DamageManager> ().HPmax) * 100) + "%";
 			}
-			else if(GameObject.Find("LabelGame - Time"))
+			else
 			{
-				GameObject.Find("LabelGame - Time").GetComponent<UILabel>().text = "";
+				if (GameObject.Find ("LabelGame - Health"))
+				{
+					healthLabel = GameObject.Find ("LabelGame - Health").GetComponent<UILabel> ();
+				}
+			}
+			if(timeLabel)
+			{
+				if(GetComponent<FlightView>().gameTime - Time.timeSinceLevelLoad > 0)
+				{
+					timeLabel.text = ToStringTime(GetComponent<FlightView>().gameTime - Time.timeSinceLevelLoad);
+				}
+				else if(timeLabel)
+				{
+					timeLabel.text = "";
+				}
+			}
+			else
+			{
+				if(GameObject.Find("LabelGame - Time"))
+				{
+					timeLabel = GameObject.Find("LabelGame - Time").GetComponent<UILabel>();
+				}
 			}
 
 			GUI.skin.label.fontSize = 26;

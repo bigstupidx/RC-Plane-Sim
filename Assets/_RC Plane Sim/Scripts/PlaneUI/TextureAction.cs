@@ -8,25 +8,29 @@ public class TextureAction : MonoBehaviour
 
 	void OnEnable()
 	{
-		label.text = PlaneAction.currentPlane.materials [PlaneAction.currentMaterial].name;
+		if(PlaneAction.currentPlane != null)
+		{
+			label.text = PlaneAction.currentPlane.plane.materials [PlaneAction.currentPlane.material].name;
+		}
 	}
 
 	void OnClick()
 	{
 		if(left)
 		{
-			PlaneAction.currentMaterial = PlaneAction.currentMaterial - 1;
-			if(PlaneAction.currentMaterial < 0)
-				PlaneAction.currentMaterial = PlaneAction.currentPlane.materials.Length - 1;
-			label.text = PlaneAction.currentPlane.materials [PlaneAction.currentMaterial].name;
+			PlaneAction.currentPlane.material = PlaneAction.currentPlane.material - 1;
+			if(PlaneAction.currentPlane.material < 0)
+				PlaneAction.currentPlane.material = PlaneAction.currentPlane.plane.materials.Length - 1;
+			label.text = PlaneAction.currentPlane.plane.materials [PlaneAction.currentPlane.material].name;
 		}
 		else
 		{
-			PlaneAction.currentMaterial = PlaneAction.currentMaterial + 1;
-			if(PlaneAction.currentMaterial == PlaneAction.currentPlane.materials.Length)
-				PlaneAction.currentMaterial = 0;
-			label.text = PlaneAction.currentPlane.materials [PlaneAction.currentMaterial].name;
+			PlaneAction.currentPlane.material = PlaneAction.currentPlane.material + 1;
+			if(PlaneAction.currentPlane.material == PlaneAction.currentPlane.plane.materials.Length)
+				PlaneAction.currentPlane.material = 0;
+			label.text = PlaneAction.currentPlane.plane.materials [PlaneAction.currentPlane.material].name;
 		}
-		PlaneAction.currentPlane.Adjust();
+		PlaneAction.currentPlane.plane.Adjust();
+		ProgressController.SaveProgress ();
 	}
 }

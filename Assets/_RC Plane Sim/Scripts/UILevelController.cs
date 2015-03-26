@@ -3,7 +3,7 @@ using System.Collections;
 
 public class UILevelController : MonoBehaviour 
 {
-	private GameObject[] levels;
+	public GameObject[] levels;
     private UISprite foreground;
 
 	public static int[] exps = new int[9] {
@@ -20,11 +20,7 @@ public class UILevelController : MonoBehaviour
 
 	void Awake()
 	{
-		if(levels == null)
-		{
-			levels = GameObject.FindGameObjectsWithTag ("Level");
-			foreground = transform.FindChild("Level Foreground").GetComponent<UISprite>();
-		}
+		foreground = transform.FindChild("Level Foreground").GetComponent<UISprite>();
 	}
 
 	void OnEnable()
@@ -40,8 +36,19 @@ public class UILevelController : MonoBehaviour
 			}
 		}
 
-        int current = (ProgressController.exp + ProgressController.expAdd) - exps[index];
-		float percent = current / (float)(exps [index + 1] - exps [index]);
+		int current;
+		float percent;
+
+		current = (ProgressController.exp + ProgressController.expAdd) - exps[index];
+
+		if(index == exps.Length - 1)
+		{
+			percent = 1;
+		}
+		else
+		{
+			percent = current / (float)(exps [index + 1] - exps [index]);
+		}
 
 		foreground.width = (int)(383 * percent);
 

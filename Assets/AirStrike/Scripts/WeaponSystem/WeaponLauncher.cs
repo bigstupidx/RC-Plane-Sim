@@ -52,7 +52,7 @@ public class WeaponLauncher : WeaponBase
 	private void Start ()
 	{
 		if (!Owner) 
-			Owner = this.transform.root.gameObject;
+			Owner = this.transform.parent.gameObject;
 		
 		if (!audio) {
 			audio = this.GetComponent<AudioSource> ();
@@ -341,8 +341,6 @@ public class WeaponLauncher : WeaponBase
 						Vector3 spread = new Vector3 (Random.Range (-Spread, Spread), Random.Range (-Spread, Spread), Random.Range (-Spread, Spread)) / 100;
 						Vector3 direction = this.transform.forward + spread;
 					
-					
-					
 						GameObject bullet = (GameObject)Instantiate (Missile, missileposition, missilerotate);
 						DamageBase damangeBase = bullet.GetComponent<DamageBase> ();
 						if (damangeBase) 
@@ -390,14 +388,6 @@ public class WeaponLauncher : WeaponBase
 					if (shell.GetComponent<Rigidbody>()) 
 					{
 						shell.GetComponent<Rigidbody>().AddForce (shelloutpos.forward * ShellOutForce);
-					}
-				}
-				
-				if (SoundGun.Length > 0) 
-				{
-					if (audio) 
-					{
-						audio.PlayOneShot (SoundGun [Random.Range (0, SoundGun.Length)]);
 					}
 				}
 			

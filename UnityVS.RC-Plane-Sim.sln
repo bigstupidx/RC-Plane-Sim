@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityVS.RC-Plane-Sim.CSharp", "UnityVS.RC-Plane-Sim.CSharp.csproj", "{7E2F8AED-0119-7B50-EE3A-39E72AAF7B84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityVS.RC-Plane-Sim.CSharp.Editor", "UnityVS.RC-Plane-Sim.CSharp.Editor.csproj", "{8ACCA4C1-2DB1-834C-4260-EEE5141289C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityVS.RC-Plane-Sim.CSharp.Plugins", "UnityVS.RC-Plane-Sim.CSharp.Plugins.csproj", "{82EEE7A9-6529-E2BE-77D1-346A8EB2B64B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E2F8AED-0119-7B50-EE3A-39E72AAF7B84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E2F8AED-0119-7B50-EE3A-39E72AAF7B84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E2F8AED-0119-7B50-EE3A-39E72AAF7B84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E2F8AED-0119-7B50-EE3A-39E72AAF7B84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8ACCA4C1-2DB1-834C-4260-EEE5141289C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8ACCA4C1-2DB1-834C-4260-EEE5141289C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8ACCA4C1-2DB1-834C-4260-EEE5141289C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8ACCA4C1-2DB1-834C-4260-EEE5141289C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82EEE7A9-6529-E2BE-77D1-346A8EB2B64B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82EEE7A9-6529-E2BE-77D1-346A8EB2B64B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82EEE7A9-6529-E2BE-77D1-346A8EB2B64B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82EEE7A9-6529-E2BE-77D1-346A8EB2B64B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -46,10 +46,12 @@ public class FlightOnHit : MonoBehaviour
 			else
 			{
 				FlightView.Target.GetComponent<FlightSystem>().enabled = false;
-				GameObject.Find("Button - Eject").GetComponent<UISprite>().enabled = true;
-				GameObject.Find("Button - Eject").GetComponent<TweenRotation>().enabled = true;
+                GameObject.Find("Button - Eject").GetComponentInChildren<UISprite>().enabled = true;
+                GameObject.Find("Button - Eject").GetComponentInChildren<UILabel>().enabled = true;
+                GameObject.Find("Button - Eject").GetComponentInChildren<TweenRotation>().enabled = true;
 				FlightView.eject = true;
 				Screen.lockCursor = false;
+				FlightView.scrOrient = Screen.orientation;
 			}
 		}	
     }

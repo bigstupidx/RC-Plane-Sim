@@ -8,6 +8,8 @@ public class AIShootController : MonoBehaviour
 
 	public bool shoot;
 
+	private float rocketDelay;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -42,6 +44,8 @@ public class AIShootController : MonoBehaviour
 				wp.FireRate = 0.02f;
 			}
 		}
+
+        rocketDelay = Time.timeSinceLevelLoad + Random.Range(60f / (float)SwipeAction.levelDifficult, 80f / (float)SwipeAction.levelDifficult);
 	}
 
 	// Update is called once per frame
@@ -70,8 +74,20 @@ public class AIShootController : MonoBehaviour
 		{
 			if(distance < 250)
 			{
-				wp.transform.LookAt(obj.transform.position);
-				wp.Shoot(foh.Damage);
+				if(wp.Missile.name.Contains("rocket"))
+				{
+					if(rocketDelay < Time.timeSinceLevelLoad && SwipeAction.levelDifficult != 1)
+					{
+						rocketDelay = Time.timeSinceLevelLoad + Random.Range(60f / (float)SwipeAction.levelDifficult , 80f / (float)SwipeAction.levelDifficult);
+						wp.transform.LookAt(obj.transform.position);
+						wp.Shoot(foh.Damage);
+					}
+				}
+				else
+				{
+					wp.transform.LookAt(obj.transform.position);
+					wp.Shoot(foh.Damage);
+				}
 			}
 			else
 			{
@@ -83,8 +99,15 @@ public class AIShootController : MonoBehaviour
 
 					if(distance < 500)
 					{
-						wp.transform.LookAt(o.transform.position);
-						wp.Shoot(foh.Damage);
+						if(wp.Missile.name.Contains("rocket"))
+						{
+
+						}
+						else
+						{
+							wp.transform.LookAt(obj.transform.position);
+							wp.Shoot(foh.Damage);
+						}
 					}
 				}
 			}

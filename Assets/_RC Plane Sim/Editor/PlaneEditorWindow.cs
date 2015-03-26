@@ -34,34 +34,15 @@ public class PlaneEditorWindow : EditorWindow
 		target.plane = EditorGUILayout.ObjectField ("Plane", target.plane, typeof(PlaneStatAdjustment)) as PlaneStatAdjustment;
 		target.unlockLevel = EditorGUILayout.IntField ("Unlock Level", target.unlockLevel);
 		target.unlockPrice = EditorGUILayout.IntField ("Unlock Price", target.unlockPrice);
-
-		if(target.stat.Count < 4)
+	
+		if(target.stat == null)
 		{
-			target.stat.Add(new PlaneAction.Stat());
-			target.stat.Add(new PlaneAction.Stat());
-			target.stat.Add(new PlaneAction.Stat());
-			target.stat.Add(new PlaneAction.Stat());
-		}
-
-		if(target.stat.Count < 5)
-		{
-			target.stat.Add(new PlaneAction.Stat());
-		}
-
-		if(target.stat.Count < 7)
-		{
-			target.stat.Add(new PlaneAction.Stat());
-			target.stat.Add(new PlaneAction.Stat());
-		}
-
-		if(target.stat.Count < 8)
-		{
-			target.stat.Add(new PlaneAction.Stat());
+			target.stat = new PlaneAction.Stat[8];
 		}
 
 		PlaneAction.Stat stat;
 
-		for(int j = 0; j < target.stat.Count; j++)
+		for(int j = 0; j < target.stat.Length; j++)
 		{
 			stat = target.stat[j];
 			stat.type = (PlaneAction.Stat.Type)EditorGUILayout.EnumPopup(stat.type);
@@ -72,18 +53,15 @@ public class PlaneEditorWindow : EditorWindow
 			stat.fold = EditorGUILayout.Foldout(stat.fold, "Levels");
 			if(stat.fold)
 			{
-				for(int i = 0; i < stat.levels.Count; i++)
+				for(int i = 0; i < stat.levels.Length; i++)
 				{
 					EditorGUILayout.LabelField("\tLevel" + (i + 1));
 					stat.levels[i].value = EditorGUILayout.FloatField ("\t\tValue", stat.levels[i].value);
 					stat.levels[i].cost = EditorGUILayout.IntField ("\t\tCost", stat.levels[i].cost);
 				}
-				if(stat.levels.Count < 4)
+				if(stat.levels == null)
 				{
-					if (GUILayout.Button("Add Level"))
-					{
-						stat.levels.Add(new PlaneAction.Stat.StatLevel());
-					}
+					stat.levels = new PlaneAction.Stat.StatLevel[4];
 				}
 			}
 			EditorGUILayout.Separator ();

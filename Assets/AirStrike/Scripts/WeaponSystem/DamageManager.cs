@@ -46,7 +46,7 @@ public class DamageManager : MonoBehaviour
 				this.gameObject.GetComponent<FlightOnDead>().OnDead(killer);
 			}
 
-            Dead();
+            Dead(killer);
         }
     }
 
@@ -66,7 +66,7 @@ public class DamageManager : MonoBehaviour
 		Destroy(this.gameObject);
 	}
 
-    private void Dead()
+	private void Dead(GameObject killer)
     {
 		if(gameObject.CompareTag("Enemy"))
 		{
@@ -82,6 +82,18 @@ public class DamageManager : MonoBehaviour
 			}
 
 			var aishoot = transform.GetComponentInParent<AirplanePath>();
+
+			transform.parent.gameObject.SetActive(false);
+
+			if(!killer.CompareTag("Player"))
+			{
+				if(aishoot && TypeAction.type == TypeAction.FREE_FOR_ALL)
+				{
+					aishoot.StartRespawn();
+				}
+				return;
+			}
+
 			if(aishoot && TypeAction.type == TypeAction.FREE_FOR_ALL)
 			{
 				ProgressController.goldAdd += 10 * SwipeAction.levelDifficult;
@@ -92,15 +104,16 @@ public class DamageManager : MonoBehaviour
 			{
 				ProgressController.goldAdd += 10 * level;
 			}
-			transform.parent.gameObject.SetActive(false);
 		}
 		else if(gameObject.CompareTag("Player"))
 		{
-			Debug.Log("blabla");
+			ProgressController.scoreDeath[ProgressController.level, SwipeAction.levelDifficult - 1]++;
 			FlightView.Target.GetComponent<FlightSystem>().enabled = false;
-			GameObject.Find("Button - Eject").GetComponent<UISprite>().enabled = true;
-			GameObject.Find("Button - Eject").GetComponent<TweenRotation>().enabled = true;
+            GameObject.Find("Button - Eject").GetComponentInChildren<UISprite>().enabled = true;
+            GameObject.Find("Button - Eject").GetComponentInChildren<UILabel>().enabled = true;
+            GameObject.Find("Button - Eject").GetComponentInChildren<TweenRotation>().enabled = true;
 			FlightView.eject = true;
+			FlightView.scrOrient = Screen.orientation;
 		}
     }
 

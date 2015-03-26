@@ -26,7 +26,6 @@ public class MoverMissile : WeaponBase
 	private void FixedUpdate ()
 	{
 		GetComponent<Rigidbody>().velocity = new Vector3 (transform.forward.x * Speed * Time.fixedDeltaTime, transform.forward.y * Speed * Time.fixedDeltaTime, transform.forward.z * Speed * Time.fixedDeltaTime);
-		GetComponent<Rigidbody>().velocity += new Vector3 (Random.Range (-Noise.x, Noise.x), Random.Range (-Noise.y, Noise.y), Random.Range (-Noise.z, Noise.z));
 		
 		if (Speed < SpeedMax) 
 		{

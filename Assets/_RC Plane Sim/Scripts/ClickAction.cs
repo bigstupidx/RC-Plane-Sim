@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ChartboostSDK;
 
 public class ClickAction : MonoBehaviour 
 {
@@ -49,7 +50,13 @@ public class ClickAction : MonoBehaviour
 		Music,
 		Sound,
 		PopUpExit,
-		ClosePopUpExit
+		ClosePopUpExit,
+		ClosePopUpUnlock,
+		ClosePopUpBuyPlane,
+		GoldFree,
+		Restore,
+		Info,
+		CloseInfo
 	}
 
 	public ActionType action;
@@ -80,10 +87,12 @@ public class ClickAction : MonoBehaviour
 
 			ProgressController.ejectAdd += 10;
 
-			GameObject.Find("Button - Eject").GetComponent<UISprite>().enabled = false;
-			GameObject.Find("Button - Eject").GetComponent<TweenRotation>().enabled = false;
+            GameObject.Find("Button - Eject").GetComponentInChildren<UISprite>().enabled = false;
+            GameObject.Find("Button - Eject").GetComponentInChildren<UILabel>().enabled = false;
+            GameObject.Find("Button - Eject").GetComponentInChildren<TweenRotation>().enabled = false;
 
 			FlightView.eject = false;
+			Screen.orientation = ScreenOrientation.AutoRotation;
 		}
 
 		if (Input.GetKeyDown (KeyCode.Escape) && Application.loadedLevel > 2) 
@@ -131,19 +140,30 @@ public class ClickAction : MonoBehaviour
 			break;
 		case ActionType.Boost:
 			GetComponent<UISprite>().fillAmount = 1 - (heatTime - Time.timeSinceLevelLoad) / 6f;
+			if(GetComponent<UISprite>().fillAmount >= 0.7f)
+			{
+				GetComponent<AudioSource>().Stop();
+			}
 			break;
 		}
 	}
 
 	void OnEnable()
 	{
-		VolumeController cntrl;
-	
 		switch(action)
 		{
+		case ActionType.GoldFree:
+			Chartboost.cacheRewardedVideo(CBLocation.Default);
+			break;
+		case ActionType.Eject:
+			if(!FlightView.eject)
+			{
+				GetComponentInChildren<UISprite>().enabled = false;
+				GetComponentInChildren<UILabel>().enabled = false;
+			}
+			break;
 		case ActionType.Music:
-			cntrl = GameObject.FindObjectOfType<VolumeController>();
-			if(cntrl.music == 0)
+			if(VolumeController.instance.music == 0)
 			{
 				GetComponent<UISprite>().spriteName = "Button_BG_reflection_grey";
 			}
@@ -153,8 +173,7 @@ public class ClickAction : MonoBehaviour
 			}
 			break;
 		case ActionType.Sound:
-			cntrl = GameObject.FindObjectOfType<VolumeController>();
-			if(cntrl.sound == 0)
+			if(VolumeController.instance.sound == 0)
 			{
 				GetComponent<UISprite>().spriteName = "Button_BG_reflection_grey";
 			}
@@ -169,6 +188,8 @@ public class ClickAction : MonoBehaviour
 			fireTime = 0;
 			break;
 		case ActionType.Fire2:
+			if(PlaneAction.currentPlane == null)
+				return;
 			if(PlaneAction.FindStatType(PlaneAction.Stat.Type.Rockets).playerLevel == 1)
 			{
 				transform.localScale = Vector3.zero;
@@ -195,12 +216,16 @@ public class ClickAction : MonoBehaviour
 		case ActionType.Boost:
 			heatTime = 0;
 			fireTime = 0;
+			GetComponent<AudioSource>().Stop();
 			break;
 		case ActionType.PopUpLevel2:
 			if(ProgressController.GetPlayerLevel() >= unlockMap[0])
 			{
 				transform.GetComponentInChildren<UILabel>().enabled = false;
-				GetComponent<TweenColor>().PlayReverse();
+				if(GetComponent<TweenColor>() != null)
+				{
+					GetComponent<TweenColor>().PlayReverse();
+				}
 				GetComponent<Collider>().enabled = true;
 			}
 			else
@@ -213,7 +238,10 @@ public class ClickAction : MonoBehaviour
 			if(ProgressController.GetPlayerLevel() >= unlockMap[1])
 			{
 				transform.GetComponentInChildren<UILabel>().enabled = false;
-				GetComponent<TweenColor>().PlayReverse();
+				if(GetComponent<TweenColor>() != null)
+				{
+					GetComponent<TweenColor>().PlayReverse();
+				}
 				GetComponent<Collider>().enabled = true;
 			}
 			else
@@ -226,7 +254,10 @@ public class ClickAction : MonoBehaviour
 			if(ProgressController.GetPlayerLevel() >= unlockMap[2])
 			{
 				transform.GetComponentInChildren<UILabel>().enabled = false;
-				GetComponent<TweenColor>().PlayReverse();
+				if(GetComponent<TweenColor>() != null)
+				{
+					GetComponent<TweenColor>().PlayReverse();
+				}
 				GetComponent<Collider>().enabled = true;
 			}
 			else
@@ -239,7 +270,10 @@ public class ClickAction : MonoBehaviour
 			if(ProgressController.isSas)
 			{
 				transform.GetComponentInChildren<UILabel>().enabled = false;
-				GetComponent<TweenColor>().PlayReverse();
+				if(GetComponent<TweenColor>() != null)
+				{
+					GetComponent<TweenColor>().PlayReverse();
+				}
 				GetComponent<Collider>().enabled = true;
 			}
 			else
@@ -251,7 +285,16 @@ public class ClickAction : MonoBehaviour
 		case ActionType.PopUpSAS:
 			if(ProgressController.isSas)
 			{
-				GameObject.Find("SAS Button").SetActive(false);
+				if(Application.loadedLevel > 2 && UIController.current.panelType == PanelType.Type.WinSAS)
+				{
+					GameObject.Find("SAS").SetActive(false);
+					var level = GameObject.Find("Level").transform;
+					level.localPosition = new Vector3(level.localPosition.x, -925, level.localPosition.y); 
+				}
+				else
+				{
+					gameObject.SetActive(false);
+				}
 			}
 			break;
 		case ActionType.NextWave:
@@ -276,20 +319,29 @@ public class ClickAction : MonoBehaviour
 				names.Add("Superbolt");
 
 				int j = 4;
-				foreach(UILabel l in GameObject.Find("LeaderBoard").GetComponentsInChildren<UILabel>())
-				{
-					if(points[j] != ProgressController.killAdd)
-					{
-						int index = UnityEngine.Random.Range(0, names.Count);
-						l.text = names[index] + ":  " + points[j];
-						names.RemoveAt(index);
-					}
-					else
-					{
-						l.text = "Player:  " + points[j]; 
-					}
-					j--;
-				}
+				bool isPlayer = false;
+                var ldr = GameObject.Find("LeaderBoard").GetComponentsInChildren<UILabel>();
+                for (int i = 0; i < ldr.Length / 2; i++)
+                {
+                    if (points[j] != ProgressController.killAdd || isPlayer)
+                    {
+                        int index = UnityEngine.Random.Range(0, names.Count);
+                        ldr[i].text = names[index] + ":";
+						ldr[i].color = Color.white;
+                        ldr[i + 5].text = points[j] + " Kills";
+						ldr[i + 5].color = Color.white;
+                        names.RemoveAt(index);
+                    }
+                    else
+                    {
+                        isPlayer = true;
+                        ldr[i].text = "Player:";
+						ldr[i].color = Color.yellow;
+                        ldr[i + 5].text = points[j] + " Kills";
+						ldr[i + 5].color = Color.yellow;
+                    }
+                    j--;
+                }
 
 				GameObject.Find("LeaderBoard").transform.localScale = Vector3.one;
 				GameObject.Find("KillsLabelText").GetComponent<UILabel>().text = "";
@@ -362,9 +414,14 @@ public class ClickAction : MonoBehaviour
 			FlightView.Target.GetComponent<FlightSystem>().WeaponControl.LaunchWeapon(1);
 			break;
         case ActionType.Boost:
-            camera = FindObjectOfType<FlightView>();
-			FlightView.Target.GetComponent<FlightSystem>().Boost();
-			heatTime = Time.timeSinceLevelLoad + 6f;
+			if(heatTime <Time.timeSinceLevelLoad)
+			{
+	            camera = FindObjectOfType<FlightView>();
+				FlightView.Target.GetComponent<FlightSystem>().Boost();
+				heatTime = Time.timeSinceLevelLoad + 6f;
+				GetComponent<AudioSource>().volume = VolumeController.instance.sound;
+				GetComponent<AudioSource>().Play();
+			}
             break;
 		}
 	}
@@ -394,49 +451,78 @@ public class ClickAction : MonoBehaviour
 		FlightView camera;
 		VolumeController cntrl;
 
-		VolumeController.click.Play ();
+		if(UIController.current.panelType != PanelType.Type.GameMenu)
+		{
+			VolumeController.click.Play ();
+		}
 
 		switch(action)
 		{
+		case ActionType.CloseInfo:
+			panel = UIController.GetPanel(PanelType.Type.Info);
+			panel.gameObject.SetActive(false);
+			break;
+		case ActionType.Info:
+			panel = UIController.GetPanel(PanelType.Type.Info);
+			panel.gameObject.SetActive(true);
+			break;
+		case ActionType.Restore:
+			AppleIAP.Instance().RestoreCompletedTransactions();
+			break;
 		case ActionType.Music:
-			cntrl = GameObject.FindObjectOfType<VolumeController>();
-			if(cntrl.music == 0)
+			if(VolumeController.instance.music == 0)
 			{
 				GetComponent<UISprite>().spriteName = "Button_BG_reflection";
-				cntrl.ChangeMusic(1);
+				VolumeController.instance.ChangeMusic(1);
 			}
 			else
 			{
 				GetComponent<UISprite>().spriteName = "Button_BG_reflection_grey";
-				cntrl.ChangeMusic(0);
+				VolumeController.instance.ChangeMusic(0);
 			}
 			break;
 		case ActionType.Sound:
-			cntrl = GameObject.FindObjectOfType<VolumeController>();
-			if(cntrl.sound == 0)
+			if(VolumeController.instance.sound == 0)
 			{
 				GetComponent<UISprite>().spriteName = "Button_BG_reflection";
-				cntrl.ChangeSound(1);
+				VolumeController.instance.ChangeSound(1);
 			}
 			else
 			{
 				GetComponent<UISprite>().spriteName = "Button_BG_reflection_grey";
-				cntrl.ChangeSound(0);
+				VolumeController.instance.ChangeSound(0);
 			}
 			break;
 		case ActionType.Gold1:
-			ProgressController.gold += 4000;
-			ProgressController.SaveProgress();
+			#if UNITY_ANDROID
+			GoogleIAB.Instance().Purchase("com.lunagames.RCW3");
+			#elif UNITY_IPHONE
+			AppleIAP.Instance().Purchase("com.lunagames.RCW3");
+			#endif
 			break;
 		case ActionType.Gold2:
-			ProgressController.gold += 10000;
-			ProgressController.SaveProgress();
+			#if UNITY_ANDROID
+			GoogleIAB.Instance().Purchase("com.lunagames.RCW4");
+			#elif UNITY_IPHONE
+			AppleIAP.Instance().Purchase("com.lunagames.RCW4");
+			#endif
 			break;
 		case ActionType.Gold3:
-			ProgressController.gold += 30000;
-			ProgressController.SaveProgress();
+			#if UNITY_ANDROID
+			GoogleIAB.Instance().Purchase("com.lunagames.RCW5");
+			#elif UNITY_IPHONE
+			AppleIAP.Instance().Purchase("com.lunagames.RCW5");
+			#endif
 			break;
 		case ActionType.Gold4:
+			#if UNITY_ANDROID
+			GoogleIAB.Instance().Purchase("com.lunagames.RCW2");
+			#elif UNITY_IPHONE
+			AppleIAP.Instance().Purchase("com.lunagames.RCW2");
+			#endif
+			break;
+		case ActionType.GoldFree:
+			Chartboost.showRewardedVideo(CBLocation.Default);
 			break;
 		case ActionType.SinglePlayer:
 			camera = FindObjectOfType<FlightView>();
@@ -553,6 +639,14 @@ public class ClickAction : MonoBehaviour
 			UIController.current = UIController.GetPanel(PanelType.Type.PauseMenu);
 			UIController.current.gameObject.SetActive(true);
 			break;
+		case ActionType.ClosePopUpUnlock:
+			panel = UIController.GetPanel(PanelType.Type.Unlock);
+			panel.gameObject.SetActive(false);
+			break;
+		case ActionType.ClosePopUpBuyPlane:
+			panel = UIController.GetPanel(PanelType.Type.BuyPlane);
+			panel.gameObject.SetActive(false);
+			break;
 		case ActionType.GamePlayLevel1:
 			if(Application.loadedLevel != 3)  LevelsLoader.LoadLevel(3);
 			break;
@@ -569,15 +663,12 @@ public class ClickAction : MonoBehaviour
 			if (Application.loadedLevel != 7) LevelsLoader.LoadLevel(7);
 			break;
 		case ActionType.PopUpSASYes:
-			ProgressController.isSas = true;
-			var go = GameObject.Find("Dragonfly");
-			if(go != null)
-			{
-				go.GetComponent<PlaneAction>().UpdatePlane(2);
-				GameObject.Find("SAS Button").SetActive(false);
-			}
+			#if UNITY_ANDROID
+			GoogleIAB.Instance().Purchase("com.lunagames.RCW1");
+			#elif UNITY_IPHONE
+			AppleIAP.Instance().Purchase("com.lunagames.RCW1");
+			#endif
 
-			ProgressController.SaveProgress();
 			panel = UIController.GetPanel(PanelType.Type.PopUpSAS);
 			panel.gameObject.SetActive(false);
 
@@ -615,30 +706,9 @@ public class ClickAction : MonoBehaviour
 			LevelsLoader.LoadLevel(1);
 			break;
 		case ActionType.NextWave:
-			Time.timeScale = 1;
 			ProgressController.expAdd = 0;
-			FlightView.wave = Mathf.Min(73, FlightView.wave + 1);
-			var planes = GameObject.FindObjectsOfType<AirplanePath>();
-			for(int i = 0; i < planes.Length; i++)
-			{
-				if(planes[i].plane.name.Contains("Subway"))
-				{
-					continue;
-				}
 
-				if(WaveProps.waveProps[FlightView.wave, i] != 0)
-				{
-					planes[i].plane.gameObject.SetActive(true);
-					planes[i].speed = WaveProps.waveStats[WaveProps.waveProps[FlightView.wave, i], 2] * 3;
-				}
-			}
-			var waves = GameObject.FindGameObjectsWithTag("Enemy");
-			for(int i = 0; i < waves.Length; i++)
-			{
-				waves[i].GetComponent<DamageManager>().HP = WaveProps.waveStats[WaveProps.waveProps[FlightView.wave, i], 1];
-				waves[i].GetComponent<DamageManager>().level = WaveProps.waveProps[FlightView.wave, i] % 4;
-				waves[i].GetComponent<FlightOnHit>().Damage = WaveProps.waveStats[WaveProps.waveProps[FlightView.wave, i], 0];
-			}
+			StartCoroutine(GameObject.FindObjectOfType<FlightView>().StartNextWave());
 
 			ProgressController.goldAdd = 0;
 			ProgressController.ejectAdd = 0;
@@ -650,8 +720,8 @@ public class ClickAction : MonoBehaviour
 			UIController.current.gameObject.SetActive(true);
 			break;
 		case ActionType.Eject: 
-			if(FlightView.eject)
-			{
+			//if(FlightView.eject)
+			//{
 				GameObject _parashute = GameObject.Instantiate(parashute) as GameObject;
 				
 				_parashute.transform.GetChild(0).gameObject.SetActive(true);
@@ -669,7 +739,8 @@ public class ClickAction : MonoBehaviour
 				ProgressController.ejectAdd += 10;
 				
 				FlightView.eject = false;
-			}
+				Screen.orientation = ScreenOrientation.AutoRotation;
+			//}
 			break;
 		}
 	}

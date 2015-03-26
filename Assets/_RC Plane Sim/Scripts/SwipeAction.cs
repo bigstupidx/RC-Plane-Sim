@@ -23,6 +23,7 @@ public class SwipeAction : MonoBehaviour
 	private string[] DIFFICULT = new string[5] { "EASY", "MEDIUM", "HARD", "MASTER", "NIGHTMARE"};
 
     public UILabel text;
+	public UILabel score;
     public static int levelDifficult = 1;
 
     private SwipeDirection sSwipeDirection;
@@ -195,6 +196,10 @@ public class SwipeAction : MonoBehaviour
 		{
 			levelDifficult = currentLevel + 1;
 			text.text = DIFFICULT[currentLevel];
+			if(!score.text.Contains("Swipe"))
+			{
+				score.text = "[99ff00]Highscore:[-]\n" + ProgressController.scoreFree[ProgressController.level, SwipeAction.levelDifficult - 1] + " Kills  " + ProgressController.scoreDeath[ProgressController.level, SwipeAction.levelDifficult - 1] + " Deaths";
+			}
 		}
 
 		iTouchStateFlag = 0;

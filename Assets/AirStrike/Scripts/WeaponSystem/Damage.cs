@@ -14,6 +14,11 @@ public class Damage : DamageBase
 	public GameObject DestroyAfterObject;
 	public float DestryAfterDuration = 10;
 
+	void Awake()
+	{
+		GetComponent<AudioSource> ().volume = VolumeController.instance.sound;
+	}
+
     private void Start()
     {
 		timetemp = Time.time;
@@ -40,6 +45,7 @@ public class Damage : DamageBase
         if (Effect)
         {
             GameObject obj = (GameObject) Instantiate(Effect, transform.position, transform.rotation);
+			obj.GetComponent<AudioSource>().volume = VolumeController.instance.sound;
             Destroy(obj, LifeTimeEffect);
         }
 

@@ -19,6 +19,7 @@ public class FlightView : MonoBehaviour
 	public float gameTime;
 	public static int wave;
 	public static bool eject;
+	public static ScreenOrientation scrOrient;
 
 	private Vector3 positionCamera;
 	private Quaternion quaternionCamera;
@@ -58,7 +59,7 @@ public class FlightView : MonoBehaviour
 		positionCamera = transform.position;
 		quaternionCamera = transform.rotation;
 
-		Instantiate (PlaneAction.currentPlane.gameObject, positionCamera, quaternionCamera);
+		Instantiate (PlaneAction.currentPlane.plane.gameObject, positionCamera, quaternionCamera);
 
 		AddCamera(this.gameObject);
 		
@@ -66,6 +67,7 @@ public class FlightView : MonoBehaviour
 		gameTime = 0;
 
 		eject = false;
+		Screen.orientation = ScreenOrientation.AutoRotation;
 		
 		Time.timeScale = 1;
 		UIController.HidePanels();
@@ -81,8 +83,8 @@ public class FlightView : MonoBehaviour
 			var enemy = GameObject.FindGameObjectsWithTag("Enemy");
 			foreach(GameObject go in enemy)
 			{
-				go.GetComponent<DamageManager>().HP = 80 + 10 * SwipeAction.levelDifficult;
-				go.GetComponent<FlightOnHit>().Damage = 5 + 1 * SwipeAction.levelDifficult;
+				go.GetComponent<DamageManager>().HP = 60 + 10 * SwipeAction.levelDifficult;
+				go.GetComponent<FlightOnHit>().Damage = 5 + 2 * SwipeAction.levelDifficult;
 			}
 
 			gameTime = Time.timeSinceLevelLoad + 180;
@@ -126,7 +128,8 @@ public class FlightView : MonoBehaviour
 		{
 			PlayerManager player = (PlayerManager)GameObject.FindObjectOfType(typeof(PlayerManager));	
 			Target = player.gameObject;
-			Target.GetComponent<AudioSource>().enabled = true;
+			if(Camera.main.GetComponent<AudioSource>().volume == 0)
+				Target.GetComponent<AudioSource>().enabled = true;
 		}
 
 		ProgressController.goldAdd = 0;
@@ -138,6 +141,11 @@ public class FlightView : MonoBehaviour
 	Vector3 positionTargetUp; 
 	void FixedUpdate ()
 	{
+		if(eject)
+		{
+			Screen.orientation = scrOrient;
+		}
+
 		//NEW
 		var go = GameObject.Find ("Colliders");
 		if(go != null && Target != null)
@@ -159,6 +167,7 @@ public class FlightView : MonoBehaviour
 
 				if(dis < 100 && !eject)
 				{
+					Debug.Log(child.name);
 					GameObject.Find("CrashedLabel").GetComponent<UILabel>().enabled = true;
 					GameObject.Find("CrashedLabel").GetComponent<UILabel>().text = "Come back to battle zone or your plane will be crashed " + Mathf.RoundToInt(Mathf.Max(0, dis)) + " meters";
 					break;
@@ -172,7 +181,7 @@ public class FlightView : MonoBehaviour
 		//NEW
 
 		bool activecheck = false;
-		for (int i =0; i<Cameras.Length; i++) 
+		for (int i = 0; i < Cameras.Length; i++) 
 		{
 			if (Cameras [i] && Cameras [i].GetComponent<Camera>().enabled) 
 			{
@@ -189,16 +198,10 @@ public class FlightView : MonoBehaviour
 
 		var enemy = GameObject.FindGameObjectsWithTag("Enemy");
 
-		if(enemy.Length == 0 && TypeAction.type == TypeAction.SURVIVAL && Time.timeScale == 1 && UIController.current.panelType != PanelType.Type.WinSAS)
+		if(enemy.Length == 0 && TypeAction.type == TypeAction.SURVIVAL && Time.timeScale == 1f && UIController.current.panelType != PanelType.Type.WinSAS && !isWait)
 		{
-			Time.timeScale = 0;
-			Screen.lockCursor = false;
-			ProgressController.killAdd++;
-			ProgressController.expAdd += 50 * ProgressController.killAdd;
-			UIController.current.gameObject.SetActive(false);
-			UIController.previous = UIController.current;
-			UIController.current = UIController.GetPanel(PanelType.Type.WinSAS);
-			UIController.current.gameObject.SetActive(true);
+			isWait = true;
+			StartCoroutine(StopCurrentWave());
 		}
 
 		if(gameTime != 0f && gameTime < Time.timeSinceLevelLoad && TypeAction.type == TypeAction.FREE_FOR_ALL && UIController.current.panelType != PanelType.Type.WinSAS)
@@ -227,13 +230,16 @@ public class FlightView : MonoBehaviour
 
 		if(dieTime != 0f && dieTime < Time.timeSinceLevelLoad && (TypeAction.type == TypeAction.FREE_FOR_ALL || TypeAction.type == TypeAction.FREE_FLIGHT))
 		{	
-			Instantiate (PlaneAction.currentPlane.gameObject, positionCamera, quaternionCamera);
-			GameObject.Find("Button - Eject").GetComponent<UISprite>().enabled = false;
-			GameObject.Find("Button - Eject").GetComponent<TweenRotation>().enabled = false;
+			Instantiate (PlaneAction.currentPlane.plane.gameObject, positionCamera, quaternionCamera);
+            GameObject.Find("Button - Eject").GetComponentInChildren<UISprite>().enabled = false;
+            GameObject.Find("Button - Eject").GetComponentInChildren<UILabel>().enabled = false;
+            GameObject.Find("Button - Eject").GetComponentInChildren<TweenRotation>().enabled = false;
 			eject = false;
+			Screen.orientation = ScreenOrientation.AutoRotation;
 			PlayerManager player = (PlayerManager)GameObject.FindObjectOfType(typeof(PlayerManager));	
 			Target = player.gameObject;
-
+			if(Camera.main.GetComponent<AudioSource>().volume == 0)
+				Target.GetComponent<AudioSource>().enabled = true;
 			GameUI menu = (GameUI)GameObject.FindObjectOfType(typeof(GameUI));
 			if(menu){
 				menu.Mode = 0;	
@@ -262,6 +268,85 @@ public class FlightView : MonoBehaviour
 			if(dieTime == 0f)
 				dieTime = Time.timeSinceLevelLoad + 3f;
 			return;
+		}
+	}
+
+	public IEnumerator StartNextWave()
+	{
+		yield return StartCoroutine (WaitForRealTimePlay(3f));
+	}
+
+	private IEnumerator StopCurrentWave()
+	{
+		yield return StartCoroutine (WaitForRealTimeStop(2f));
+
+		isWait = false;
+
+		Time.timeScale = 0;
+		Screen.lockCursor = false;
+		ProgressController.killAdd++;
+		ProgressController.expAdd += 50 * ProgressController.killAdd;
+		UIController.current.gameObject.SetActive(false);
+		UIController.previous = UIController.current;
+		UIController.current = UIController.GetPanel(PanelType.Type.WinSAS);
+		UIController.current.gameObject.SetActive(true);
+	}
+
+	public static bool isWait;
+	public static IEnumerator WaitForRealTimePlay(float delay)
+	{
+		while(true)
+		{
+			float pauseEndTime = Time.realtimeSinceStartup + delay;
+			float startEndTime = Time.realtimeSinceStartup;
+			while (Time.realtimeSinceStartup < pauseEndTime)
+			{
+				Time.timeScale = (Time.realtimeSinceStartup - startEndTime) / delay;
+				yield return 0;
+			}
+			break;
+		}
+
+		isWait = false;
+
+		Time.timeScale = 1f;
+		
+		wave = Mathf.Min(73, wave + 1);
+		var planes = GameObject.FindObjectsOfType<AirplanePath>();
+		for(int i = 0; i < planes.Length; i++)
+		{
+			if(planes[i].plane.name.Contains("Subway"))
+			{
+				continue;
+			}
+			
+			if(WaveProps.waveProps[FlightView.wave, i] != 0)
+			{
+				planes[i].plane.gameObject.SetActive(true);
+				planes[i].speed = WaveProps.waveStats[WaveProps.waveProps[FlightView.wave, i], 2] * 3;
+			}
+		}
+		var waves = GameObject.FindGameObjectsWithTag("Enemy");
+		for(int i = 0; i < waves.Length; i++)
+		{
+			waves[i].GetComponent<DamageManager>().HP = WaveProps.waveStats[WaveProps.waveProps[FlightView.wave, i], 1];
+			waves[i].GetComponent<DamageManager>().level = WaveProps.waveProps[FlightView.wave, i] % 4;
+			waves[i].GetComponent<FlightOnHit>().Damage = WaveProps.waveStats[WaveProps.waveProps[FlightView.wave, i], 0];
+		}
+	}
+
+	public static IEnumerator WaitForRealTimeStop(float delay)
+	{
+		while(true)
+		{
+			float pauseEndTime = Time.realtimeSinceStartup + delay;
+			float startEndTime = Time.realtimeSinceStartup;
+			while (Time.realtimeSinceStartup < pauseEndTime)
+			{
+				Time.timeScale = pauseEndTime - Time.realtimeSinceStartup;
+				yield return 0;
+			}
+			break;
 		}
 	}
 }

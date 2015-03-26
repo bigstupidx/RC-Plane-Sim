@@ -19,9 +19,9 @@ public class PlaneVisual : MonoBehaviour
 		if (PlaneAction.currentPlane == null)
 						return;
 
-		GameObject.Find ("Plane - Description").GetComponent<UILabel> ().text = PlaneAction.currentPlane.desc;
+		GameObject.Find ("Plane - Description").GetComponent<UILabel> ().text = PlaneAction.currentPlane.plane.desc;
 
-		PlaneAction.currentPlane.Adjust ();
+		PlaneAction.currentPlane.plane.Adjust ();
 
 		planeName.text = PlaneAction.currentPlane.gameObject.name;
 

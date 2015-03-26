@@ -172,8 +172,6 @@ public class FlightSystem : MonoBehaviour
 
     IEnumerator BoostCoroutine()
     {
-        Debug.Log("Boost");
-
         Speed *= BoostFactor;
         SpeedMax *= BoostFactor;
         for (int i = 0; i < boostEfect.Length; i++)

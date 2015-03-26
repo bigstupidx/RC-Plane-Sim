@@ -17,30 +17,65 @@ public class TypeAction : MonoBehaviour
 	
 	void OnEnable()
 	{
+		if(left)
+		{
+			return;
+		}
+
 		ProgressController.level = level;
 		label.text = types[type];
-		score.text = "Swipe to select difficulty level";
-		if((ProgressController.scoreFree[level] != 0 && type == FREE_FOR_ALL) || (ProgressController.scoreWave[level] != 0 && type == SURVIVAL))
+
+		if(type == FREE_FOR_ALL)
 		{
-			score.GetComponent<TweenAlpha> ().PlayForward ();
+			score.text = "Swipe to select difficulty level";
+			score.GetComponent<TweenAlpha>().from = 1f;
+			score.GetComponent<TweenAlpha>().to = 0;
+			score.GetComponent<TweenAlpha>().ResetToBeginning();
+			score.GetComponent<TweenAlpha> ().Play ();
+		}
+		else if(type == SURVIVAL)
+		{
+			score.text = "[99ff00]Highscore:[-]\n" + ProgressController.scoreWave[level] + " Waves";
+		}
+
+		if(type == FREE_FOR_ALL)
+		{
+			score.enabled = true;
+			GameObject.FindObjectOfType<SwipeAction>().enabled = true;
+			GameObject.FindObjectOfType<SwipeAction>().transform.localScale = Vector3.one;
+		}
+		else if(type == SURVIVAL)
+		{
+			score.enabled = true;
+			GameObject.FindObjectOfType<SwipeAction>().enabled = false;
+			GameObject.FindObjectOfType<SwipeAction>().transform.localScale = Vector3.zero;
+		}
+		else
+		{
+			score.enabled = false;
+			GameObject.FindObjectOfType<SwipeAction>().enabled = false;
+			GameObject.FindObjectOfType<SwipeAction>().transform.localScale = Vector3.zero;
 		}
 	}
 
 	public void OnAlphaComplete()
 	{
-		if(score.color.a == 1f)
+		if(score.color.a != 0)
 			return;
+
+		score.GetComponent<TweenAlpha>().from = 0;
+		score.GetComponent<TweenAlpha>().to = 1f;
+		score.GetComponent<TweenAlpha>().ResetToBeginning();
+		score.GetComponent<TweenAlpha> ().Play ();
 
 		if(type == FREE_FOR_ALL)
 		{
-			score.text = ProgressController.scoreFree[level] + " Kills";
+			score.text = "[99ff00]Highscore:[-]\n" + ProgressController.scoreFree[level, SwipeAction.levelDifficult - 1] + " Kills  " + ProgressController.scoreDeath[ProgressController.level, SwipeAction.levelDifficult - 1] + " Deaths";
 		}
 		else
 		{
-			score.text = ProgressController.scoreWave[level] + " Waves";
+			score.text = "[99ff00]Highscore:[-]\n" +  ProgressController.scoreWave[level] + " Waves";
 		}
-
-		score.GetComponent<TweenAlpha> ().PlayReverse ();
 	}
 	
 	void OnClick()
@@ -57,10 +92,21 @@ public class TypeAction : MonoBehaviour
 			if(type == types.Length)
 				type = 0;
 		}
-		score.text = "Swipe to select difficulty level";
-		if((ProgressController.scoreFree[level] != 0 && type == FREE_FOR_ALL) || (ProgressController.scoreWave[level] != 0 && type == SURVIVAL))
+
+		if(type == FREE_FOR_ALL)
 		{
-			score.GetComponent<TweenAlpha> ().PlayForward ();
+			score.text = "Swipe to select difficulty level";
+			score.GetComponent<TweenAlpha>().from = 1;
+			score.GetComponent<TweenAlpha>().to = 0;
+			score.GetComponent<TweenAlpha>().ResetToBeginning();
+			score.GetComponent<TweenAlpha> ().Play ();
+		}
+		else if(type == SURVIVAL)
+		{
+			score.text = "[99ff00]Highscore:[-]\n" + ProgressController.scoreWave[level] + " Waves";
+			score.GetComponent<TweenAlpha>().ResetToBeginning();
+			score.GetComponent<TweenAlpha> ().enabled = false;
+			score.alpha = 1f;
 		}
 
 		if(type == FREE_FOR_ALL)

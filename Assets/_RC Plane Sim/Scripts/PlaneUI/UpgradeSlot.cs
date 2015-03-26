@@ -31,18 +31,18 @@ public class UpgradeSlot : MonoBehaviour
 				stats.transform.FindChild("Plane - StatDelim" + j).gameObject.SetActive(false);
 			}
 			transform.FindChild ("Button - Buy").transform.localScale = Vector3.one;
-			transform.FindChild ("Button - Buy").GetComponentInChildren<UILabel> ().text = "200";
+			transform.FindChild ("Button - Buy").GetComponentInChildren<UILabel> ().text = "200\ncoins";
 			return;
 		}
 
 		if(PlaneAction.currentPlane.name.Contains("Dragon") && type == PlaneAction.Stat.Type.Rockets)
 		{
-			transform.FindChild("Stat Name").GetComponent<UILabel>().text = "laser" + ": " + stat.levels[stat.currentLevel].value.ToString();
+			transform.FindChild("Stat Name").GetComponent<UILabel>().text = "laser" + ": " + (int)(stat.levels[stat.currentLevel].value);
 			transform.FindChild("Icon - Front").GetComponent<UISprite>().spriteName = "Icon_energy";
 		}
 		else
 		{
-			transform.FindChild("Stat Name").GetComponent<UILabel>().text = stat.type.ToString() + ": " + stat.levels[stat.currentLevel].value.ToString();
+			transform.FindChild("Stat Name").GetComponent<UILabel>().text = stat.type.ToString() + ": " + (int)(stat.levels[stat.currentLevel].value);
 			if(type == PlaneAction.Stat.Type.Rockets) transform.FindChild("Icon - Front").GetComponent<UISprite>().spriteName = "rocket";
 		}
 
@@ -53,7 +53,7 @@ public class UpgradeSlot : MonoBehaviour
 		else
 		{
 			transform.FindChild ("Button - Buy").transform.localScale = Vector3.one;
-			transform.FindChild ("Button - Buy").GetComponentInChildren<UILabel> ().text = stat.levels [stat.currentLevel].cost.ToString ();
+			transform.FindChild ("Button - Buy").GetComponentInChildren<UILabel> ().text = stat.levels [stat.currentLevel].cost + "\ncoins";
 		}
 
 		stats = transform.FindChild ("Plane - StatDelim");
@@ -98,7 +98,7 @@ public class UpgradeSlot : MonoBehaviour
 
 		ProgressController.gold -= stat.levels [stat.currentLevel].cost;
 
-		stat.currentLevel = Mathf.Min(stat.currentLevel + 1, stat.levels.Count - 1);
+		stat.currentLevel = Mathf.Min(stat.currentLevel + 1, stat.levels.Length - 1);
 		ProgressController.SaveProgress ();
 		UpdateSlot ();
 	}

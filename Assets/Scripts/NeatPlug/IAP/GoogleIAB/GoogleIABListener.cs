@@ -210,7 +210,23 @@ public class GoogleIABListener : MonoBehaviour {
 		/// This is the best place to re-deliver the NonConsumable item if you cannot 
 		/// find the locally saved data records saying the item has been delivered.	
 		
-		/// Your code here...
+		if(sku == "com.lunagames.RCW2")
+		{
+			ProgressController.adsNeeded = true;
+		}
+
+		if(sku == "com.lunagames.RCW1")
+		{
+			ProgressController.isSas = true;
+			var go = GameObject.Find("Dragonfly");
+			if(go != null)
+			{
+				go.GetComponent<PlaneAction>().UpdatePlane(2);
+				GameObject.Find("SAS Button").SetActive(false);
+			}
+			
+			ProgressController.SaveProgress();
+		}
 	}		
 	
 	/**
@@ -239,7 +255,40 @@ public class GoogleIABListener : MonoBehaviour {
 			    + "}\n"
 			);
 		
-		/// Your code here...
+		if(receipt.purchaseState == "0")
+		{
+			switch(receipt.sku)
+			{
+			case "com.lunagames.RCW1":
+				ProgressController.isSas = true;
+				var go = GameObject.Find("Dragonfly");
+				if(go != null)
+				{
+					go.GetComponent<PlaneAction>().UpdatePlane(2);
+					GameObject.Find("SAS Button").SetActive(false);
+				}
+				
+				ProgressController.SaveProgress();
+				break;
+			case "com.lunagames.RCW2":
+				ProgressController.adsNeeded = true;
+				break;
+			case "com.lunagames.RCW3":
+				ProgressController.gold += 4000;
+				GoogleIAB.Instance().Consume(receipt.sku);
+				break;
+			case "com.lunagames.RCW4":
+				ProgressController.gold += 10000;
+				GoogleIAB.Instance().Consume(receipt.sku);
+				break;
+			case "com.lunagames.RCW5":
+				ProgressController.gold += 30000;
+				GoogleIAB.Instance().Consume(receipt.sku);
+				break;
+			}
+
+			ProgressController.SaveProgress ();
+		}
 	}	
 	
 	/**
@@ -295,7 +344,23 @@ public class GoogleIABListener : MonoBehaviour {
 		if (_debug)
 			Debug.Log (this.GetType().ToString() + " - OnItemAlreadyOwned(" + sku + ") Fired.");		
 		
-		/// Your code here...
+		if(sku == "com.lunagames.RCW2")
+		{
+			ProgressController.adsNeeded = true;
+		}
+		
+		if(sku == "com.lunagames.RCW1")
+		{
+			ProgressController.isSas = true;
+			var go = GameObject.Find("Dragonfly");
+			if(go != null)
+			{
+				go.GetComponent<PlaneAction>().UpdatePlane(2);
+				GameObject.Find("SAS Button").SetActive(false);
+			}
+			
+			ProgressController.SaveProgress();
+		}
 	}	
 	
 	/**
