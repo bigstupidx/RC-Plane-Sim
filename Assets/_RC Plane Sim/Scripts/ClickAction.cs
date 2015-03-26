@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using ChartboostSDK;
+using Prime31;
+using Prime31.WinPhoneStore;
 
 public class ClickAction : MonoBehaviour 
 {
@@ -498,6 +500,21 @@ public class ClickAction : MonoBehaviour
 			GoogleIAB.Instance().Purchase("com.lunagames.RCW3");
 			#elif UNITY_IPHONE
 			AppleIAP.Instance().Purchase("com.lunagames.RCW3");
+            #else
+            Store.requestProductPurchase("com.lunagames.RCW3", (receipt, error) =>
+            {
+                if (receipt != null)
+                {
+                    Debug.Log("purchase completed with receipt: " + receipt);
+                    Store.reportProductFulfillment("com.lunagames.RCW3");
+                    ProgressController.gold += 4000;
+                    ProgressController.SaveProgress();
+                }
+                else if (error != null)
+                {
+                    Debug.Log("error purchasing product: " + error);
+                }
+            });
 			#endif
 			break;
 		case ActionType.Gold2:
@@ -505,6 +522,21 @@ public class ClickAction : MonoBehaviour
 			GoogleIAB.Instance().Purchase("com.lunagames.RCW4");
 			#elif UNITY_IPHONE
 			AppleIAP.Instance().Purchase("com.lunagames.RCW4");
+            #else
+            Store.requestProductPurchase("com.lunagames.RCW4", (receipt, error) =>
+            {
+                if (receipt != null)
+                {
+                    Debug.Log("purchase completed with receipt: " + receipt);
+                    Store.reportProductFulfillment("com.lunagames.RCW4");
+                    ProgressController.gold += 10000;
+                    ProgressController.SaveProgress();
+                }
+                else if (error != null)
+                {
+                    Debug.Log("error purchasing product: " + error);
+                }
+            });
 			#endif
 			break;
 		case ActionType.Gold3:
@@ -512,6 +544,21 @@ public class ClickAction : MonoBehaviour
 			GoogleIAB.Instance().Purchase("com.lunagames.RCW5");
 			#elif UNITY_IPHONE
 			AppleIAP.Instance().Purchase("com.lunagames.RCW5");
+            #else
+            Store.requestProductPurchase("com.lunagames.RCW5", (receipt, error) =>
+            {
+                if (receipt != null)
+                {
+                    Debug.Log("purchase completed with receipt: " + receipt);
+                    Store.reportProductFulfillment("com.lunagames.RCW5");
+                    ProgressController.gold += 30000;
+                    ProgressController.SaveProgress();
+                }
+                else if (error != null)
+                {
+                    Debug.Log("error purchasing product: " + error);
+                }
+            });
 			#endif
 			break;
 		case ActionType.Gold4:
@@ -519,6 +566,20 @@ public class ClickAction : MonoBehaviour
 			GoogleIAB.Instance().Purchase("com.lunagames.RCW2");
 			#elif UNITY_IPHONE
 			AppleIAP.Instance().Purchase("com.lunagames.RCW2");
+            #else
+            Store.requestProductPurchase("com.lunagames.RCW2", (receipt, error) =>
+            {
+                if (receipt != null)
+                {
+                    Debug.Log("purchase completed with receipt: " + receipt);
+                    ProgressController.adsNeeded = true;
+                    ProgressController.SaveProgress();
+                }
+                else if (error != null)
+                {
+                    Debug.Log("error purchasing product: " + error);
+                }
+            });
 			#endif
 			break;
 		case ActionType.GoldFree:
@@ -667,6 +728,27 @@ public class ClickAction : MonoBehaviour
 			GoogleIAB.Instance().Purchase("com.lunagames.RCW1");
 			#elif UNITY_IPHONE
 			AppleIAP.Instance().Purchase("com.lunagames.RCW1");
+            #else
+            Store.requestProductPurchase("com.lunagames.RCW1", (receipt, error) =>
+            {
+                if (receipt != null)
+                {
+                    Debug.Log("purchase completed with receipt: " + receipt);
+                    ProgressController.isSas = true;
+                    var go = GameObject.Find("Dragonfly");
+                    if (go != null)
+                    {
+                        go.GetComponent<PlaneAction>().UpdatePlane(2);
+                        GameObject.Find("SAS Button").SetActive(false);
+                    }
+
+                    ProgressController.SaveProgress();
+                }
+                else if (error != null)
+                {
+                    Debug.Log("error purchasing product: " + error);
+                }
+            });
 			#endif
 
 			panel = UIController.GetPanel(PanelType.Type.PopUpSAS);

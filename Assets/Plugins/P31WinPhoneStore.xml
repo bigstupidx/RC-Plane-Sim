@@ -1,0 +1,295 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>P31WinPhoneStore</name>
+    </assembly>
+    <members>
+        <member name="T:Prime31.WinPhoneStore.LicenseInformation">
+            <summary>
+            Provides access to the current app's license metadata
+            </summary>
+        </member>
+        <member name="M:Prime31.WinPhoneStore.LicenseInformation.#ctor(Windows.ApplicationModel.Store.LicenseInformation)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="licenseInfo"></param>
+        </member>
+        <member name="M:Prime31.WinPhoneStore.LicenseInformation.#ctor(MockIAPLib.LicenseInformation)">
+            <summary>
+            
+            </summary>
+            <param name="licenseInformation"></param>
+        </member>
+        <member name="M:Prime31.WinPhoneStore.LicenseInformation.ToString">
+            <summary>
+            Override
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Prime31.WinPhoneStore.LicenseInformation.expirationDate">
+            <summary>
+            Gets the license expiration date and time relative to the system clock
+            </summary>
+        </member>
+        <member name="P:Prime31.WinPhoneStore.LicenseInformation.isActive">
+            <summary>
+            Gets the value that indicates whether the license is active
+            </summary>
+        </member>
+        <member name="P:Prime31.WinPhoneStore.LicenseInformation.isTrial">
+            <summary>
+            Gets the value that indicates whether the license is a trial license
+            </summary>
+        </member>
+        <member name="P:Prime31.WinPhoneStore.LicenseInformation.productLicenses">
+            <summary>
+            Gets the associative list of licenses for the app's features that can be bought through an in-app purchase
+            </summary>
+        </member>
+        <member name="T:Prime31.WinPhoneStore.ListingInformation">
+            <summary>
+             Provides the listing info that describes the app in the Windows Store.
+            </summary>
+        </member>
+        <member name="M:Prime31.WinPhoneStore.ListingInformation.#ctor(Windows.ApplicationModel.Store.ListingInformation)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="source"></param>
+        </member>
+        <member name="M:Prime31.WinPhoneStore.ListingInformation.#ctor(MockIAPLib.ListingInformation)">
+            <summary>
+            
+            </summary>
+            <param name="listingInfo"></param>
+        </member>
+        <member name="M:Prime31.WinPhoneStore.ListingInformation.ToString">
+            <summary>
+            Override
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Prime31.WinPhoneStore.ListingInformation.description">
+            <summary>
+            Gets the app's description in the current market.
+            </summary>
+        </member>
+        <member name="P:Prime31.WinPhoneStore.ListingInformation.formattedPrice">
+            <summary>
+            Gets the app's purchase price formatted for the current market and currency.
+            </summary>
+        </member>
+        <member name="P:Prime31.WinPhoneStore.ListingInformation.name">
+            <summary>
+            Gets the app's name in the current market.
+            </summary>
+        </member>
+        <member name="P:Prime31.WinPhoneStore.ListingInformation.productListings">
+            <summary>
+            Gets information about the features and products that can be bought by making in-app purchases.
+            </summary>
+        </member>
+        <member name="T:Prime31.WinPhoneStore.ProductLicense">
+            <summary>
+            Provides info about a license that is associated with an in-app offer
+            </summary>
+        </member>
+        <member name="M:Prime31.WinPhoneStore.ProductLicense.#ctor(Windows.ApplicationModel.Store.ProductLicense)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="productLicense"></param>
+        </member>
+        <member name="M:Prime31.WinPhoneStore.ProductLicense.#ctor(MockIAPLib.ProductLicense)">
+            <summary>
+            
+            </summary>
+            <param name="productLicense"></param>
+        </member>
+        <member name="M:Prime31.WinPhoneStore.ProductLicense.ToString">
+            <summary>
+            Override
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Prime31.WinPhoneStore.ProductLicense.expirationDate">
+            <summary>
+            Gets the expiration date and time of the license
+            </summary>
+        </member>
+        <member name="P:Prime31.WinPhoneStore.ProductLicense.isActive">
+            <summary>
+            Gets the value that indicates whether the feature's license is active
+            </summary>
+        </member>
+        <member name="P:Prime31.WinPhoneStore.ProductLicense.productId">
+            <summary>
+            Gets the ID of an app's in-app offer
+            </summary>
+        </member>
+        <member name="T:Prime31.WinPhoneStore.ProductType">
+            <summary>
+            Specifies the product type for a product
+            </summary>
+        </member>
+        <member name="F:Prime31.WinPhoneStore.ProductType.Unknown">
+            <summary>
+            The product type is unknown
+            </summary>
+        </member>
+        <member name="F:Prime31.WinPhoneStore.ProductType.Durable">
+            <summary>
+            A durable product
+            </summary>
+        </member>
+        <member name="F:Prime31.WinPhoneStore.ProductType.Consumable">
+            <summary>
+            A consumable product
+            </summary>
+        </member>
+        <member name="T:Prime31.WinPhoneStore.ProductListing">
+            <summary>
+             Provides localized info about an in-app offer in your app.
+            </summary>
+        </member>
+        <member name="M:Prime31.WinPhoneStore.ProductListing.#ctor(Windows.ApplicationModel.Store.ProductListing)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="source"></param>
+        </member>
+        <member name="M:Prime31.WinPhoneStore.ProductListing.#ctor(MockIAPLib.ProductListing)">
+            <summary>
+            
+            </summary>
+            <param name="source"></param>
+        </member>
+        <member name="M:Prime31.WinPhoneStore.ProductListing.ToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Prime31.WinPhoneStore.ProductListing.description">
+            <summary>
+            Gets the product's description.
+            </summary>
+        </member>
+        <member name="P:Prime31.WinPhoneStore.ProductListing.formattedPrice">
+            <summary>
+            Gets the product's purchase price with the appropriate formatting for the current market.
+            </summary>
+        </member>
+        <member name="P:Prime31.WinPhoneStore.ProductListing.name">
+            <summary>
+            Gets the descriptive name of the product or feature that can be shown to customers in the current market.
+            </summary>
+        </member>
+        <member name="P:Prime31.WinPhoneStore.ProductListing.productId">
+            <summary>
+            Gets the ID of an app's feature or product.
+            </summary>
+        </member>
+        <member name="P:Prime31.WinPhoneStore.ProductListing.productType">
+            <summary>
+            Gets the type of this product. Possible values are defined by ProductType.
+            </summary>
+        </member>
+        <member name="P:Prime31.WinPhoneStore.ProductListing.imageUrl">
+            <summary>
+            Gets the product's image url.
+            </summary>
+        </member>
+        <member name="P:Prime31.WinPhoneStore.ProductListing.tag">
+            <summary>
+            Gets the tag string that contains custom information about this product.
+            </summary>
+        </member>
+        <member name="T:Prime31.WinPhoneStore.Store">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Prime31.WinPhoneStore.Store.loadTestingLicenseXml(System.String)">
+            <summary>
+            Calling this method puts the plugin in testing mode and no real purchases will occur. The XML passed in
+            should have the format defined <a href="http://msdn.microsoft.com/en-us/library/windowsphone/develop/jj681689(v=vs.105).aspx">here</a>
+            </summary>
+            <param name="xml"></param>
+        </member>
+        <member name="M:Prime31.WinPhoneStore.Store.loadListingInformation(System.Action{Prime31.WinPhoneStore.ListingInformation})">
+            <summary>
+            Loads listing information and fires completionHandler with the data once loading completes
+            </summary>
+        </member>
+        <member name="M:Prime31.WinPhoneStore.Store.getLicenseInformation">
+            <summary>
+            Fetches the current LicenseInformation. If in testing mode it will be from the app simulator.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Prime31.WinPhoneStore.Store.showMarketplaceDetailPage">
+            <summary>
+            Shows the Marketplace detail page used to convert a trial to a purchase. When this method is called on a non-published
+            app it will show an error. If this error has the error code 805a0941, then the call was successful and will operate
+            correctly when the app is published.
+            </summary>
+        </member>
+        <member name="M:Prime31.WinPhoneStore.Store.clearCache">
+            <summary>
+            Clears the application item cache when in test mode
+            </summary>
+        </member>
+        <member name="M:Prime31.WinPhoneStore.Store.requestProductPurchase(System.String,System.Action{System.String,System.Exception})">
+            <summary>
+            Requests a product purchase for the given productId. completionHandler will be called with either a receipt (string)
+            or an error (Exception)
+            </summary>
+            <param name="productId"></param>
+            <param name="completionHandler"></param>
+        </member>
+        <member name="M:Prime31.WinPhoneStore.Store.reportProductFulfillment(System.String)">
+            <summary>
+            Reports a product fulfillment to Microsoft. An item cannot be repurchased until it is reported as fulfilled.
+            Note that only Consumable products can be fulfilled.
+            </summary>
+            <param name="productId"></param>
+        </member>
+        <member name="M:Prime31.WinPhoneStore.Store.getProductLicense(System.String)">
+            <summary>
+            Gets a product license for the given productId. Returns null if no license exists for the product.
+            </summary>
+            <param name="productId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Prime31.WinPhoneStore.Store.getProductReceipt(System.String)">
+            <summary>
+            Gets the product receipt for the given productId.
+            </summary>
+            <param name="productId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MockIAPLib.ListingInformation">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MockIAPLib.MockIAP.PopulateIAPItemsFromXml(System.String)">
+            <summary>
+            Populates the Mock Library with IAP items defined in XML
+            </summary>
+            <param name="Xml">XML to parse</param>
+        </member>
+        <member name="T:MockIAPLib.ProductLicense">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MockIAPLib.ProductListing">
+            <summary>
+            
+            </summary>
+        </member>
+    </members>
+</doc>
