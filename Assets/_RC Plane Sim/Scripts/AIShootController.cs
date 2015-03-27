@@ -16,6 +16,7 @@ public class AIShootController : MonoBehaviour
 		wpnlncr = GetComponentsInChildren<WeaponLauncher> ();
 		foh = GetComponentInChildren<FlightOnHit> ();
 
+		//change ai minigun stat according to game difficulty
 		foreach(WeaponLauncher wp in wpnlncr)
 		{
 			if(SwipeAction.levelDifficult == 1)
@@ -55,6 +56,7 @@ public class AIShootController : MonoBehaviour
 
 		float distance;
 
+		//endless shooting if player was not present in the game (for main menu)
 		if(obj == null)
 		{
 			if(shoot)
@@ -67,17 +69,19 @@ public class AIShootController : MonoBehaviour
 
 			return;
 		}
-
+		//find distance to player
 	 	distance = Vector3.Distance(transform.position + (transform.forward * 250), obj.transform.position);
 
 		foreach(WeaponLauncher wp in wpnlncr)
 		{
 			if(distance < 250)
 			{
+				//shoot if player close enough
 				if(wp.Missile.name.Contains("rocket"))
 				{
 					if(rocketDelay < Time.timeSinceLevelLoad && SwipeAction.levelDifficult != 1)
 					{
+						//shoot rocket
 						rocketDelay = Time.timeSinceLevelLoad + Random.Range(60f / (float)SwipeAction.levelDifficult , 80f / (float)SwipeAction.levelDifficult);
 						wp.transform.LookAt(obj.transform.position);
 						wp.Shoot(foh.Damage);
@@ -85,12 +89,14 @@ public class AIShootController : MonoBehaviour
 				}
 				else
 				{
+					//shoot minigun
 					wp.transform.LookAt(obj.transform.position);
 					wp.Shoot(foh.Damage);
 				}
 			}
 			else
 			{
+				//if player not reachable, then shoot other planes
 				GameObject[] objs = GameObject.FindGameObjectsWithTag ("Enemy");
 				
 				foreach(GameObject o in objs)

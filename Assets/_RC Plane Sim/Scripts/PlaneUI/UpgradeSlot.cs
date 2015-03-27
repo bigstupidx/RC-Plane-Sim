@@ -12,6 +12,7 @@ public class UpgradeSlot : MonoBehaviour
 
 	private void UpdateSlot()
 	{
+		//update upgrade window slots according to current plane progression
 		PlaneAction.Stat stat = PlaneAction.FindStatType (type);
 
 		if (stat == null)
@@ -70,6 +71,7 @@ public class UpgradeSlot : MonoBehaviour
 
 	public void Click()
 	{
+		//upgrade selected stat
 		PlaneAction.Stat stat = PlaneAction.FindStatType (type);
 
 		if(stat.playerLevel == 1)

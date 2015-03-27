@@ -16,6 +16,7 @@ public class PlaneVisualStat : MonoBehaviour
 
 	public void UpdateSlot()
 	{
+		//update plane stats at the garage ui according to formulas with usage of real plane stats values
 		PlaneAction.Stat param1;
 		PlaneAction.Stat param2;
 

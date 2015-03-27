@@ -26,30 +26,43 @@ public class PlaneAction : MonoBehaviour
 			GunHeatTime,
 			Speed
 		}
-		
+		//type of stat
 		public Type type;
+		//player level needed to unlock stat
 		public int playerLevel;
+		//start level of the stat
 		public int startLevel;
+		//current level of the stat
 		public int currentLevel;
+
 		public bool fold;
+		//cost and value on each stat level
 		public StatLevel[] levels;
 	}
-
+	//player level needed to unlock plane
 	public int unlockLevel;
+	//plane unlock price
 	public int unlockPrice;
+	//is player owned current plane
 	public bool isOwned;
+	//stats on the plane model
 	public PlaneStatAdjustment plane;
+	//index of the current plane texture
 	public int material;
+	//all of the plane stats
 	public Stat[] stat;
-	
+	//current selected plane
 	public static PlaneAction currentPlane;
+	//current plane model
 	public static GameObject planeModel;
-	
+	//current plane icon
 	private static UISprite sprite;
+	//current plane icon name
 	private static string spriteName;
 
 	void Awake()
 	{
+		//select first plane on garage level selected
 		if(name.Contains("Superbolt") && currentPlane == null)
 		{
 			currentPlane = this;
@@ -71,6 +84,7 @@ public class PlaneAction : MonoBehaviour
 	{
 		if(level == 2)
 		{
+			//update plane icon at the bottom garage ui and place selected plane in garage
 			if(name.Contains("Superbolt"))
 			{
 				if(currentPlane == null)
@@ -125,9 +139,11 @@ public class PlaneAction : MonoBehaviour
 
 	public void Click()
 	{
+		//select new plane at the bottom garage scroll menu
 		PanelType panel;
 		if(!isOwned)
 		{
+			//show buy popup if plane locked but avaliable to purchasing
 			BuyPlane.plane = this;
 			UIController.GetPanel(PanelType.Type.BuyPlane).gameObject.SetActive(false);
 			UIController.GetPanel(PanelType.Type.BuyPlane).gameObject.SetActive(true);
@@ -165,6 +181,7 @@ public class PlaneAction : MonoBehaviour
 
 	public static Stat FindStatType(Stat.Type type)
 	{
+		//return stat by type
 		if (currentPlane == null)
 						return null;
 

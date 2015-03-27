@@ -16,6 +16,7 @@ public class PlaneVisual : MonoBehaviour
 
 	public void UpdateStats()
 	{
+		//update plane stats at garage ui after upgrading it or reselected plane
 		if (PlaneAction.currentPlane == null)
 						return;
 

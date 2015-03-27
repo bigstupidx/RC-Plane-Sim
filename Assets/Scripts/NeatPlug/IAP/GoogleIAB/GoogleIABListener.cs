@@ -224,9 +224,17 @@ public class GoogleIABListener : MonoBehaviour {
 				go.GetComponent<PlaneAction>().UpdatePlane(2);
 				GameObject.Find("SAS Button").SetActive(false);
 			}
-			
-			ProgressController.SaveProgress();
+
+			if(UIController.current.panelType == PanelType.Type.WinSAS)
+			{
+				UIController.current.gameObject.SetActive(false);
+				UIController.previous = UIController.current;
+				UIController.current = UIController.GetPanel(PanelType.Type.WinSAS);
+				UIController.current.gameObject.SetActive(true);
+			}
 		}
+
+		ProgressController.SaveProgress();
 	}		
 	
 	/**
@@ -269,6 +277,14 @@ public class GoogleIABListener : MonoBehaviour {
 				}
 				
 				ProgressController.SaveProgress();
+
+				if(UIController.current.panelType == PanelType.Type.WinSAS)
+				{
+					UIController.current.gameObject.SetActive(false);
+					UIController.previous = UIController.current;
+					UIController.current = UIController.GetPanel(PanelType.Type.WinSAS);
+					UIController.current.gameObject.SetActive(true);
+				}
 				break;
 			case "com.lunagames.RCW2":
 				ProgressController.adsNeeded = true;
@@ -359,8 +375,16 @@ public class GoogleIABListener : MonoBehaviour {
 				GameObject.Find("SAS Button").SetActive(false);
 			}
 			
-			ProgressController.SaveProgress();
+			if(UIController.current.panelType == PanelType.Type.WinSAS)
+			{
+				UIController.current.gameObject.SetActive(false);
+				UIController.previous = UIController.current;
+				UIController.current = UIController.GetPanel(PanelType.Type.WinSAS);
+				UIController.current.gameObject.SetActive(true);
+			}
 		}
+		
+		ProgressController.SaveProgress();
 	}	
 	
 	/**

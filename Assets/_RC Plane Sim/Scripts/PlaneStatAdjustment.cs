@@ -18,6 +18,7 @@ public class PlaneStatAdjustment : MonoBehaviour
 
 	public void Adjust()
 	{
+		//set plane stats to plane controller 
 		var armour = PlaneAction.FindStatType (PlaneAction.Stat.Type.Armour);
 		GetComponent<DamageManager> ().HP = (int)armour.levels [armour.currentLevel].value;
 
@@ -57,6 +58,7 @@ public class PlaneStatAdjustment : MonoBehaviour
 
 	void Update()
 	{
+		//plane rotator
 		if (Application.loadedLevel != 2)
 			return;
 

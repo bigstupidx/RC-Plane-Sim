@@ -60,6 +60,7 @@ public class TypeAction : MonoBehaviour
 
 	public void OnAlphaComplete()
 	{
+		//change helping text to highscore after animation complete
 		if(score.color.a != 0)
 			return;
 
@@ -80,6 +81,7 @@ public class TypeAction : MonoBehaviour
 	
 	void OnClick()
 	{
+		//change game type on arrow press
 		if(left)
 		{
 			type = type - 1;
@@ -93,6 +95,7 @@ public class TypeAction : MonoBehaviour
 				type = 0;
 		}
 
+		//change highscore text according to game type
 		if(type == FREE_FOR_ALL)
 		{
 			score.text = "Swipe to select difficulty level";
@@ -108,7 +111,7 @@ public class TypeAction : MonoBehaviour
 			score.GetComponent<TweenAlpha> ().enabled = false;
 			score.alpha = 1f;
 		}
-
+		//show difficulty selection according to game type
 		if(type == FREE_FOR_ALL)
 		{
 			score.enabled = true;

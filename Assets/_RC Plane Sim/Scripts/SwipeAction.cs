@@ -16,7 +16,7 @@ public enum Difficult
 	MASTER = 3,
 	NIGHTMARE = 4,
 }
-
+//swipe animation controller of the level difficulty 
 public class SwipeAction : MonoBehaviour 
 {
 	private int[] unlock = new int[5] {0, 2, 4, 6, 8 };

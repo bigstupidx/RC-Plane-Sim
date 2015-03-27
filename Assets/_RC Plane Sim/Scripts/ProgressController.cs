@@ -13,21 +13,37 @@ using Newtonsoft.Json;
 
 public class ProgressController : MonoBehaviour 
 {
+	//current gold
     public static int gold;
+	//current experience
     public static int exp;
+	//map level earned gold
     public static int goldAdd;
+	//map level parachute eject gold bonus earned
 	public static int ejectAdd;
+	//map level earned experience
     public static int expAdd;
+	//player kill points
 	public static int killAdd;
+	//player sas status
 	public static bool isSas;
+	//sas gold and exp bonus
 	public static int sasBonus = 2;
+	//plane availableness status
 	public static bool[] planeLocked;
+	//current plane stats (speed, damage health)
 	private static PlaneAction.Stat[,] stats;
+	//kills count on every level and difficulty
 	public static int[,] scoreFree = new int[5, 5];
+	//death count on every level and difficulty
 	public static int[,] scoreDeath = new int[5, 5];
+	//max wave progression on each level
 	public static int[] scoreWave = new int[5];
+	//current map level
 	public static int level;
+	//if player buy full version
     public static bool adsNeeded;
+	//current texture on planes
 	private static int[] materials = new int[6];
 
 	void Awake () 
@@ -41,6 +57,7 @@ public class ProgressController : MonoBehaviour
 
 	public static int GetPlayerLevel()
 	{
+		//get player level according current exp
 		int i = 0;
 		int index = 0;
 		for(; i < UILevelController.exps.Length; i++)

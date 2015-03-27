@@ -3,25 +3,23 @@ using System.Collections;
 
 public class UIController : MonoBehaviour 
 {
+	//list of all ui screens
     private static PanelType[] panels;
 	public static PanelType current;
 	public static PanelType previous;
-
-	//Save Data
+	
 	public static bool acceleration = false;
-
-	//float deltaTime = 0.0f;
-	//float fps = 0.0f;
 
 	// Use this for initialization
     void Start()
     {
         DontDestroyOnLoad(this);
-
+		//get all ui screens
         panels = gameObject.GetComponentsInChildren<PanelType>();
 
         for(int i = 0; i < panels.Length; i++)
         {
+			//set main menu ui to visible
             if(panels[i].panelType != PanelType.Type.MainMenu)
             {
                 panels[i].gameObject.SetActive(false);
@@ -31,12 +29,13 @@ public class UIController : MonoBehaviour
 				current = panels[i];
 			}
         }
-
+		//load main menu level
 		LevelsLoader.LoadLevel (1);
     }
 
     void Update()
     {
+		//return to previous screen or quit or pause game on device back button
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             if(current.panelType == PanelType.Type.Garage)
@@ -62,9 +61,19 @@ public class UIController : MonoBehaviour
 			{
 				Application.Quit();
 			}
+			else if (Application.loadedLevel > 2) 
+			{
+				Screen.lockCursor = false;
+				Time.timeScale = 0;
+				current.gameObject.SetActive(false);
+				previous = UIController.current;
+				current = UIController.GetPanel(PanelType.Type.PauseMenu);
+				current.gameObject.SetActive(true);
+			}
         }
     }
 
+	//get ui screen by type
 	public static PanelType GetPanel(PanelType.Type type)
 	{
 		for(int i = 0; i < panels.Length; i++)
@@ -78,6 +87,7 @@ public class UIController : MonoBehaviour
 		return null;
 	}
 
+	//hide all ui screens
 	public static void HidePanels()
 	{
 		for(int i = 0; i < panels.Length; i++)

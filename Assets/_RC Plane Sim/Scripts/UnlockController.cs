@@ -13,6 +13,7 @@ public class UnlockController : MonoBehaviour
 
 	void OnLevelWasLoaded(int level) 
 	{
+		//according to player level show him new unlock and save showing status
 		if(level != 2)
 		{
 			return;
